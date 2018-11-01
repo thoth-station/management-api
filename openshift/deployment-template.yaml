@@ -127,6 +127,11 @@ objects:
                     secretKeyRef:
                       name: thoth
                       key: thoth-secret
+                - name: THOTH_MANAGEMENT_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: thoth
+                      key: management-api-token
                 - name: THOTH_APP_SECRET_KEY
                   valueFrom:
                     secretKeyRef:
