@@ -1,0 +1,631 @@
+swagger: "2.0"
+info:
+  title: Thoth Management API
+  version: "0.1"
+basePath: "/api/v1/"
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /solve/python:
+    post:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: post_solve_python
+      summary: Solve the given application stack.
+      parameters:
+        - name: solver
+          in: query
+          description: Name of solver to be triggered.
+          type: string
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analyzer in a verbose mode so developers
+            can debug analyzer.
+          type: boolean
+          default: false
+        - name: packages
+          in: body
+          required: true
+          description: Packages to be solved.
+          schema:
+            $ref: "#/definitions/Packages"
+        - name: transitive
+          in: query
+          required: false
+          description: Packages to be solved.
+          type: boolean
+          default: true
+      responses:
+        202:
+          description: Successful response with solver id.
+          schema:
+            $ref: "#/definitions/AnalysisResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+    get:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: list_solve_python_results
+      summary: Retrieve a list of document ids for solver results.
+      parameters:
+        - name: page
+          in: query
+          required: false
+          default: 0
+          description: Page offset in pagination.
+          type: integer
+      responses:
+        200:
+          description: A list of analyzer results.
+          schema:
+            $ref: "#/definitions/AnalysisListingResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /solve/python/{analysis_id}:
+    get:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python
+      summary: Retrieve a solver result.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: Document id to be retrieved.
+          type: string
+      responses:
+        200:
+          description: Analyzer result retrieved.
+          schema:
+            $ref: "#/definitions/AnalysisResultResponse"
+        202:
+          description: Results are not ready yet.
+          schema:
+            $ref: "#/definitions/AnalysisUnfinishedResultResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+        404:
+          description: The given document does not exist.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /solve/python/{analysis_id}/log:
+    get:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_log
+      summary: Retrieve a solver log.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of analysis for a solver run.
+          type: string
+      responses:
+        200:
+          description: Retrieved ecosystem solver log.
+          schema:
+            $ref: "#/definitions/AnalysisLogResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+        404:
+          description: The given solver log does not exist.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /solve/python/{analysis_id}/status:
+    get:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_status
+      summary: Show status of an ecosystem solver.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested ecosystem solver run.
+          type: string
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            $ref: "#/definitions/AnalysisStatusResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /solvers:
+    get:
+      tags: ["Ecosystem Solver"]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: list_solvers
+      summary: Retrieve a list of solvers installed and available.
+      responses:
+        200:
+          description: A list of available solvers.
+          schema:
+            type: object
+            required:
+              - parameters
+              - solvers
+            additionalProperties: false
+            properties:
+              parameters:
+                type: object
+                description: Parameters echoed back to user.
+                additionalProperties: true
+              solvers:
+                type: object
+                description: Available solvers per ecosystem.
+                additionalProperties: true
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /dependency-monkey/python:
+    post:
+      tags: [Dependency Monkey]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: post_dependency_monkey_python
+      summary: Run Dependency Monkey on the given application stack.
+      parameters:
+        - name: application_stack
+          in: body
+          required: true
+          description: Specification of Python application stack.
+          schema:
+            $ref: "#/definitions/PythonStack"
+        - name: runtime_environment
+          in: query
+          description: >
+            Runtime environment in which the given stack will be run.
+          type: string
+          required: false
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analysis in a verbose mode so developers can debug it.
+          type: boolean
+          default: false
+      responses:
+        202:
+          description: The Dependency Monkey analysis is scheduled.
+          schema:
+            $ref: "#/definitions/AnalysisResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /dependency-monkey/python/{analysis_id}/log:
+    get:
+      tags: [Dependency Monkey]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_python_log
+      summary: Retrieve a Dependency Monkey run log.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of analysis for which log should be retrieved.
+          type: string
+      responses:
+        200:
+          description: Retrieved Dependency Monkey log.
+          schema:
+            $ref: "#/definitions/AnalysisLogResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+        404:
+          description: The given Dependency Monkey log does not exist.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /dependency-monkey/python/{analysis_id}/status:
+    get:
+      tags: [Dependency Monkey]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_python_status
+      summary: Show status of a Dependency Monkey run.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested Dependency Monkey run.
+          type: string
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            $ref: "#/definitions/AnalysisStatusResponse"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
+  /erase-graph:
+    post:
+      tags: [Graph]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: erase_graph
+      summary: Clean graph database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to clean graph database.
+          type: string
+          default: false
+      responses:
+        201:
+          description: Graph database was cleaned.
+        400:
+          description: On invalid request.
+
+  /sync:
+    post:
+      tags: [Graph]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: sync
+      summary: Force run sync to graph database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to sync graph database.
+          type: string
+        - name: force_analysis_results_sync
+          in: query
+          required: false
+          description: Force resync all analysis results.
+          type: boolean
+          default: false
+        - name: force_solver_results_sync
+          in: query
+          required: false
+          description: Force resync all solver results.
+          type: boolean
+          default: false
+      responses:
+        202:
+          description: Successful response with solver id.
+        400:
+          description: On invalid request.
+        401:
+          description: Invalid authorization secret.
+
+
+definitions:
+  Packages:
+    type: object
+    required:
+      - 'requirements'
+    additionalProperties: false
+    properties:
+      requirements: &defRequirements
+        type: string
+        minLength: 1
+        description: Requirements as stated in the requirements.txt file.
+        example: >
+          selinon==1.0.0rc3
+  PythonStack:
+    type: object
+    required:
+      - 'requirements'
+      - 'requirements_lock'
+    additionalProperties: false
+    properties:
+      requirements: &pythonRequiremnets
+        type: string
+        minLength: 1
+        description: Direct dependencies for the application stack.
+        example: |
+          [[source]]
+          url = "https://pypi.python.org/simple"
+          verify_ssl = true
+          name = "pypi"
+
+          [packages]
+          daiquiri = "*"
+
+          [dev-packages]
+      requirements_lock: &pythonRequirementsLock
+        type: string
+        description: Fully pinned down dependency stack.
+        example:
+          '{
+            "_meta": {
+                "hash": {
+                    "sha256": "fecd8a66514e1129f796d7a45a1f5b2f7733e3ae0ead487ca63752da680ab8e4"
+                },
+                "pipfile-spec": 6,
+                "requires": {},
+                "sources": [
+                    {
+                        "name": "pypi",
+                        "url": "https://pypi.python.org/simple",
+                        "verify_ssl": true
+                    }
+                ]
+            },
+            "default": {
+                "daiquiri": {
+                    "hashes": [
+                        "sha256:1c4942ef0d40920100162ede6024edd43734e40b8dca9b13ebaf4b52ea198457",
+                        "sha256:eb300dfddae43dfdb157938a854b1387298b8fb340d6ecb7b5ae867283af763e"
+                    ],
+                    "index": "pypi",
+                    "version": "==1.4.0"
+                }
+            },
+            "develop": {}
+          }'
+      requirements_format:
+        type: string
+        description: >
+          Lockfile format - defaults to pipenv if not explicitly specified.
+        items:
+          type: string
+        enum:
+          - pipenv
+          - requirements
+        example: pipenv
+  AnalysisResponse:
+    type: object
+    description: Response for a submitted analysis.
+    additionalProperties: false
+    properties:
+      analysis_id:
+        type: string
+        description: >
+          An id of submitted analysis for checking its status and its results.
+      parameters:
+        type: object
+        description: >
+          Parameters echoed back to user (with default parameters if omitted).
+      cached:
+        type: boolean
+        description: >
+          If set to true the given analysis was picked from cache.
+    required:
+      - analysis_id
+      - parameters
+      - cached
+  AnalysisResponseError:
+    type: object
+    required:
+      - error
+      - parameters
+    properties:
+      error:
+        type: string
+        description: Error information for user.
+      parameters:
+        type: object
+        description: Parameters echoed back to user for debugging.
+  AnalysisResultResponse:
+    type: object
+    additionalProperties: false
+    description: Result of an analysis
+    required:
+      - metadata
+      - result
+    properties:
+      metadata:
+        type: object
+        description: Metadata for analysis run.
+        additionalProperties: false
+        required:
+          - analyzer
+          - analyzer_version
+          - arguments
+          - datetime
+          - distribution
+          - hostname
+          - python
+        properties:
+          analyzer:
+            type: string
+            description: Analyzer name which handled analysis.
+          analyzer_version:
+            type: string
+            description: Version of analyzer handling analysis.
+          arguments:
+            type: object
+            additionalProperties: true
+            description: Arguments passed to analyzer.
+          datetime:
+            type: string
+            description: Date and time of analysis end in ISO format.
+          distribution:
+            type: object
+            description: >
+              Information about environment in which the analysis
+              was performed.
+            required:
+              - codename
+              - id
+              - like
+              - version
+              - version_parts
+            properties:
+              codename:
+                type: string
+                description: >
+                  Codename of environment in which the analysis was perfomed.
+              id:
+                type: string
+                description: >
+                  Identifier of environment in which the analysis
+                  was perfomed.
+              like:
+                type: string
+                description: >
+                  Similar environments in comparision to environment in
+                  which the analysis was perfomed.
+              version:
+                type: string
+                description: A string representation of environment version.
+              version_parts:
+                type: object
+                description: >
+                  Parts of version identifier of the analysing environment.
+                properties:
+                  build_number:
+                    type: string
+                  major:
+                    type: string
+                  minor:
+                    type: string
+                additionalProperties: false
+                required:
+                  - build_number
+                  - major
+                  - minor
+          hostname:
+            type: string
+            description: Pod name where the analysis was done.
+          python:
+            required:
+              - api_version
+              - implementation_name
+              - major
+              - minor
+              - micro
+              - releaselevel
+              - serial
+            properties:
+              api_version:
+                type: integer
+              implementation_name:
+                type: string
+                example: cpython
+              major:
+                type: integer
+              micro:
+                type: integer
+              minor:
+                type: integer
+              releaselevel:
+                type: string
+                example: final
+              serial:
+                type: integer
+      result:
+        type: object
+        additionalProperties: true
+        description: Actual result of an analysis run.
+  AnalysisListingResponse:
+    type: object
+    description: Listing of available results.
+    additionalProperties: false
+    required:
+      - result
+      - parameters
+    properties:
+      result:
+        type: array
+        description: List of available analysis ids.
+        items:
+          type: string
+          description: Analysis id that is used as a document id.
+      parameters:
+        type: object
+        description: Parameters echoed back to user.
+        additionalProperties: true
+  AnalysisStatusResponse: &analysisStatus
+    type: object
+    description: Information about the current analysis status.
+    additionalProperties: false
+    required:
+      - parameters
+      - status
+    properties:
+      status:
+        type: object
+        description: Status information about the analysis run.
+        additionalProperties: false
+        required:
+          - container
+          - exit_code
+          - finished_at
+          - reason
+          - started_at
+          - state
+        properties:
+          container:
+            type: string
+            description: SHA of container image in which the analysis is done.
+            x-nullable: true
+          exit_code:
+            type: integer
+            description: Return code of the process perfoming analysis.
+            x-nullable: true
+          finished_at:
+            type: string
+            description: >
+              Datetime in ISO format informing about when the analysis
+              has finished.
+            x-nullable: true
+          reason:
+            type: string
+            description: Reasoning on finished run.
+            x-nullable: true
+          started_at:
+            type: string
+            description: >
+              Datetime in ISO format informing about when the analysis
+              has started.
+          state:
+            type: string
+            example: terminated
+      parameters:
+        type: object
+        description: Parameters echoed back to user for debugging.
+        additionalProperties: true
+  AnalysisUnfinishedResultResponse:
+    type: object
+    required:
+      - error
+      - parameters
+      - status
+    properties:
+      error:
+        type: string
+        description: Error information for user.
+      parameters:
+        type: object
+        description: Parameters echoed back to user for debugging.
+      status: *analysisStatus
+  AnalysisLogResponse:
+    type: object
+    required:
+      - log
+      - parameters
+    properties:
+      log:
+        type: string
+        description: Analyzer logs printed to stdout/stderr as a plain text.
+        x-nullable: true
+      parameters:
+        type: object
+        description: Parameters echoed back to user for debugging.
