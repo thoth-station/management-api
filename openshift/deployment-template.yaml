@@ -127,6 +127,11 @@ objects:
                     secretKeyRef:
                       name: thoth
                       key: thoth-secret
+                - name: THOTH_MANAGEMENT_API_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: thoth
+                      key: management-api-token
                 - name: THOTH_APP_SECRET_KEY
                   valueFrom:
                     secretKeyRef:
@@ -172,11 +177,11 @@ objects:
                   protocol: TCP
               resources:
                 requests:
-                  memory: "384Mi"
-                  cpu: "125m"
+                  memory: "256Mi"
+                  cpu: "250m"
                 limits:
-                  memory: "384Mi"
-                  cpu: "500m"
+                  memory: "256Mi"
+                  cpu: "250m"
               readinessProbe:
                 httpGet:
                   path: '/readiness'
