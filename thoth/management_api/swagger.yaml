@@ -274,7 +274,6 @@ paths:
           required: true
           description: A secret to clean graph database.
           type: string
-          default: false
       responses:
         201:
           description: Graph database was cleaned.
