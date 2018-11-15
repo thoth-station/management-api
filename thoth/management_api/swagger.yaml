@@ -193,10 +193,33 @@ paths:
             $ref: "#/definitions/PythonStack"
         - name: runtime_environment
           in: query
-          description: >
+          description:
             Runtime environment in which the given stack will be run.
           type: string
           required: false
+        - name: seed
+          in: query
+          description: A seed to be used for generating software stack samples.
+          type: integer
+          required: false
+        - name: dry_run
+          in: query
+          type: boolean
+          description:
+            Do not generate software stacks, just report how many software
+            stacks will be generated.
+          default: false
+        - name: decision
+          in: query
+          type: string
+          items:
+            type: string
+          enum:
+            - uniform-distribution
+          required: false
+          description:
+            A decision function that should be used for generating software
+            stack samples; if omitted, all software stacks will be created.
         - name: debug
           in: query
           required: false

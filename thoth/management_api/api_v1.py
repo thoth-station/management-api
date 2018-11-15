@@ -22,6 +22,7 @@ import asyncio
 import logging
 import typing
 
+from thoth.common import OpenShift
 from thoth.storages import GraphDatabase
 from thoth.storages import SolverResultsStore
 from thoth.storages.exceptions import NotFoundError
@@ -31,7 +32,7 @@ from .configuration import Configuration
 
 PAGINATION_SIZE = 100
 _LOGGER = logging.getLogger(__name__)
-#_OPENSHIFT = OpenShift()
+_OPENSHIFT = OpenShift()
 
 
 def post_solve_python(packages: dict, debug: bool = False, transitive: bool = False, solver: str = None):
