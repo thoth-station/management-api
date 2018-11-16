@@ -100,7 +100,7 @@ def post_dependency_monkey_python(input: dict, seed: int = None, dry_run: bool =
     return _do_run(
         parameters,
         _OPENSHIFT.run_dependency_monkey,
-        report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT
+        report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT,
         stack_output=Configuration.THOTH_DEPENDENCY_MONKEY_STACK_OUTPUT
     )
 
