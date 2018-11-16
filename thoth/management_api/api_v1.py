@@ -89,11 +89,11 @@ def list_solvers():
     }
 
 
-def post_dependency_monkey_python(input: dict, seed: int = None, dry_run: bool = False,
+def post_dependency_monkey_python(input: dict, seed: int = None, dry_run: bool = False, count: int = None,
                                   decision: str = None, debug: bool = False):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
     requirements = input.pop('requirements')
-    context = input
+    context = input.pop('context')
     parameters = locals()
     parameters.pop('input')
 
