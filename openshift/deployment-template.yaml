@@ -70,6 +70,11 @@ objects:
                   value: 'https://kubernetes.default.svc.cluster.local'
                 - name: KUBERNETES_VERIFY_TLS
                   value: "0"
+                - name: AMUN_API_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      key: amun-api-url
+                      name: thoth
                 - name: THOTH_RESULT_API_URL
                   value: http://result-api
                 - name: THOTH_MIDDLETIER_POD_CPU_LIMIT
