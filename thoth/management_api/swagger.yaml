@@ -209,7 +209,9 @@ paths:
           items:
             type: string
           enum:
-            - uniform-distribution
+            - random
+            - all
+          default: all
           required: false
           description:
             A decision function that should be used for generating software
