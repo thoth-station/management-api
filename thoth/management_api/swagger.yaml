@@ -379,6 +379,59 @@ definitions:
             type: string
             description: Base image to build stack upon.
             example: fedora:29
+          packages:
+            type: array
+            description: Packages to be installed.
+            items:
+              type: string
+              example: pipenv
+          build:
+            type: object
+            description: Buildtime requirements and requests.
+            required:
+              - requests
+            properties:
+              requests:
+                type: object
+                description: Requests for hardware.
+                required:
+                  - cpu
+                  - memory
+                properties:
+                  cpu:
+                    type: string
+                    description: CPU requests.
+                    example: 500m
+                  memory:
+                    type: string
+                    description: Memoery requests.
+                    example: 512Mi
+          run:
+            type: object
+            description: Runtime requirements and requests.
+            required:
+              - requests
+            properties:
+              requests:
+                type: object
+                description: Requests for hardware.
+                required:
+                  - cpu
+                  - memory
+                properties:
+                  cpu:
+                    type: string
+                    description: CPU requests.
+                    example: 500m
+                  memory:
+                    type: string
+                    description: Memoery requests.
+                    example: 512Mi
+          script:
+            type: string
+            description: A script to validate stack with.
+            example: |
+              #!/usr/bin/true
   AnalysisResponse:
     type: object
     description: Response for a submitted analysis.
