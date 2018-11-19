@@ -406,6 +406,30 @@ definitions:
                     type: string
                     description: Memoery requests.
                     example: 512Mi
+                  hardware:
+                    type: object
+                    description: Set hardware requirements for run time.
+                    required:
+                      - cpu_family
+                      - cpu_model
+                      - processor
+                    properties:
+                      cpu_family:
+                        type: integer
+                        description: CPU family number from CPU proc info.
+                        example: 6
+                      cpu_model:
+                        type: integer
+                        description: Model number of CPU from CPU proc info.
+                        example: 94
+                      physical_cpus:
+                        type: integer
+                        description: Number of physical physical CPUs.
+                        example: 32
+                      processor:
+                        type: string
+                        description: Name of the CPU model name of CPU proc info.
+                        example: "Intel Core Processor (Skylake, IBRS)"
           run:
             type: object
             description: Runtime requirements and requests.
@@ -427,11 +451,36 @@ definitions:
                     type: string
                     description: Memoery requests.
                     example: 512Mi
+                  hardware:
+                    type: object
+                    description: Set hardware requirements for run time.
+                    required:
+                      - cpu_family
+                      - cpu_model
+                      - processor
+                    properties:
+                      cpu_family:
+                        type: integer
+                        description: CPU family number from CPU proc info.
+                        example: 6
+                      cpu_model:
+                        type: integer
+                        description: Model number of CPU from CPU proc info.
+                        example: 94
+                      physical_cpus:
+                        type: integer
+                        description: Number of physical physical CPUs.
+                        example: 32
+                      processor:
+                        type: string
+                        description: Name of the CPU model name of CPU proc info.
+                        example: "Intel Core Processor (Skylake, IBRS)"
           script:
             type: string
             description: A script to validate stack with.
             example: |
-              #!/usr/bin/true
+              #!/usr/bin/bash
+              echo "Here should be run tests..."
   AnalysisResponse:
     type: object
     description: Response for a submitted analysis.
