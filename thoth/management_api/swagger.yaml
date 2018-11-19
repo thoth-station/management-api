@@ -286,6 +286,28 @@ paths:
           schema:
             $ref: "#/definitions/AnalysisResponseError"
 
+  /dependency-monkey/python/{analysis_id}/report:
+    get:
+      tags: [Dependency Monkey]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_report
+      summary: Get report of a dependency monkey run.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested Dependency Monkey run.
+          type: string
+      responses:
+        200:
+          description: Successful response.
+          schema:
+            $ref: "#/definitions/DependencyMonkeyReport"
+        400:
+          description: On invalid request.
+          schema:
+            $ref: "#/definitions/AnalysisResponseError"
+
   /erase-graph:
     post:
       tags: [Graph]
@@ -595,6 +617,23 @@ definitions:
         type: object
         description: Parameters echoed back to user.
         additionalProperties: true
+  DependencyMonkeyReport:
+    type: object
+    description: Report of a dependency monkey run.
+    additionalProperties: false
+    required:
+      - report
+      - parameters
+    properties:
+      report:
+        type: object
+        description: Report of a Dependency Monkey run.
+        additionalProperties: true
+      parameters:
+        type: object
+        description: Parameters echoed back to user.
+        additionalProperties: true
+
   AnalysisStatusResponse: &analysisStatus
     type: object
     description: Information about the current analysis status.

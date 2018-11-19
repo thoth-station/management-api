@@ -25,6 +25,7 @@ import typing
 from thoth.common import OpenShift
 from thoth.storages import GraphDatabase
 from thoth.storages import SolverResultsStore
+from thoth.storages import DependencyMonkeyReportsStore
 from thoth.storages.exceptions import NotFoundError
 
 from .configuration import Configuration
@@ -144,6 +145,27 @@ def erase_graph(secret: str):
     loop = asyncio.get_event_loop()
     loop.run_until_complete(adapter.g.V().drop().next())
     return {}, 201
+
+
+def get_dependency_monkey_report(analysis_id: str) -> dict:
+    """Retrieve a dependency monkey run report."""
+    parameters = {'analysis_id': analysis_id}
+
+    adapter = DependencyMonkeyReportsStore()
+    adapter.connect()
+
+    try:
+        document = adapter.retrieve_document(analysis_id)
+    except NotFoundError:
+        return {
+            'parameters': parameters,
+            'error': f"Report with the given id {analysis_id} was not found"
+        }, 404
+
+    return {
+        'parameters': parameters,
+        'report': document
+    }
 
 
 def _do_listing(adapter_class, page: int) -> tuple:
