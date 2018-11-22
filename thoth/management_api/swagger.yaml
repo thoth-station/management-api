@@ -10,14 +10,15 @@ produces:
 paths:
   /solve/python:
     post:
-      tags: ["Ecosystem Solver"]
+      tags: [Python Packages]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: post_solve_python
-      summary: Solve the given application stack.
+      summary: Register the given Python package.
       parameters:
-        - name: solver
+        - name: secret
           in: query
-          description: Name of solver to be triggered.
+          required: true
+          description: A secret to register the given Python package.
           type: string
         - name: debug
           in: query
@@ -27,53 +28,21 @@ paths:
             can debug analyzer.
           type: boolean
           default: false
-        - name: packages
+        - name: python_package
           in: body
           required: true
-          description: Packages to be solved.
+          description: Python package that should be registered.
           schema:
-            $ref: "#/definitions/Packages"
-        - name: transitive
-          in: query
-          required: false
-          description: Packages to be solved.
-          type: boolean
-          default: true
+            $ref: "#/definitions/PythonPackage"
       responses:
-        202:
-          description: Successful response with solver id.
-          schema:
-            $ref: "#/definitions/AnalysisResponse"
+        201:
+          description: The given Python package was registered.
         400:
           description: On invalid request.
-          schema:
-            $ref: "#/definitions/AnalysisResponseError"
-
-    get:
-      tags: ["Ecosystem Solver"]
-      x-swagger-router-controller: thoth.management_api.api_v1
-      operationId: list_solve_python_results
-      summary: Retrieve a list of document ids for solver results.
-      parameters:
-        - name: page
-          in: query
-          required: false
-          default: 0
-          description: Page offset in pagination.
-          type: integer
-      responses:
-        200:
-          description: A list of analyzer results.
-          schema:
-            $ref: "#/definitions/AnalysisListingResponse"
-        400:
-          description: On invalid request.
-          schema:
-            $ref: "#/definitions/AnalysisResponseError"
 
   /solve/python/{analysis_id}:
     get:
-      tags: ["Ecosystem Solver"]
+      tags: [Python Packages]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python
       summary: Retrieve a solver result.
@@ -103,7 +72,7 @@ paths:
 
   /solve/python/{analysis_id}/log:
     get:
-      tags: ["Ecosystem Solver"]
+      tags: [Python Packages]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_log
       summary: Retrieve a solver log.
@@ -129,7 +98,7 @@ paths:
 
   /solve/python/{analysis_id}/status:
     get:
-      tags: ["Ecosystem Solver"]
+      tags: [Python Packages]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_status
       summary: Show status of an ecosystem solver.
@@ -149,9 +118,9 @@ paths:
           schema:
             $ref: "#/definitions/AnalysisResponseError"
 
-  /solvers:
+  /installed-solvers:
     get:
-      tags: ["Ecosystem Solver"]
+      tags: [Python Packages]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: list_solvers
       summary: Retrieve a list of solvers installed and available.
@@ -180,7 +149,7 @@ paths:
 
   /dependency-monkey/python:
     post:
-      tags: [Dependency Monkey]
+      tags: [Python Dependency Monkey]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: post_dependency_monkey_python
       summary: Run Dependency Monkey on the given application stack.
@@ -240,7 +209,7 @@ paths:
 
   /dependency-monkey/python/{analysis_id}/log:
     get:
-      tags: [Dependency Monkey]
+      tags: [Python Dependency Monkey]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_dependency_monkey_python_log
       summary: Retrieve a Dependency Monkey run log.
@@ -266,7 +235,7 @@ paths:
 
   /dependency-monkey/python/{analysis_id}/status:
     get:
-      tags: [Dependency Monkey]
+      tags: [Python Dependency Monkey]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_dependency_monkey_python_status
       summary: Show status of a Dependency Monkey run.
@@ -288,7 +257,7 @@ paths:
 
   /dependency-monkey/python/{analysis_id}/report:
     get:
-      tags: [Dependency Monkey]
+      tags: [Python Dependency Monkey]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_dependency_monkey_report
       summary: Get report of a dependency monkey run.
@@ -308,27 +277,9 @@ paths:
           schema:
             $ref: "#/definitions/AnalysisResponseError"
 
-  /erase-graph:
-    post:
-      tags: [Graph]
-      x-swagger-router-controller: thoth.management_api.api_v1
-      operationId: erase_graph
-      summary: Clean graph database.
-      parameters:
-        - name: secret
-          in: query
-          required: true
-          description: A secret to clean graph database.
-          type: string
-      responses:
-        201:
-          description: Graph database was cleaned.
-        400:
-          description: On invalid request.
-
   /register-python-package-index:
     post:
-      tags: [Python]
+      tags: [Python Package Index]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: post_register_python_package_index
       summary: Register the given Python package index.
@@ -376,6 +327,24 @@ paths:
         401:
           description: Invalid authorization secret.
 
+  /erase-graph:
+    post:
+      tags: [Graph]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: erase_graph
+      summary: Clean graph database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to clean graph database.
+          type: string
+      responses:
+        201:
+          description: Graph database was cleaned.
+        400:
+          description: On invalid request.
+
 
 definitions:
   PythonPackageIndex:
@@ -398,18 +367,20 @@ definitions:
         type: boolean
         description: Use secured connection to warehouse.
         example: true
-  Packages:
+  PythonPackage:
     type: object
+    description: A Python package.
     required:
-      - 'requirements'
-    additionalProperties: false
+      - package_name
     properties:
-      requirements: &defRequirements
+      package_name:
         type: string
-        minLength: 1
-        description: Requirements as stated in the requirements.txt file.
-        example: >
-          selinon==1.0.0rc3
+        description: A name of the package to be registered in the system.
+        example: selinon
+      version_specifier:
+        type: string
+        description: A version specifier according to PEP-440
+        example: "==1.0.0"
   DependencyMonkeyInput:
     type: object
     required:

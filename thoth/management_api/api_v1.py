@@ -36,10 +36,21 @@ _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
 
 
-def post_solve_python(packages: dict, debug: bool = False, transitive: bool = False, solver: str = None):
-    """Run a solver to solve the given ecosystem dependencies."""
-    packages = packages.pop('requirements', '')
-    parameters = locals()
+def post_register_python_package_index(url: str, warehouse_api_url: str = None, verify_ssl: bool = True):
+    """Register the given Python package index in the graph database."""
+    graph = GraphDatabase()
+    graph.connect()
+    graph.register_python_package_index(
+        url=url,
+        warehouse_api_url=warehouse_api_url,
+        verify_ssl=verify_ssl if verify_ssl is not None else True
+    )
+    return {}, 201
+
+
+def post_solve_python(package_name: str, version_specifier: str = None, debug: bool = False):
+    """Register the given Python package in Thoth."""
+    packages = package_name + (version_specifier if version_specifier else '')
     response, status_code = _do_run(parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT)
 
     # Handle a special case where no solvers for the given name were found.
@@ -56,15 +67,6 @@ def post_solve_python(packages: dict, debug: bool = False, transitive: bool = Fa
             }, 500
 
     return response, status_code
-
-
-def post_register_python_package_index(index: dict):
-    """Register the given Python package index in the graph database."""
-    index['verify_ssl'] = index.get('verify_ssl', True)
-    graph = GraphDatabase()
-    graph.connect()
-    graph.register_python_package_index(**index)
-    return {}, 201
 
 
 def get_solve_python(analysis_id: str):
