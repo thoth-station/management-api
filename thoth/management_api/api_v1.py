@@ -58,15 +58,12 @@ def post_solve_python(packages: dict, debug: bool = False, transitive: bool = Fa
     return response, status_code
 
 
-def post_register_python_package_index(url: str, warehouse_api_url: str = None, verify_ssl: bool = True):
+def post_register_python_package_index(index: dict):
     """Register the given Python package index in the graph database."""
+    index['verify_ssl'] = index.get('verify_ssl', True)
     graph = GraphDatabase()
     graph.connect()
-    graph.register_python_package_index(
-        url=url,
-        warehouse_api_url=warehouse_api_url,
-        verify_ssl=verify_ssl if verify_ssl is not None else True
-    )
+    graph.register_python_package_index(**index)
     return {}, 201
 
 
