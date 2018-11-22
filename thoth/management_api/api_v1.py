@@ -90,7 +90,7 @@ def list_solvers():
     }
 
 
-def post_dependency_monkey_python(input: dict, seed: int = None, dry_run: bool = False, count: int = None,
+def post_dependency_monkey_python(input: dict, seed: int = None, dry_run: bool = False, limit: int = None,
                                   decision: str = None, debug: bool = False):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
     requirements = input.pop('requirements')
@@ -116,7 +116,7 @@ def get_dependency_monkey_python_status(analysis_id: str):
     return _get_job_status(locals(), 'dependency-monkey-', Configuration.THOTH_MIDDLETIER_NAMESPACE)
 
 
-def sync(secret: str, force_analysis_results_sync: bool = False, force_solver_results_sync: bool = False):
+def sync(secret: str, force_sync: bool = False):
     """Sync results to graph database."""
     parameters = locals()
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
@@ -125,10 +125,7 @@ def sync(secret: str, force_analysis_results_sync: bool = False, force_solver_re
         }, 401
 
     return {
-        'sync_id': _OPENSHIFT.run_sync(
-            force_analysis_results_sync=force_analysis_results_sync,
-            force_solver_results_sync=force_solver_results_sync
-        ),
+        'sync_id': _OPENSHIFT.run_sync(force_sync=force_sync),
         'parameters': parameters
     }, 202
 

@@ -338,16 +338,10 @@ paths:
           required: true
           description: A secret to sync graph database.
           type: string
-        - name: force_analysis_results_sync
+        - name: force_sync
           in: query
           required: false
-          description: Force resync all analysis results.
-          type: boolean
-          default: false
-        - name: force_solver_results_sync
-          in: query
-          required: false
-          description: Force resync all solver results.
+          description: Force resync all results.
           type: boolean
           default: false
       responses:
