@@ -326,6 +326,30 @@ paths:
         400:
           description: On invalid request.
 
+  /register-python-package-index:
+    post:
+      tags: [Python]
+      x-swagger-router-controller: thoth.management_api.api_v1
+      operationId: post_register_python_package_index
+      summary: Register the given Python package index.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to register the given Python package index.
+          type: string
+        - name: index
+          in: body
+          required: true
+          description: Python package index configuration to be registered.
+          schema:
+            $ref: "#/definitions/PythonPackageIndex"
+      responses:
+        201:
+          description: The given Python package index was registered.
+        400:
+          description: On invalid request.
+
   /sync:
     post:
       tags: [Graph]
@@ -360,6 +384,26 @@ paths:
 
 
 definitions:
+  PythonPackageIndex:
+    type: object
+    description: A Python package index.
+    required:
+      - url
+      - warehouse_api_url
+      - verify_ssl
+    properties:
+      url:
+        type: string
+        description: URL to the Python simple repository as described in PEP 503.
+        example: http://pypi.org/simple
+      warehouse_api_url:
+        type: string
+        description: URL to the warehouse API.
+        example: https://pypi.org/pypi
+      verify_ssl:
+        type: boolean
+        description: Use secured connection to warehouse.
+        example: true
   Packages:
     type: object
     required:

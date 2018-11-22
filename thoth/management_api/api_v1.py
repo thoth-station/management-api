@@ -58,6 +58,18 @@ def post_solve_python(packages: dict, debug: bool = False, transitive: bool = Fa
     return response, status_code
 
 
+def post_register_python_package_index(url: str, warehouse_api_url: str = None, verify_ssl: bool = True):
+    """Register the given Python package index in the graph database."""
+    graph = GraphDatabase()
+    graph.connect()
+    graph.register_python_package_index(
+        url=url,
+        warehouse_api_url=warehouse_api_url,
+        verify_ssl=verify_ssl if verify_ssl is not None else True
+    )
+    return {}, 201
+
+
 def get_solve_python(analysis_id: str):
     """Retrieve the given solver result."""
     return _get_document(
