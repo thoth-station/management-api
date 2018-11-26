@@ -48,8 +48,10 @@ def post_register_python_package_index(url: str, warehouse_api_url: str = None, 
     return {}, 201
 
 
-def post_solve_python(package_name: str, version_specifier: str = None, debug: bool = False):
+def post_solve_python(python_package: dict, version_specifier: str = None, debug: bool = False):
     """Register the given Python package in Thoth."""
+    package_name = python_package.pop('package_name')
+    version_specifier = python_package.pop('version_specifier')
     packages = package_name + (version_specifier if version_specifier else '')
     response, status_code = _do_run(parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT)
 

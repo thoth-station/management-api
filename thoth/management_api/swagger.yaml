@@ -8,9 +8,9 @@ consumes:
 produces:
   - application/json
 paths:
-  /solve/python:
+  /solver/python:
     post:
-      tags: [Python Packages]
+      tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: post_solve_python
       summary: Register the given Python package.
@@ -40,9 +40,9 @@ paths:
         400:
           description: On invalid request.
 
-  /solve/python/{analysis_id}:
+  /solver/python/{analysis_id}:
     get:
-      tags: [Python Packages]
+      tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python
       summary: Retrieve a solver result.
@@ -70,9 +70,9 @@ paths:
           schema:
             $ref: "#/definitions/AnalysisResponseError"
 
-  /solve/python/{analysis_id}/log:
+  /solver/python/{analysis_id}/log:
     get:
-      tags: [Python Packages]
+      tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_log
       summary: Retrieve a solver log.
@@ -96,9 +96,9 @@ paths:
           schema:
             $ref: "#/definitions/AnalysisResponseError"
 
-  /solve/python/{analysis_id}/status:
+  /solver/python/{analysis_id}/status:
     get:
-      tags: [Python Packages]
+      tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_status
       summary: Show status of an ecosystem solver.
@@ -120,7 +120,7 @@ paths:
 
   /installed-solvers:
     get:
-      tags: [Python Packages]
+      tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
       operationId: list_solvers
       summary: Retrieve a list of solvers installed and available.
