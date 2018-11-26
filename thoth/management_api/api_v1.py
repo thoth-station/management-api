@@ -50,10 +50,19 @@ def post_register_python_package_index(url: str, warehouse_api_url: str = None, 
 
 def post_solve_python(python_package: dict, version_specifier: str = None, debug: bool = False):
     """Register the given Python package in Thoth."""
+    parameters = locals()
+
     package_name = python_package.pop('package_name')
     version_specifier = python_package.pop('version_specifier')
     packages = package_name + (version_specifier if version_specifier else '')
-    response, status_code = _do_run(parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT)
+
+    graph = GraphDatabase()
+    graph.connect()
+    run_parameters = {
+        'packages': packages,
+        'indexes': graph.get_python_package_index_urls()
+    }
+    response, status_code = _do_run(run_parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT)
 
     # Handle a special case where no solvers for the given name were found.
     if status_code == 202 and not response['analysis_id']:
