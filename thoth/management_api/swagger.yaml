@@ -12,7 +12,7 @@ paths:
     post:
       tags: [Python]
       x-swagger-router-controller: thoth.management_api.api_v1
-      operationId: post_solver_python
+      operationId: post_solve_python
       summary: Register the given Python package.
       parameters:
         - name: secret
