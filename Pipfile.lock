@@ -105,9 +105,6 @@
             "version": "==1.2.2"
         },
         "connexion": {
-            "extras": [
-                "swagger-ui"
-            ],
             "hashes": [
                 "sha256:4061139474d62733ef370928fbb2892e78d0d6f06350d6ec1fe0692dac8ff7ce"
             ],
@@ -502,9 +499,6 @@
             "version": "==0.0.2"
         },
         "thoth-common": {
-            "extras": [
-                "openshift"
-            ],
             "hashes": [
                 "sha256:0a67090464d38f440799d8bb284abe2ef7ba63e3e852c956da72c450f5256dd8",
                 "sha256:27a37768eaec54df4db79db07c9fc51b2074bf4326654248662856cad9228315"
