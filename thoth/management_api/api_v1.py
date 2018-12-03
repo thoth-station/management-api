@@ -63,8 +63,9 @@ def post_solve_python(
     graph = GraphDatabase()
     graph.connect()
     run_parameters = {
-        "packages": packages,
-        "indexes": graph.get_python_package_index_urls(),
+        'packages': packages,
+        'indexes': graph.get_python_package_index_urls(),
+        'debug': debug
     }
     response, status_code = _do_run(
         run_parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT
