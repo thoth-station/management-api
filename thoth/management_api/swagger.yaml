@@ -421,7 +421,7 @@ definitions:
             description: Packages to be installed.
             items:
               type: string
-              example: pipenv
+              example: [pipenv, which]
           build:
             type: object
             description: Buildtime requirements and requests.
