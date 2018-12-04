@@ -123,7 +123,6 @@ def post_dependency_monkey_python(
     input: dict,
     seed: int = None,
     dry_run: bool = False,
-    limit: int = None,
     decision: str = None,
     debug: bool = False,
     count: int = None,
