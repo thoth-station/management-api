@@ -126,6 +126,7 @@ def post_dependency_monkey_python(
     limit: int = None,
     decision: str = None,
     debug: bool = False,
+    count: int = None,
 ):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
     requirements = input.pop("requirements")
