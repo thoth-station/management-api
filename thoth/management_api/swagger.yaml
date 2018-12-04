@@ -20,6 +20,12 @@ paths:
           required: true
           description: A secret to register the given Python package.
           type: string
+        - name: no_subgraph_checks
+          in: query
+          required: true
+          description: Do not perform subgraphs checks for packages already solved.
+          type: boolean
+          default: false
         - name: debug
           in: query
           required: false

@@ -51,7 +51,7 @@ def post_register_python_package_index(
 
 
 def post_solve_python(
-    python_package: dict, version_specifier: str = None, debug: bool = False
+    python_package: dict, version_specifier: str = None, debug: bool = False, no_subgraph_checks: bool = False,
 ):
     """Register the given Python package in Thoth."""
     parameters = locals()
@@ -65,7 +65,8 @@ def post_solve_python(
     run_parameters = {
         'packages': packages,
         'indexes': graph.get_python_package_index_urls(),
-        'debug': debug
+        'debug': debug,
+        'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
     response, status_code = _do_run(
         run_parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT
