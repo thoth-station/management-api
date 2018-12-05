@@ -395,17 +395,22 @@ definitions:
     additionalProperties: false
     properties:
       requirements: &pythonRequiremnets
-        type: string
-        minLength: 1
+        type: object
+        additionalProperties: true
         description: Direct dependencies for the application stack.
-        example: |
-          [[source]]
-          url = "https://pypi.python.org/simple"
-          verify_ssl = true
-          name = "pypi"
-
-          [packages]
-          flask = "==1.0.2"
+        example:
+          {
+            "source": [
+              {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true,
+                "name": "pypi"
+              }
+            ],
+            "packages": {
+              "flask": "==1.0.2"
+            }
+          }
       context:
         type: object
         additionalProperties: true
