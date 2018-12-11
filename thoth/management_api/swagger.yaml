@@ -402,13 +402,31 @@ definitions:
           {
             "source": [
               {
-                "url": "https://pypi.python.org/simple",
+                "url": "https://pypi.org/simple",
                 "verify_ssl": true,
                 "name": "pypi"
               }
             ],
             "packages": {
-              "flask": "==1.0.2"
+              "absl-py": "==0.6.1",
+              "astor": "==0.7.1",
+              "bleach": "==1.5.0",
+              "gast": "==0.2.0",
+              "grpcio": "==1.9.1",
+              "html5lib": "==1.0",
+              "markdown": "==3.0.1",
+              "numpy": "==1.15.4",
+              "olefile": "==0.42.1",
+              "pillow": "==5.0.0",
+              "protobuf": "==3.6.1",
+              "setuptools": "==10.2.1",
+              "six": "==1.9.0",
+              "tensorboard": "==1.10.0",
+              "tensorflow": "==1.9.0",
+              "termcolor": "==1.1.0",
+              "webencodings": "==0.5.1",
+              "werkzeug": "==0.14.1",
+              "wheel": "==0.32.3"
             },
             "requires": {
               "python_version": "3.6"
@@ -426,10 +444,10 @@ definitions:
             example: fedora:29
           packages:
             type: array
+            example: [pipenv, which, python36]
             description: Packages to be installed.
             items:
               type: string
-              example: [pipenv, which]
           build:
             type: object
             description: Buildtime requirements and requests.
