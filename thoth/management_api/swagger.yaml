@@ -419,7 +419,7 @@ definitions:
               "olefile": "==0.42.1",
               "pillow": "==5.0.0",
               "protobuf": "==3.6.1",
-              "setuptools": "==10.2.1",
+              "setuptools": "==40.6.0",
               "six": "==1.9.0",
               "tensorboard": "==1.10.0",
               "tensorflow": "==1.9.0",
