@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7a2bc83ff98c524059fe0b80a3c34447f3c613b05dbf42605b2b0b117322bb79"
+            "sha256": "201e20d8bc9ba4edc228a9323ee7f05738a5bb5e395c56bfc89e0801d8f457a9"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -112,6 +112,9 @@
             "version": "==1.2.2"
         },
         "connexion": {
+            "extras": [
+                "swagger-ui"
+            ],
             "hashes": [
                 "sha256:4061139474d62733ef370928fbb2892e78d0d6f06350d6ec1fe0692dac8ff7ce"
             ],
@@ -507,12 +510,15 @@
             "version": "==0.0.2"
         },
         "thoth-common": {
+            "extras": [
+                "openshift"
+            ],
             "hashes": [
-                "sha256:b20460fcc83e8a153e197b1da00e97fcceac70eec3b94edc837335f708aaeb4e",
-                "sha256:df73a271ba472e7fd513f3d351d18e4d42f23d5efef62ef0cf2dd637abf88509"
+                "sha256:a5f8d8c08c6a3db5da871bbbbeebfce109c99b865e0e3cc81cac60106117886b",
+                "sha256:ad2fcd466c1245ad35bbf2f7ce2c444b6d02861d625a69fefb280d3a98c919a5"
             ],
             "index": "pypi",
-            "version": "==0.4.6"
+            "version": "==0.5.0"
         },
         "thoth-storages": {
             "hashes": [
