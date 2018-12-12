@@ -540,10 +540,8 @@ definitions:
                         example: "Intel Core Processor (Skylake, IBRS)"
           script:
             type: string
-            description: A script to validate stack with.
-            example: |
-              #!/usr/bin/bash
-              echo "Here should be run tests..."
+            description: A script to validate stack with or URL to script to be used.
+            example: https://raw.githubusercontent.com/fridex/tf-benchmark-mock/master/benchmark.py
   AnalysisResponse:
     type: object
     description: Response for a submitted analysis.
