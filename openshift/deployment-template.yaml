@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: This is Thoth - Management API
     openshift.io/display-name: 'Thoth Core: Management API'
-    version: 0.7.0
+    version: 0.7.1
     tags: poc,thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
@@ -185,14 +185,14 @@ objects:
                   memory: "256Mi"
                   cpu: "250m"
                 limits:
-                  memory: "256Mi"
-                  cpu: "250m"
+                  memory: "376Mi"
+                  cpu: "500m"
               readinessProbe:
                 httpGet:
                   path: '/readiness'
                   port: 8080
                   scheme: HTTP
-                initialDelaySeconds: 5
+                initialDelaySeconds: 15
                 periodSeconds: 10
                 timeoutSeconds: 10
               livenessProbe:
