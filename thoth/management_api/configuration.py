@@ -24,8 +24,8 @@ _LOGGER = logging.getLogger(__name__)
 
 _AMUN_API_URL = os.getenv('AMUN_API_URL') or '-'
 if _AMUN_API_URL == '-':
-    _LOGGER.warning("Amun API URL was not configured, Dependency Monkey results will not "
-                    "be submitted to Amun for inspection!")
+    _LOGGER.error("Amun API URL was not configured, Dependency Monkey results will not "
+                  "be submitted to Amun for inspection!")
 
 
 class Configuration:
