@@ -69,7 +69,7 @@ def post_solve_python(
         'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
     response, status_code = _do_run(
-        run_parameters, _OPENSHIFT.run_solver, output=Configuration.THOTH_SOLVER_OUTPUT
+        run_parameters, _OPENSHIFT.schedule_solver, output=Configuration.THOTH_SOLVER_OUTPUT
     )
 
     # Handle a special case where no solvers for the given name were found.
@@ -135,7 +135,7 @@ def post_dependency_monkey_python(
 
     return _do_run(
         parameters,
-        _OPENSHIFT.run_dependency_monkey,
+        _OPENSHIFT.schedule_dependency_monkey,
         report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT,
         stack_output=Configuration.THOTH_DEPENDENCY_MONKEY_STACK_OUTPUT,
     )
