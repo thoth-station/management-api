@@ -68,6 +68,7 @@ def post_solve_python(
         'debug': debug,
         'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
+
     response, status_code = _do_run(
         run_parameters, _OPENSHIFT.schedule_all_solvers, output=Configuration.THOTH_SOLVER_OUTPUT
     )
@@ -130,7 +131,7 @@ def post_dependency_monkey_python(
     parameters = locals()
     parameters.pop("input")
 
-    return _do_run(
+    return _do_schedule(
         parameters,
         _OPENSHIFT.schedule_dependency_monkey,
         report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT,
@@ -311,8 +312,8 @@ def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
     return {"parameters": parameters, "status": status}
 
 
-def _do_run(parameters: dict, runner: typing.Callable, **runner_kwargs):
-    """Run the given job - a generic method for running any analyzer, solver, ..."""
+def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
+    """Schedule the given job - a generic method for running any analyzer, solver, ..."""
     return (
         {
             "analysis_id": runner(**parameters, **runner_kwargs),
