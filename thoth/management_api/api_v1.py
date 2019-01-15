@@ -74,16 +74,13 @@ def post_solve_python(
 
     # Handle a special case where no solvers for the given name were found.
     if status_code == 202 and not response["analysis_id"]:
-        if solver:
-            return {"error": "No solver was run", "parameters": parameters}, 400
-        else:
-            return (
-                {
-                    "error": "Please contact administrator - no solvers were installed",
-                    "parameters": parameters,
-                },
-                500,
-            )
+        return (
+            {
+                "error": "Please contact administrator - no solvers were installed",
+                "parameters": parameters,
+            },
+            500,
+        )
 
     return response, status_code
 
