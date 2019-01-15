@@ -69,21 +69,18 @@ def post_solve_python(
         'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
     response, status_code = _do_run(
-        run_parameters, _OPENSHIFT.schedule_solver, output=Configuration.THOTH_SOLVER_OUTPUT
+        run_parameters, _OPENSHIFT.schedule_all_solvers, output=Configuration.THOTH_SOLVER_OUTPUT
     )
 
     # Handle a special case where no solvers for the given name were found.
     if status_code == 202 and not response["analysis_id"]:
-        if solver:
-            return {"error": "No solver was run", "parameters": parameters}, 400
-        else:
-            return (
-                {
-                    "error": "Please contact administrator - no solvers were installed",
-                    "parameters": parameters,
-                },
-                500,
-            )
+        return (
+            {
+                "error": "Please contact administrator - no solvers were installed",
+                "parameters": parameters,
+            },
+            500,
+        )
 
     return response, status_code
 
