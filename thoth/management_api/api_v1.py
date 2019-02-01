@@ -114,7 +114,18 @@ def list_solve_python_results(page: int = 0):
 def list_solvers():
     """List available registered solvers."""
     # We are fine with 500 here in case of some OpenShift/configuration failures.
-    return {"solvers": {"python": _OPENSHIFT.get_solver_names()}, "parameters": {}}
+    python_solvers = []
+    for solver_name in _OPENSHIFT.get_solver_names():
+        solver_info = GraphDatabase.parse_python_solver_name(solver_name)
+        solver_info["solver_name"] = solver_name
+        python_solvers.append(solver_info)
+
+    return {
+        "solvers": {
+            "python": python_solvers
+        },
+        "parameters": {}
+    }
 
 
 def post_dependency_monkey_python(
