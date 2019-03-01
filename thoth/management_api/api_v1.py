@@ -69,7 +69,7 @@ def post_solve_python(
         'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
 
-    response, status_code = _do_run(
+    response, status_code = _do_schedule(
         run_parameters, _OPENSHIFT.schedule_all_solvers, output=Configuration.THOTH_SOLVER_OUTPUT
     )
 
