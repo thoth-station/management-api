@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: "This is Thoth - Management API"
     openshift.io/display-name: "Thoth Core: Management API"
-    version: 0.8.0
+    version: 0.8.1
     tags: thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
@@ -32,6 +32,7 @@ parameters:
     displayName: Service account name.
     required: true
     name: SERVICE_ACCOUNT_NAME
+    value: "management-api"
 
 objects:
   - kind: Route
