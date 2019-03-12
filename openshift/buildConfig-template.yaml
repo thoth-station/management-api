@@ -5,19 +5,39 @@ metadata:
   annotations:
     description: >
       This is Thoth Management API BuildConfig, this template is meant to be used by
-      Jenkins, but could also be used by humans...
-    openshift.io/display-name: 'Thoth Core: Management API BuildConfig'
-    version: 0.4.1
-    tags: poc,thoth,thoth-management-api,ai-stacks
+      Bots, but could also be used by humans...
+    openshift.io/display-name: "Thoth Core: Management API BuildConfig"
+    version: 0.8.0
+    tags: thoth,thoth-management-api,ai-stacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
       This is Thoth Management API BuildConfig, this template is meant to be used
-      by Jenkins, but could also be used by humans...
-    template.openshift.io/provider-display-name: Red Hat, Inc.
+      by Bots, but could also be used by humans...
+    template.openshift.io/provider-display-name: "Red Hat, Inc."
   labels:
     template: management-api-buildconfig
     app: thoth
     component: management-api
+
+parameters:
+  - description: Name of the github repository for Thoth's Management API
+    displayName: Git Repository
+    required: true
+    name: GITHUB_URL
+    value: "https://github.com/thoth-station/management-api"
+
+  - description: Git reference to be used for Thoth's Management API
+    displayName: Git Reference
+    required: true
+    name: GITHUB_REF
+    value: "master"
+
+  - description: >
+      Tag of the output ImageStream the resulting container image should go to
+    displayName: ImageStream Tag
+    required: true
+    name: IMAGE_STREAM_TAG
+    value: "latest"
 
 objects:
   - apiVersion: v1
@@ -52,31 +72,11 @@ objects:
             name: python-36-centos7:latest
           env:
             - name: ENABLE_PIPENV
-              value: '1'
+              value: "1"
             - name: UPGRADE_PIP_TO_LATEST
-              value: ''
+              value: ""
             - name: WEB_CONCURRENCY
-              value: '4'
+              value: "4"
       triggers:
         - type: ImageChange
           imageChange: {}
-
-parameters:
-  - description: Name of the github repository for Thoth's Management API
-    displayName: Git Repository
-    required: true
-    name: GITHUB_URL
-    value: 'https://github.com/thoth-station/management-api'
-
-  - description: Git reference to be used for Thoth's Management API
-    displayName: Git Reference
-    required: true
-    name: GITHUB_REF
-    value: 'master'
-
-  - description: >
-      Tag of the output ImageStream the resulting container image should go to
-    displayName: ImageStream Tag
-    required: true
-    name: IMAGE_STREAM_TAG
-    value: 'latest'

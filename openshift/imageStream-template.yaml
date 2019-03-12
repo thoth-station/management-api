@@ -4,18 +4,27 @@ metadata:
   name: management-api-imagestream
   annotations:
     description: >
-      This is Management API ImageStream, this template is meant to be used by Bots, but could also be used by humans...
-    openshift.io/display-name: 'Thoth Core: Management API'
-    version: 0.5.0
-    tags: poc,thoth,management-api,ai-stacks,aistacks
+      This is Management API ImageStream, this template is meant to be used by
+      Bots, but could also be used by humans...
+    openshift.io/display-name: "Thoth Core: Management API"
+    version: 0.8.0
+    tags: thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
-      This is Management API ImageStream, this template is meant to be used by Bots, but could also be used by humans...
-    template.openshift.io/provider-display-name: Red Hat, Inc.
+      This is Management API ImageStream, this template is meant to be used by
+      Bots, but could also be used by humans...
+    template.openshift.io/provider-display-name: "Red Hat, Inc."
   labels:
     template: management-api-imagestream
     app: thoth
     component: management-api
+
+parameters:
+  - description: Tag of the ImageStream to use
+    displayName: ImageStream Tag
+    required: true
+    name: IMAGE_STREAM_TAG
+    value: "latest"
 
 objects:
   - kind: ImageStream
@@ -26,11 +35,4 @@ objects:
         component: management-api
       name: management-api
     spec:
-      name: ${IMAGE_STREAM_TAG}
-
-parameters:
-  - description: Tag of the ImageStream to use
-    displayName: ImageStream Tag
-    required: true
-    name: IMAGE_STREAM_TAG
-    value: 'latest'
+      name: "${IMAGE_STREAM_TAG}"
