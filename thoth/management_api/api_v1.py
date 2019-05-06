@@ -187,8 +187,8 @@ def erase_graph(secret: str):
 
     adapter = GraphDatabase()
     adapter.connect()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(adapter.g.V().drop().next())
+    adapter.drop_all()
+    adapter.initialize_schema()
     return {}, 201
 
 
