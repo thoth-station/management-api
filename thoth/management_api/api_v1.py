@@ -165,21 +165,6 @@ def get_dependency_monkey_python_status(analysis_id: str):
     )
 
 
-def sync(secret: str, force_sync: bool = False):
-    """Sync results to graph database."""
-    parameters = locals()
-    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
-        return {"error": "Wrong secret provided"}, 401
-
-    return (
-        {
-            "sync_id": _OPENSHIFT.run_sync(force_sync=force_sync),
-            "parameters": parameters,
-        },
-        202,
-    )
-
-
 def erase_graph(secret: str):
     """Clean content of the graph database."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
