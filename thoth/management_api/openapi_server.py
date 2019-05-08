@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# thoth-management-api
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Stub
+# Copyright(C) 2019 Christoph Görn
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,51 +14,70 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-"""Core Thoth Management API."""
 
+"""Thoth Management API entrypoint."""
+
+
+import os
+import sys
 import logging
 from datetime import datetime
 
 import connexion
+from connexion.resolver import RestyResolver
 
-from flask import redirect, request, jsonify
+from flask import redirect, jsonify
 from flask_script import Manager
 from prometheus_flask_exporter import PrometheusMetrics
 
-from thoth.common import SafeJSONEncoder
+from thoth.common import datetime2datetime_str
 from thoth.common import init_logging
-from thoth.common import logger_setup
-from thoth.storages import SolverResultsStore
-
-import thoth.management_api as thoth_management_api
-
-from .configuration import Configuration
+from thoth.management_api import __version__
+from thoth.management_api.configuration import Configuration
+from thoth.management_api.configuration import init_jaeger_tracer
 
 
-init_logging()
+# Configure global application logging using Thoth's init_logging.
+init_logging(logging_env_var_start="THOTH_MANAGEMENT_API_LOG_")
+
 _LOGGER = logging.getLogger("thoth.management_api")
+_LOGGER.setLevel(logging.DEBUG if bool(int(os.getenv("THOTH_MANAGEMENT_API_DEBUG", 0))) else logging.INFO)
+
+_LOGGER.info(f"This is Management API v%s", __version__)
+_LOGGER.debug("DEBUG mode is enabled!")
 
 # Expose for uWSGI.
-app = connexion.App(__name__)
-application = app.app
-metrics = PrometheusMetrics(application)
+app = connexion.FlaskApp(__name__, specification_dir=Configuration.SWAGGER_YAML_PATH, debug=True)
 
-app.add_api(Configuration.SWAGGER_YAML_PATH)
-application.json_encoder = SafeJSONEncoder
+app.add_api(
+    "openapi.yaml",
+    options={"swagger_ui": True},
+    arguments={"title": "Management API"},
+    resolver=RestyResolver("thoth.management_api"),
+    strict_validation=True,
+    validate_responses=False,
+)
+
+
+application = app.app
+
+
+# create tracer and put it in the application configuration
+Configuration.tracer = init_jaeger_tracer("management_api")
+
+# create metrics and manager
+metrics = PrometheusMetrics(application)
 manager = Manager(application)
 
 # Needed for session.
 application.secret_key = Configuration.APP_SECRET_KEY
 
 # static information as metric
-metrics.info(
-    "management_api_info",
-    "Management API info",
-    version=thoth_management_api.__version__,
-)
+metrics.info("management_api_info", "Management API info", version=__version__)
 
 
 @app.route("/")
+@metrics.do_not_track()
 def base_url():
     """Redirect to UI by default."""
     return redirect("api/v1/ui")
@@ -78,25 +97,10 @@ def api_v1():
     return jsonify({"paths": paths})
 
 
-@metrics.do_not_track()
 def _healthiness():
-    """Check service healthiness."""
-    # Check that Ceph is reachable.
-    adapter = SolverResultsStore()
-    adapter.connect()
-    adapter.ceph.check_connection()
-
-    return (
-        jsonify({"status": "ready", "version": thoth_management_api.__version__}),
-        200,
-        {"ContentType": "application/json"},
-    )
+    return jsonify({"status": "ready", "version": __version__}), 200, {"ContentType": "application/json"}
 
 
-@logger_setup("werkzeug", logging.WARNING)
-@logger_setup(
-    "botocore.vendored.requests.packages.urllib3.connectionpool", logging.WARNING
-)
 @app.route("/readiness")
 @metrics.do_not_track()
 def api_readiness():
@@ -104,10 +108,6 @@ def api_readiness():
     return _healthiness()
 
 
-@logger_setup("werkzeug", logging.WARNING)
-@logger_setup(
-    "botocore.vendored.requests.packages.urllib3.connectionpool", logging.WARNING
-)
 @app.route("/liveness")
 @metrics.do_not_track()
 def api_liveness():
@@ -133,10 +133,7 @@ def internal_server_error(exc):
         jsonify(
             {
                 "error": "Internal server error occurred, please contact administrator with provided details.",
-                "details": {
-                    "type": exc.__class__.__name__,
-                    "datetime": datetime.utcnow().isoformat(),
-                },
+                "details": {"type": exc.__class__.__name__, "datetime": datetime2datetime_str(datetime.utcnow())},
             }
         ),
         500,
@@ -144,5 +141,8 @@ def internal_server_error(exc):
 
 
 if __name__ == "__main__":
-    _LOGGER.info(f"Thoth Management API v{thoth_management_api.__version__}")
-    manager.run()
+    app.run()
+
+    Configuration.tracer.close()
+
+    sys.exit(1)

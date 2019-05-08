@@ -18,11 +18,11 @@
 """Implementation of Management API v1."""
 
 from itertools import islice
-import asyncio
 import logging
 import typing
 
 from thoth.common import OpenShift
+from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages import GraphDatabase
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
@@ -36,16 +36,14 @@ _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
 
 
-def post_register_python_package_index(
-    url: str, warehouse_api_url: str = None, verify_ssl: bool = True
-):
+def post_register_python_package_index(index: dict):
     """Register the given Python package index in the graph database."""
     graph = GraphDatabase()
     graph.connect()
     graph.register_python_package_index(
-        url=url,
-        warehouse_api_url=warehouse_api_url,
-        verify_ssl=verify_ssl if verify_ssl is not None else True,
+        url=index["url"],
+        warehouse_api_url=index["warehouse_api_url"],
+        verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
     )
     return {}, 201
 
@@ -64,7 +62,7 @@ def post_solve_python(
     graph.connect()
     run_parameters = {
         'packages': packages,
-        'indexes': graph.get_python_package_index_urls(),
+        'indexes': list(graph.get_python_package_index_urls()),
         'debug': debug,
         'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
     }
@@ -177,7 +175,7 @@ def erase_graph(secret: str):
     return {}, 201
 
 
-def get_dependency_monkey_report(analysis_id: str) -> dict:
+def get_dependency_monkey_report(analysis_id: str) -> tuple:
     """Retrieve a dependency monkey run report."""
     parameters = {"analysis_id": analysis_id}
 
@@ -195,7 +193,7 @@ def get_dependency_monkey_report(analysis_id: str) -> dict:
             404,
         )
 
-    return {"parameters": parameters, "report": document}
+    return {"parameters": parameters, "report": document}, 200
 
 
 def _do_listing(adapter_class, page: int) -> tuple:
@@ -260,7 +258,7 @@ def _get_document(
                         },
                         404,
                     )
-                elif status["state"] in ("scheduling", "waiting"):
+                elif status["state"] in ("scheduling", "waiting", "registered"):
                     return (
                         {
                             "error": "Analysis is being scheduled",
@@ -290,10 +288,21 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
     if not job_id.startswith(name_prefix):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
+    try:
+        log =_OPENSHIFT.get_job_log(job_id, namespace=namespace)
+    except OpenShiftNotFound:
+        return (
+            {
+                "parameters": parameters,
+                "error": f"No job with id {job_id} found",
+            },
+            404,
+        )
+
     return (
         {
             "parameters": parameters,
-            "log": _OPENSHIFT.get_job_log(job_id, namespace=namespace),
+            "log": log,
         },
         200,
     )
@@ -305,7 +314,16 @@ def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
     if not job_id.startswith(name_prefix):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
-    status = _OPENSHIFT.get_job_status_report(job_id, namespace=namespace)
+    try:
+        status = _OPENSHIFT.get_job_status_report(job_id, namespace=namespace)
+    except OpenShiftNotFound:
+        return (
+            {
+                "parameters": parameters,
+                "error": f"No job with id {job_id} found"
+            },
+            404,
+        )
     return {"parameters": parameters, "status": status}
 
 
