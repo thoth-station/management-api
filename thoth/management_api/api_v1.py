@@ -289,7 +289,7 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
     try:
-        log =_OPENSHIFT.get_job_log(job_id, namespace=namespace)
+        log = _OPENSHIFT.get_job_log(job_id, namespace=namespace)
     except OpenShiftNotFound:
         return (
             {
