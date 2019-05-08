@@ -4,16 +4,21 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-connexion = {extras = ["swagger-ui"],version = "<2.0.1"}
+connexion = {extras = ["swagger-ui"],version = "*"}
+flask = "*"
 flask-script = "*"
-requests = "*"
+grpcio = "*"
+grpcio-opentracing = "*"
+grpcio-tools = "*"
 gunicorn = "*"
-thoth-common = {extras = ["openshift"],version = "*"}
-thoth-storages = "*"
+jaeger-client = "*"
+openapi-spec-validator = "<=0.2.4"
+opentracing-instrumentation = "*"
 prometheus-client = "*"
 prometheus-flask-exporter = "*"
-# TODO: remove once dependency resolution will fix this
-openapi-spec-validator = "<=0.2.4"
+requests = "*"
+thoth-common = {extras = ["openshift"],version = "*"}
+thoth-storages = "*"
 
 [dev-packages]
 pytest = "*"

@@ -83,10 +83,10 @@ objects:
         spec:
           serviceAccountName: "${SERVICE_ACCOUNT_NAME}"
           containers:
-            - name: management-api
-              env:
+            - name: management-api-openapi
+              env: &env
                 - name: APP_MODULE
-                  value: "thoth.management_api.entrypoint:app"
+                  value: "thoth.management_api.openapi_server:app"
                 - name: KUBERNETES_API_URL
                   value: "https://kubernetes.default.svc.cluster.local"
                 - name: KUBERNETES_VERIFY_TLS
@@ -247,7 +247,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - management-api
+              - management-api-openapi
             from:
               kind: ImageStreamTag
               namespace: "${IMAGE_STREAM_PROJECT_NAME}"

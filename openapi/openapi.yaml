@@ -1,0 +1,829 @@
+openapi: "3.0.0"
+info:
+  title: Thoth Management API
+  version: "0.1"
+servers:
+  - url: "/api/v1/"
+paths:
+  /solver/python:
+    post:
+      tags: [Python]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_solve_python
+      summary: Register the given Python package.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to register the given Python package.
+          schema:
+            type: string
+        - name: no_subgraph_checks
+          in: query
+          required: true
+          description: Do not perform subgraphs checks for packages already solved.
+          schema:
+            type: boolean
+            default: false
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analyzer in a verbose mode so developers
+            can debug analyzer.
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        description: Python package that should be registered.
+        content:
+          application/json:
+            schema:
+              x-body-name: python_package
+              type: object
+              description: A Python package.
+              required:
+                - package_name
+              properties:
+                package_name:
+                  type: string
+                  description: A name of the package to be registered in the system.
+                  example: selinon
+                version_specifier:
+                  type: string
+                  description: A version specifier according to PEP-440
+                  example: "==1.0.0"
+      responses:
+        "201":
+          description: The given Python package was registered and will be solved.
+        "400":
+          description: On invalid request.
+        "202":
+          description: Solvers were run.
+
+  /solver/python/{analysis_id}:
+    get:
+      tags: [Python]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python
+      summary: Retrieve a solver result.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: Document id to be retrieved.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Analyzer result retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Result of an analysis
+                required:
+                  - metadata
+                  - result
+                properties:
+                  metadata:
+                    type: object
+                    description: Metadata for analysis run.
+                    required:
+                      - analyzer
+                      - analyzer_version
+                      - arguments
+                      - datetime
+                      - distribution
+                      - hostname
+                      - python
+                    properties:
+                      analyzer:
+                        type: string
+                        description: Analyzer name which handled analysis.
+                      analyzer_version:
+                        type: string
+                        description: Version of analyzer handling analysis.
+                      arguments:
+                        type: object
+                        description: Arguments passed to analyzer.
+                      datetime:
+                        type: string
+                        description: Date and time of analysis end in ISO format.
+                      distribution:
+                        type: object
+                        description: >
+                          Information about environment in which the analysis
+                          was performed.
+                        required:
+                          - codename
+                          - id
+                          - like
+                          - version
+                          - version_parts
+                        properties:
+                          codename:
+                            type: string
+                            description: >
+                              Codename of environment in which the analysis was perfomed.
+                          id:
+                            type: string
+                            description: >
+                              Identifier of environment in which the analysis
+                              was perfomed.
+                          like:
+                            type: string
+                            description: >
+                              Similar environments in comparision to environment in
+                              which the analysis was perfomed.
+                          version:
+                            type: string
+                            description: A string representation of environment version.
+                          version_parts:
+                            type: object
+                            description: >
+                              Parts of version identifier of the analysing environment.
+                            properties:
+                              build_number:
+                                type: string
+                              major:
+                                type: string
+                              minor:
+                                type: string
+                            required:
+                              - build_number
+                              - major
+                              - minor
+                      hostname:
+                        type: string
+                        description: Pod name where the analysis was done.
+                      python:
+                        required:
+                          - api_version
+                          - implementation_name
+                          - major
+                          - minor
+                          - micro
+                          - releaselevel
+                          - serial
+                        properties:
+                          api_version:
+                            type: integer
+                          implementation_name:
+                            type: string
+                            example: cpython
+                          major:
+                            type: integer
+                          micro:
+                            type: integer
+                          minor:
+                            type: integer
+                          releaselevel:
+                            type: string
+                            example: final
+                          serial:
+                            type: integer
+                  result:
+                    type: object
+                    description: Actual result of an analysis run.
+        "202":
+          description: Results are not ready yet.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                  - parameters
+                  - status
+                properties:
+                  error:
+                    type: string
+                    description: Error information for user.
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+                  status:
+                    type: object
+                    description: Status information about the analysis run.
+                    required:
+                      - container
+                      - exit_code
+                      - finished_at
+                      - reason
+                      - started_at
+                      - state
+                    properties:
+                      container:
+                        type: string
+                        description: SHA of container image in which the analysis is done.
+                        nullable: true
+                      exit_code:
+                        type: integer
+                        description: Return code of the process perfoming analysis.
+                        nullable: true
+                      finished_at:
+                        type: string
+                        description: >
+                          Datetime in ISO format informing about when the analysis
+                          has finished.
+                        nullable: true
+                      reason:
+                        type: string
+                        description: Reasoning on finished run.
+                        nullable: true
+                      started_at:
+                        type: string
+                        nullable: true
+                        description: >
+                          Datetime in ISO format informing about when the analysis
+                          has started.
+                      state:
+                        type: string
+                        example: terminated
+                      parameters:
+                        type: object
+                        description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema: &analysisResponseError
+                type: object
+                required:
+                  - error
+                  - parameters
+                properties:
+                  error:
+                    type: string
+                    description: Error information for user.
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "404":
+          description: The given document does not exist.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /solver/python/{analysis_id}/log:
+    get:
+      tags: [Python]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_log
+      summary: Retrieve a solver log.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of analysis for a solver run.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retrieved ecosystem solver log.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - log
+                  - parameters
+                properties:
+                  log:
+                    type: string
+                    description: Analyzer logs printed to stdout/stderr as a plain text.
+                    nullable: true
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+        "404":
+          description: The given solver log does not exist.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /solver/python/{analysis_id}/status:
+    get:
+      tags: [Python]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_status
+      summary: Show status of an ecosystem solver.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested ecosystem solver run.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema: &analysisStatus
+                type: object
+                description: Information about the current analysis status.
+                required:
+                  - parameters
+                  - status
+                properties:
+                  status:
+                    type: object
+                    description: Status information about the analysis run.
+                    required:
+                      - container
+                      - exit_code
+                      - finished_at
+                      - reason
+                      - started_at
+                      - state
+                    properties:
+                      container:
+                        type: string
+                        description: SHA of container image in which the analysis is done.
+                        nullable: true
+                      exit_code:
+                        type: integer
+                        description: Return code of the process perfoming analysis.
+                        nullable: true
+                      finished_at:
+                        type: string
+                        description: >
+                          Datetime in ISO format informing about when the analysis
+                          has finished.
+                        nullable: true
+                      reason:
+                        type: string
+                        description: Reasoning on finished run.
+                        nullable: true
+                      started_at:
+                        type: string
+                        nullable: true
+                        description: >
+                          Datetime in ISO format informing about when the analysis
+                          has started.
+                      state:
+                        type: string
+                        example: terminated
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /installed-solvers:
+    get:
+      tags: [Python]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: list_solvers
+      summary: Retrieve a list of solvers installed and available.
+      responses:
+        "200":
+          description: A list of available solvers.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - parameters
+                  - solvers
+                properties:
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user.
+                  solvers:
+                    type: object
+                    description: Available solvers per ecosystem.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /dependency-monkey/python:
+    post:
+      tags: [Python Dependency Monkey]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_dependency_monkey_python
+      summary: Run Dependency Monkey on the given application stack.
+      requestBody:
+        required: true
+        description: Specification of Python application stack with Context to Amun.
+        content:
+          application/json:
+            schema:
+              x-body-name: input
+              type: object
+              required:
+                - 'requirements'
+                - 'context'
+              properties:
+                requirements:
+                  type: object
+                  description: Direct dependencies for the application stack.
+                  example:
+                    {
+                      "source": [
+                      ],
+                      "packages": {
+                        "absl-py": "==0.6.1",
+                        "astor": "==0.7.1",
+                        "bleach": "==1.5.0",
+                        "gast": "==0.2.0",
+                        "grpcio": "==1.9.1",
+                        "html5lib": ">1.0",
+                        "markdown": "==3.0.1",
+                        "numpy": "==1.15.4",
+                        "olefile": "==0.42.1",
+                        "pillow": "==5.0.0",
+                        "protobuf": "==3.6.1",
+                        "setuptools": "==40.6.2",
+                        "six": "==1.9.0",
+                        "tensorboard": "==1.10.0",
+                        "tensorflow": "==1.9.0",
+                        "termcolor": "==1.1.0",
+                        "webencodings": "==0.5.1",
+                        "werkzeug": "==0.14.1",
+                        "wheel": "==0.32.3"
+                      },
+                      "requires": {
+                        "python_version": "3.6"
+                      }
+                    }
+                context:
+                  type: object
+                  required:
+                    - base
+                  properties:
+                    base:
+                      type: string
+                      description: Base image to build stack upon.
+                      example: fedora:29
+                    packages:
+                      type: array
+                      example: [pipenv, which, python36]
+                      description: Packages to be installed.
+                      items:
+                        type: string
+                    build:
+                      type: object
+                      description: Buildtime requirements and requests.
+                      required:
+                        - requests
+                      properties:
+                        requests:
+                          type: object
+                          description: Requests for hardware.
+                          required:
+                            - cpu
+                            - memory
+                          properties:
+                            cpu:
+                              type: string
+                              description: CPU requests.
+                              example: 500m
+                            memory:
+                              type: string
+                              description: Memoery requests.
+                              example: 512Mi
+                            hardware:
+                              type: object
+                              description: Set hardware requirements for run time.
+                              required:
+                                - cpu_family
+                                - cpu_model
+                                - processor
+                              properties:
+                                cpu_family:
+                                  type: integer
+                                  description: CPU family number from CPU proc info.
+                                  example: 6
+                                cpu_model:
+                                  type: integer
+                                  description: Model number of CPU from CPU proc info.
+                                  example: 94
+                                physical_cpus:
+                                  type: integer
+                                  description: Number of physical CPUs.
+                                  example: 32
+                                processor:
+                                  type: string
+                                  description: Name of the CPU model name of CPU proc info.
+                                  example: "Intel Core Processor (Skylake, IBRS)"
+                    run:
+                      type: object
+                      description: Runtime requirements and requests.
+                      required:
+                        - requests
+                      properties:
+                        requests:
+                          type: object
+                          description: Requests for hardware.
+                          required:
+                            - cpu
+                            - memory
+                          properties:
+                            cpu:
+                              type: string
+                              description: CPU requests.
+                              example: 500m
+                            memory:
+                              type: string
+                              description: Memoery requests.
+                              example: 512Mi
+                            hardware:
+                              type: object
+                              description: Set hardware requirements for run time.
+                              required:
+                                - cpu_family
+                                - cpu_model
+                                - processor
+                              properties:
+                                cpu_family:
+                                  type: integer
+                                  description: CPU family number from CPU proc info.
+                                  example: 6
+                                cpu_model:
+                                  type: integer
+                                  description: Model number of CPU from CPU proc info.
+                                  example: 94
+                                physical_cpus:
+                                  type: integer
+                                  description: Number of physical CPUs.
+                                  example: 32
+                                processor:
+                                  type: string
+                                  description: Name of the CPU model name of CPU proc info.
+                                  example: "Intel Core Processor (Skylake, IBRS)"
+                    script:
+                      type: string
+                      description: A script to validate stack with or URL to script to be used.
+                      example: https://raw.githubusercontent.com/fridex/tf-benchmark-mock/master/benchmark.py
+      parameters:
+        - name: seed
+          in: query
+          description: A seed to be used for generating software stack samples.
+          schema:
+            type: integer
+          required: false
+        - name: dry_run
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description:
+            Do not generate software stacks, just report how many software
+            stacks will be generated.
+        - name: decision
+          in: query
+          schema:
+            type: string
+            items:
+              type: string
+            enum:
+              - random
+              - all
+            default: all
+          required: false
+          description:
+            A decision function that should be used for generating software
+            stack samples; if omitted, all software stacks will be created.
+        - name: count
+          in: query
+          schema:
+            type: integer
+          required: false
+          description: Number of stacks that should be generated.
+        - name: limit_latest_versions
+          in: query
+          schema:
+            type: integer
+          required: false
+          description: Limit number of packages considering only specific number of versions for each package.
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analysis in a verbose mode so developers can debug it.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "202":
+          description: The Dependency Monkey analysis is scheduled.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response for a submitted analysis.
+                properties:
+                  analysis_id:
+                    type: string
+                    description: >
+                      An id of submitted analysis for checking its status and its results.
+                  parameters:
+                    type: object
+                    description: >
+                      Parameters echoed back to user (with default parameters if omitted).
+                  cached:
+                    type: boolean
+                    description: >
+                      If set to true the given analysis was picked from cache.
+                required:
+                  - analysis_id
+                  - parameters
+                  - cached
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /dependency-monkey/python/{analysis_id}/log:
+    get:
+      tags: [Python Dependency Monkey]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_python_log
+      summary: Retrieve a Dependency Monkey run log.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of analysis for which log should be retrieved.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retrieved Dependency Monkey log.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - log
+                  - parameters
+                properties:
+                  log:
+                    type: string
+                    description: Analyzer logs printed to stdout/stderr as a plain text.
+                    nullable: true
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+        "404":
+          description: The given Dependency Monkey log does not exist.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /dependency-monkey/python/{analysis_id}/status:
+    get:
+      tags: [Python Dependency Monkey]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_python_status
+      summary: Show status of a Dependency Monkey run.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested Dependency Monkey run.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                <<: *analysisStatus
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /dependency-monkey/python/{analysis_id}/report:
+    get:
+      tags: [Python Dependency Monkey]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_dependency_monkey_report
+      summary: Get report of a dependency monkey run.
+      parameters:
+        - name: analysis_id
+          in: path
+          required: true
+          description: An id of requested Dependency Monkey run.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Report of a dependency monkey run.
+                required:
+                  - report
+                  - parameters
+                properties:
+                  report:
+                    type: object
+                    description: Report of a Dependency Monkey run.
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /register-python-package-index:
+    post:
+      tags: [Python Package Index]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_register_python_package_index
+      summary: Register the given Python package index.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to register the given Python package index.
+          schema:
+            type: string
+      requestBody:
+        description: Python package index configuration to be registered.
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: index
+              type: object
+              description: A Python package index.
+              required:
+                - url
+                - warehouse_api_url
+                - verify_ssl
+              properties:
+                url:
+                  type: string
+                  description: URL to the Python simple repository as described in PEP 503.
+                  example: http://pypi.org/simple
+                warehouse_api_url:
+                  type: string
+                  description: URL to the warehouse API.
+                  example: https://pypi.org/pypi
+                verify_ssl:
+                  type: boolean
+                  description: Use secured connection to warehouse.
+                  example: true
+      responses:
+        "201":
+          description: The given Python package index was registered.
+        "400":
+          description: On invalid request.
+
+  /erase-graph:
+    post:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: erase_graph
+      summary: Clean graph database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to clean graph database.
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Graph database was cleaned.
+        "400":
+          description: On invalid request.
