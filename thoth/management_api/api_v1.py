@@ -55,7 +55,11 @@ def post_solve_python(
     parameters = locals()
 
     package_name = python_package.pop("package_name")
+
     version_specifier = python_package.pop("version_specifier")
+    if version_specifier == "*":
+        version_specifier = ""
+
     packages = package_name + (version_specifier if version_specifier else "")
 
     graph = GraphDatabase()
