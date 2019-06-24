@@ -179,6 +179,15 @@ def erase_graph(secret: str):
     return {}, 201
 
 
+def schedule_graph_refresh(secret: str):
+    """Schedule graph refresh job."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    job_id = _OPENSHIFT.schedule_graph_refresh()
+    return {"job_id": job_id}, 201
+
+
 def get_dependency_monkey_report(analysis_id: str) -> tuple:
     """Retrieve a dependency monkey run report."""
     parameters = {"analysis_id": analysis_id}
