@@ -827,3 +827,24 @@ paths:
           description: Graph database was cleaned.
         "400":
           description: On invalid request.
+
+  /schedule-graph-refresh:
+    post:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: schedule_graph_refresh
+      summary: Schedule a graph refresh job to solve unsolved Python packages.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to schedule the job.
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Graph refresh job was scheduled.
+        "400":
+          description: On invalid request.
+        "401":
+          description: On invalid secret.
