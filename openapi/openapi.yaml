@@ -900,6 +900,25 @@ paths:
         "400":
           description: On invalid request.
 
+  /graph/initialize:
+    put:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: initialize_schema
+      summary: Perform initialization procedure in graph.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Initialization procedure has finished successfully.
+        "401":
+          description: On invalid secret.
+
   /graph/refresh:
     post:
       tags: [Graph]
