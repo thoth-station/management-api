@@ -385,9 +385,9 @@ paths:
               schema:
                 <<: *analysisResponseError
 
-  /installed-solvers:
+  /solvers:
     get:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: list_solvers
       summary: Retrieve a list of solvers installed and available.
