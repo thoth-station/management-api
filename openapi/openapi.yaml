@@ -809,6 +809,17 @@ paths:
         "400":
           description: On invalid request.
 
+  /graph/version:
+    get:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_graph_version
+      summary: Get version of Thoth's graph adapter implementation.
+      parameters:
+      responses:
+        "200":
+          description: Version string of Thoth's
+
   /graph/erase:
     post:
       tags: [Graph]
