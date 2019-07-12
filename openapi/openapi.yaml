@@ -764,7 +764,7 @@ paths:
               schema:
                 <<: *analysisResponseError
 
-  /register-python-package-index:
+  /python/package-index/register:
     post:
       tags: [Python Package Index]
       x-openapi-router-controller: thoth.management_api.api_v1
