@@ -23,6 +23,7 @@ import typing
 
 from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
+from thoth.storages import __version__ as thoth_storages_version
 from thoth.storages import GraphDatabase
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
@@ -202,6 +203,11 @@ def sync_graph(
     )
 
     return {"job_id": job_id}, 201
+
+
+def get_graph_version():
+    """Get version of Thoth's storages package installed."""
+    return {"thoth-storages": thoth_storages_version}, 200
 
 
 def schedule_graph_refresh(secret: str):
