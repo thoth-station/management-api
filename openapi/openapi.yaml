@@ -385,6 +385,35 @@ paths:
               schema:
                 <<: *analysisResponseError
 
+  /solver/python/unsolvable:
+    post:
+      tags: [Python Solver]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: schedule_solver_unsolvable
+      summary: Schedule analysis of unsolvable packages for the given solver.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: solver_name
+          in: query
+          required: true
+          description: Solver for which unsolved packages should be solved again.
+          schema:
+            type: string
+      responses:
+        "202":
+          description: Scheduled solver jobs for unsolvable packages.
+        "200":
+          description: No solver jobs were run as no unsolvable packages were detected.
+        "401":
+          description: On invalid secret.
+        "404":
+          description: The given solver was not found.
+
   /solvers:
     get:
       tags: [Python Solver]
