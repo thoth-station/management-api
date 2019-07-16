@@ -7,7 +7,7 @@ servers:
 paths:
   /solver/python:
     post:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: post_solve_python
       summary: Register the given Python package.
@@ -64,7 +64,7 @@ paths:
 
   /solver/python/{analysis_id}:
     get:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python
       summary: Retrieve a solver result.
@@ -270,7 +270,7 @@ paths:
 
   /solver/python/{analysis_id}/log:
     get:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_log
       summary: Retrieve a solver log.
@@ -314,7 +314,7 @@ paths:
 
   /solver/python/{analysis_id}/status:
     get:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_solve_python_status
       summary: Show status of an ecosystem solver.
@@ -385,9 +385,9 @@ paths:
               schema:
                 <<: *analysisResponseError
 
-  /installed-solvers:
+  /solvers:
     get:
-      tags: [Python]
+      tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: list_solvers
       summary: Retrieve a list of solvers installed and available.
@@ -764,7 +764,7 @@ paths:
               schema:
                 <<: *analysisResponseError
 
-  /register-python-package-index:
+  /python/package-index/register:
     post:
       tags: [Python Package Index]
       x-openapi-router-controller: thoth.management_api.api_v1
