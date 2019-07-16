@@ -917,6 +917,8 @@ paths:
           description: Initialization procedure has finished successfully.
         "401":
           description: On invalid secret.
+        "500":
+          description: On server side errors.
 
   /graph/refresh:
     post:
