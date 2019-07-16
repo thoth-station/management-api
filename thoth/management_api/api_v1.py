@@ -257,6 +257,56 @@ def initialize_schema(secret: str):
     return {}, 201
 
 
+def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
+    """Schedule solving of unsolvable packages for the given solver."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    parameters = {"solver_name": solver_name}
+
+    graph = GraphDatabase()
+    graph.connect()
+
+    solvers_installed = _OPENSHIFT.get_solver_names()
+    if solver_name not in solvers_installed:
+        return {
+            "parameters": parameters,
+            "error": f"Solver with name {solver_name!r} is not installed, "
+            f"installed solvers: {', '.join(list(solvers_installed))}",
+        }, 404
+
+    indexes = list(graph.get_python_package_index_urls())
+    analyses = []
+    for package_name, versions in graph.retrieve_unsolvable_python_packages(solver_name).items():
+        for package_version in versions:
+            analysis_id = _OPENSHIFT.schedule_solver(
+                packages=f"{package_name}=={package_version}",
+                output=Configuration.THOTH_SOLVER_OUTPUT,
+                solver=solver_name,
+                indexes=indexes,
+                subgraph_check_api=Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API,
+                transitive=False,
+            )
+
+            analyses.append({
+                "package_name": package_name,
+                "package_version": package_version,
+                "analysis_id": analysis_id,
+            })
+
+    response = {
+        "parameters": parameters,
+        "index_urls": indexes,
+        "analyses": analyses,
+    }
+
+    if analyses:
+        return response, 202
+
+    # No analyses to run, return 200.
+    return response, 200
+
+
 def _do_listing(adapter_class, page: int) -> tuple:
     """Perform actual listing of documents available."""
     adapter = adapter_class()
