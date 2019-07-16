@@ -240,6 +240,18 @@ def get_dependency_monkey_report(analysis_id: str) -> tuple:
     return {"parameters": parameters, "report": document}, 200
 
 
+def initialize_schema(secret: str):
+    """Initialize schema in graph database."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    graph = GraphDatabase()
+    graph.connect()
+    graph.initialize_schema()
+
+    return {}, 201
+
+
 def _do_listing(adapter_class, page: int) -> tuple:
     """Perform actual listing of documents available."""
     adapter = adapter_class()
