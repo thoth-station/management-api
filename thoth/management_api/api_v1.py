@@ -247,7 +247,12 @@ def initialize_schema(secret: str):
 
     graph = GraphDatabase()
     graph.connect()
-    graph.initialize_schema()
+    try:
+        graph.initialize_schema()
+    except Exception as exc:
+        return {
+            "error": str(exc)
+        }, 500
 
     return {}, 201
 
