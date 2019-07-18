@@ -448,3 +448,14 @@ def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
         },
         202,
     )
+
+
+def analyze_package(package_name: str, package_version: str, index_url: str, debug: bool):
+    """Fetch digests for packages in Python ecosystem."""
+    parameters = locals()
+
+    return _do_schedule(
+        parameters,
+        _OPENSHIFT.schedule_package_analyzer,
+        output=Configuration.THOTH_PACKAGE_ANALYZER_OUTPUT
+    )

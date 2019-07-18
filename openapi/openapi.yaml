@@ -969,3 +969,57 @@ paths:
           description: On invalid request.
         "401":
           description: On invalid secret.
+
+  /package-analyzer:
+    post:
+      tags: [Package Analyzer]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: analyze_package
+      summary: Gather digests of packages and files present inside packages.
+      parameters:
+        - name: package_name
+          in: query
+          required: true
+          description: Package name for which digests should be fetched.
+          schema:
+            type: string
+        - name: package_version
+          in: query
+          required: true
+          description: Package version for which digests should be fetched.
+          schema:
+            type: string
+        - name: index_url
+          in: query
+          required: false
+          description: A comma separated list of Python package indexes (package sources) to gather digests from.
+          schema:
+            type: string
+            default: https://pypi.org/simple
+        - name: debug
+          in: query
+          required: false
+          description: Be verbose about what's going on.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "202":
+          description: The Package analysis is scheduled.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Response for a submitted analysis.
+                properties:
+                  analysis_id:
+                    type: string
+                    description: >
+                      An id of submitted analysis for checking its status and its results.
+                  parameters:
+                    type: object
+                    description: >
+                      Parameters echoed back to user (with default parameters if omitted).
+                required:
+                  - analysis_id
+                  - parameters
