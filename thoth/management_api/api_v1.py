@@ -52,7 +52,7 @@ def post_register_python_package_index(index: dict):
 def post_solve_python(
     python_package: dict, version_specifier: str = None, debug: bool = False, no_subgraph_checks: bool = False,
 ):
-    """Register the given Python package in Thoth."""
+    """Schedule analysis for the given Python package."""
     parameters = locals()
 
     package_name = python_package.pop("package_name")
