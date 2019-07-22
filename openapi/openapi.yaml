@@ -10,12 +10,12 @@ paths:
       tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: post_solve_python
-      summary: Register the given Python package.
+      summary: Schedule analysis for the given Python package.
       parameters:
         - name: secret
           in: query
           required: true
-          description: A secret to register the given Python package.
+          description: A secret to schedule analysis of the given Python package.
           schema:
             type: string
         - name: no_subgraph_checks
@@ -877,7 +877,7 @@ paths:
         - name: secret
           in: query
           required: true
-          description: A secret to clean graph database.
+          description: A secret to sync documents in graph database.
           schema:
             type: string
         - name: only_solver_documents
