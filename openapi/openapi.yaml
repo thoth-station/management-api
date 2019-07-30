@@ -503,6 +503,10 @@ paths:
                       type: string
                       description: Base image to build stack upon.
                       example: fedora:29
+                    identifier:
+                      type: string
+                      description: Identifier to be used for inspection jobs.
+                      example: test
                     packages:
                       type: array
                       example: [pipenv, which, python36]
