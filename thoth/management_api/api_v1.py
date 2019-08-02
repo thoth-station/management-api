@@ -25,6 +25,7 @@ from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages import __version__ as thoth_storages_version
 from thoth.storages import GraphDatabase
+from thoth.storages.graph.models import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
 from thoth.storages.exceptions import NotFoundError
@@ -208,6 +209,16 @@ def sync_graph(
 def get_graph_version():
     """Get version of Thoth's storages package installed."""
     return {"thoth-storages": thoth_storages_version}, 200
+
+
+def get_performance_indicators():
+    """List available performance indicators."""
+    return {
+        "performance-indicators": [
+            model_class.__name__ for model_class in ALL_PERFORMANCE_MODELS
+        ],
+        "parameters": {}
+    }
 
 
 def schedule_graph_refresh(secret: str):
