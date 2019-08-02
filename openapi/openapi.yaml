@@ -838,6 +838,16 @@ paths:
         "400":
           description: On invalid request.
 
+  /graph/performance-indicators:
+    get:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_performance_indicators
+      summary: List registered performance indicators in the current Thoth deployment
+      responses:
+        "200":
+          description: A list of available performance indicators
+
   /graph/version:
     get:
       tags: [Graph]
