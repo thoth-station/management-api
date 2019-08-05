@@ -988,9 +988,15 @@ paths:
     post:
       tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
-      operationId: analyze_package
+      operationId: post_analyze_package
       summary: Gather digests of packages and files present inside packages.
       parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to schedule analysis of the given Python package.
+          schema:
+            type: string
         - name: package_name
           in: query
           required: true
