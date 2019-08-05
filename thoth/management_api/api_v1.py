@@ -28,6 +28,7 @@ from thoth.storages import GraphDatabase
 from thoth.storages.graph.models import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
+from thoth.storages import PackageAnalysisResultsStore
 from thoth.storages.exceptions import NotFoundError
 
 from .configuration import Configuration
@@ -470,3 +471,23 @@ def analyze_package(package_name: str, package_version: str, index_url: str, deb
         _OPENSHIFT.schedule_package_analyzer,
         output=Configuration.THOTH_PACKAGE_ANALYZER_OUTPUT
     )
+
+
+def get_analyze_package(analysis_id: str):
+    """Retrieve the given package analyzer result."""
+    return _get_document(
+        PackageAnalysisResultsStore,
+        analysis_id,
+        name_prefix="package-analyzer-",
+        namespace=Configuration.THOTH_MIDDLETIER_NAMESPACE,
+    )
+
+
+def get_analyze_package_log(analysis_id: str):
+    """Get package analyzer log."""
+    return _get_job_log(locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE)
+
+
+def get_analyze_package_status(analysis_id: str):
+    """Get status of an ecosystem package-analyzer."""
+    return _get_job_status(locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE)
