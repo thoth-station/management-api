@@ -1046,7 +1046,7 @@ paths:
 
   /package-analyzer/{analysis_id}:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package
       summary: Retrieve a package analyzer result.
@@ -1231,18 +1231,8 @@ paths:
           description: On invalid request.
           content:
             application/json:
-              schema: &analysisResponseError
-                type: object
-                required:
-                  - error
-                  - parameters
-                properties:
-                  error:
-                    type: string
-                    description: Error information for user.
-                  parameters:
-                    type: object
-                    description: Parameters echoed back to user for debugging.
+              schema:
+                <<: *analysisResponseError
         "404":
           description: The given document does not exist.
           content:
@@ -1252,7 +1242,7 @@ paths:
 
   /package-analyzer/{analysis_id}/log:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package_log
       summary: Retrieve a package analyzer log.
@@ -1296,7 +1286,7 @@ paths:
 
   /package-analyzer/{analysis_id}/status:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package_status
       summary: Show status of an ecosystem package-analyzer.
@@ -1312,54 +1302,8 @@ paths:
           description: Successful response.
           content:
             application/json:
-              schema: &analysisStatus
-                type: object
-                description: Information about the current analysis status.
-                required:
-                  - parameters
-                  - status
-                properties:
-                  status:
-                    type: object
-                    description: Status information about the analysis run.
-                    required:
-                      - container
-                      - exit_code
-                      - finished_at
-                      - reason
-                      - started_at
-                      - state
-                    properties:
-                      container:
-                        type: string
-                        description: SHA of container image in which the analysis is done.
-                        nullable: true
-                      exit_code:
-                        type: integer
-                        description: Return code of the process perfoming analysis.
-                        nullable: true
-                      finished_at:
-                        type: string
-                        description: >
-                          Datetime in ISO format informing about when the analysis
-                          has finished.
-                        nullable: true
-                      reason:
-                        type: string
-                        description: Reasoning on finished run.
-                        nullable: true
-                      started_at:
-                        type: string
-                        nullable: true
-                        description: >
-                          Datetime in ISO format informing about when the analysis
-                          has started.
-                      state:
-                        type: string
-                        example: terminated
-                  parameters:
-                    type: object
-                    description: Parameters echoed back to user for debugging.
+              schema:
+                <<: *analysisStatus
         "400":
           description: On invalid request.
           content:
