@@ -1046,7 +1046,7 @@ paths:
 
   /package-analyzer/{analysis_id}:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package
       summary: Retrieve a package analyzer result.
@@ -1242,7 +1242,7 @@ paths:
 
   /package-analyzer/{analysis_id}/log:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package_log
       summary: Retrieve a package analyzer log.
@@ -1286,7 +1286,7 @@ paths:
 
   /package-analyzer/{analysis_id}/status:
     get:
-      tags: [Python Analyzer]
+      tags: [Package Analyzer]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_analyze_package_status
       summary: Show status of an ecosystem package-analyzer.
