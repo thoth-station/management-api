@@ -863,7 +863,7 @@ paths:
           description: Version string of Thoth's
 
   /graph/erase:
-    post:
+    delete:
       tags: [Graph]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: erase_graph
