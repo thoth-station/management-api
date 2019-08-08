@@ -908,6 +908,13 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: only_package_analyzer_documents
+          in: query
+          required: true
+          description: Sync only package analyzer documents
+          schema:
+            type: boolean
+            default: false
         - name: only_inspection_documents
           in: query
           required: true

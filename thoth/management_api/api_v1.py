@@ -186,6 +186,7 @@ def sync_graph(
     secret: str,
     only_solver_documents: bool,
     only_analysis_documents: bool,
+    only_package_analyzer_documents: bool,
     only_inspection_documents: bool,
     only_adviser_documents: bool,
     only_provenance_checker_documents: bool,
@@ -198,6 +199,7 @@ def sync_graph(
     job_id = _OPENSHIFT.schedule_graph_sync_multiple(
         only_solver_documents=only_solver_documents,
         only_analysis_documents=only_analysis_documents,
+        only_package_analyzer_documents=only_package_analyzer_documents,
         only_inspection_documents=only_inspection_documents,
         only_adviser_documents=only_adviser_documents,
         only_provenance_checker_documents=only_provenance_checker_documents,
