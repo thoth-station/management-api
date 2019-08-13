@@ -17,7 +17,7 @@ opentracing-instrumentation = "*"
 prometheus-client = "*"
 prometheus-flask-exporter = "*"
 requests = "*"
-thoth-common = {extras = ["openshift"],version = "*"}
+thoth-common = "*"
 thoth-storages = "*"
 
 [dev-packages]
