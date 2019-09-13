@@ -464,7 +464,14 @@ def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
     )
 
 
-def post_analyze_package(secret: str, package_name: str, package_version: str, index_url: str, debug: bool):
+def post_analyze_package(
+    secret: str,
+    package_name: str,
+    package_version: str,
+    index_url: str,
+    debug: bool,
+    dry_run: bool
+):
     """Fetch digests for packages in Python ecosystem."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401

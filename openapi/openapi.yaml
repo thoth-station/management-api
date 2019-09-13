@@ -1030,6 +1030,13 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: dry_run
+          in: query
+          required: false
+          description: Run in a dry mode.
+          schema:
+            type: boolean
+            default: false
       responses:
         "202":
           description: The Package analysis is scheduled.
