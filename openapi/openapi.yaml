@@ -810,6 +810,13 @@ paths:
           description: A secret to register the given Python package index.
           schema:
             type: string
+        - name: enabled
+          in: query
+          required: false
+          description: Enable the given Python package index in Thoth's database.
+          schema:
+            type: boolean
+            default: false
       requestBody:
         description: Python package index configuration to be registered.
         required: true
@@ -841,6 +848,42 @@ paths:
           description: The given Python package index was registered.
         "400":
           description: On invalid request.
+
+  /python/package-index/state:
+    post:
+      tags: [Python Package Index]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_set_python_package_index_state
+      summary: Enable or disable the given Python package index.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to adjust the given Python package index.
+          schema:
+            type: string
+        - name: index_url
+          in: query
+          required: true
+          description: A secret to register the given Python package index.
+          schema:
+            type: string
+            example: "https://pypi.org/simple"
+        - name: enabled
+          in: query
+          required: true
+          description: Enable or disable the given Python package index in Thoth's database.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "201":
+          description: The state was adjusted.
+        "400":
+          description: On invalid request.
+        "404":
+          description: If the given Python package index was not found.
+
 
   /graph/performance-indicators:
     get:
