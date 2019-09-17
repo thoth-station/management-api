@@ -39,15 +39,34 @@ _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
 
 
-def post_register_python_package_index(index: dict):
+def post_register_python_package_index(secret: str, index: dict, enabled: bool = False) -> tuple:
     """Register the given Python package index in the graph database."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
     graph = GraphDatabase()
     graph.connect()
     graph.register_python_package_index(
         url=index["url"],
         warehouse_api_url=index["warehouse_api_url"],
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
+        enabled=enabled,
     )
+    return {}, 201
+
+
+def post_set_python_package_index_state(secret: str, index_url: dict, enabled: bool) -> tuple:
+    """Disable or enable a Python package index."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    graph = GraphDatabase()
+    graph.connect()
+    try:
+        graph.set_python_package_index_state(index_url, enabled=enabled)
+    except NotFoundError as exc:
+        return {"error": str(exc)}, 404
+
     return {}, 201
 
 
