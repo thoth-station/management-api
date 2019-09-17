@@ -25,7 +25,7 @@ from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages import __version__ as thoth_storages_version
 from thoth.storages import GraphDatabase
-from thoth.storages.graph.models import ALL_PERFORMANCE_MODELS
+from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
 from thoth.storages import PackageAnalysisResultsStore
