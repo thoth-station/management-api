@@ -21,10 +21,12 @@ paths:
         - name: no_subgraph_checks
           in: query
           required: true
-          description: Do not perform subgraphs checks for packages already solved.
+          description: >
+            Do not perform subgraphs checks for packages already solved.
+            This flag is disjoint with the transitive flag.
           schema:
             type: boolean
-            default: false
+            default: true
         - name: debug
           in: query
           required: false
@@ -42,6 +44,7 @@ paths:
             dependencies which were not solved yet in one solver run. If
             this flag is set to false, transitive dependencies will be
             automatically resolved by the system in other solver runs.
+            This flag is disjoint with no_subgraph_checks.
           schema:
             type: boolean
             default: false
