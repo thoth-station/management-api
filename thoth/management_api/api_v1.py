@@ -71,7 +71,11 @@ def post_set_python_package_index_state(secret: str, index_url: dict, enabled: b
 
 
 def post_solve_python(
-    python_package: dict, version_specifier: str = None, debug: bool = False, no_subgraph_checks: bool = False,
+    python_package: dict,
+    version_specifier: str = None,
+    debug: bool = False,
+    no_subgraph_checks: bool = False,
+    transitive: bool = False,
 ):
     """Schedule analysis for the given Python package."""
     parameters = locals()
@@ -90,7 +94,8 @@ def post_solve_python(
         'packages': packages,
         'indexes': list(graph.get_python_package_index_urls()),
         'debug': debug,
-        'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else ''
+        'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else '',
+        'transitive': transitive,
     }
 
     response, status_code = _do_schedule(

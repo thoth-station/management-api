@@ -34,6 +34,17 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: transitive
+          in: query
+          required: false
+          description: >
+            Do not solve just one package, but solve all the transitive
+            dependencies which were not solved yet in one solver run. If
+            this flag is set to false, transitive dependencies will be
+            automatically resolved by the system in other solver runs.
+          schema:
+            type: boolean
+            default: false
       requestBody:
         required: true
         description: Python package that should be registered.
