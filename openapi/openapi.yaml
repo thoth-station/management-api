@@ -5,6 +5,20 @@ info:
 servers:
   - url: "/api/v1/"
 paths:
+  /info:
+    get:
+      tags: [Info]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_info
+      summary: Get information about Thoth deployment.
+      responses:
+        "200":
+          description: A core information about Thoth deployment.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Info"
+
   /solver/python:
     post:
       tags: [Python Solver]
