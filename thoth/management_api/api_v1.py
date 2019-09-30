@@ -44,7 +44,7 @@ def get_info():
     return {
         "deployment_name": os.getenv("THOTH_DEPLOYMENT_NAME"),
         "s3_endpoint_url": os.getenv("THOTH_S3_ENDPOINT_URL"),
-        "dgraph_host": os.getenv("GRAPH_SERVICE_HOST"),
+        "knowledge_graph_host": os.getenv("KNOWLEDGE_GRAPH_HOST"),
         "amun_api_url": os.getenv("AMUN_API_URL"),
         "frontend_namespace": os.getenv("THOTH_FRONTEND_NAMESPACE"),
         "middletier_namespace": os.getenv("THOTH_MIDDLETIER_NAMESPACE"),
