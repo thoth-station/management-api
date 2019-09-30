@@ -39,6 +39,20 @@ _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
 
 
+def get_info():
+    """Get information about Thoth deployment."""
+    return {
+        "deployment_name": os.getenv("THOTH_DEPLOYMENT_NAME"),
+        "s3_endpoint_url": os.getenv("THOTH_S3_ENDPOINT_URL"),
+        "knowledge_graph_host": os.getenv("KNOWLEDGE_GRAPH_HOST"),
+        "amun_api_url": os.getenv("AMUN_API_URL"),
+        "frontend_namespace": os.getenv("THOTH_FRONTEND_NAMESPACE"),
+        "middletier_namespace": os.getenv("THOTH_MIDDLETIER_NAMESPACE"),
+        "backend_namespace": os.getenv("THOTH_BACKEND_NAMESPACE"),
+        "s3_bucket_prefix": os.getenv("THOTH_CEPH_BUCKET_PREFIX"),
+    }
+
+
 def post_register_python_package_index(secret: str, index: dict, enabled: bool = False) -> tuple:
     """Register the given Python package index in the graph database."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
