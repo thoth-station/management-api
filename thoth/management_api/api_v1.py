@@ -43,7 +43,6 @@ def get_info():
     """Get information about Thoth deployment."""
     return {
         "deployment_name": os.getenv("THOTH_DEPLOYMENT_NAME"),
-        "version:": os.getenv("OPENSHIFT_BUILD_REFERENCE", "@dev"),
         "s3_endpoint_url": os.getenv("THOTH_S3_ENDPOINT_URL"),
         "dgraph_host": os.getenv("GRAPH_SERVICE_HOST"),
         "amun_api_url": os.getenv("AMUN_API_URL"),
