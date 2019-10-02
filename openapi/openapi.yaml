@@ -32,15 +32,6 @@ paths:
           description: A secret to schedule analysis of the given Python package.
           schema:
             type: string
-        - name: no_subgraph_checks
-          in: query
-          required: true
-          description: >
-            Do not perform subgraphs checks for packages already solved.
-            This flag is disjoint with the transitive flag.
-          schema:
-            type: boolean
-            default: true
         - name: debug
           in: query
           required: false
@@ -55,10 +46,7 @@ paths:
           required: false
           description: >
             Do not solve just one package, but solve all the transitive
-            dependencies which were not solved yet in one solver run. If
-            this flag is set to false, transitive dependencies will be
-            automatically resolved by the system in other solver runs.
-            This flag is disjoint with no_subgraph_checks.
+            dependencies which were not solved yet in one solver run.
           schema:
             type: boolean
             default: false

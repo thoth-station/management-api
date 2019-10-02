@@ -88,7 +88,6 @@ def post_solve_python(
     python_package: dict,
     version_specifier: str = None,
     debug: bool = False,
-    no_subgraph_checks: bool = False,
     transitive: bool = False,
 ):
     """Schedule analysis for the given Python package."""
@@ -108,7 +107,6 @@ def post_solve_python(
         'packages': packages,
         'indexes': list(graph.get_python_package_index_urls()),
         'debug': debug,
-        'subgraph_check_api': Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API if not no_subgraph_checks else '',
         'transitive': transitive,
     }
 
