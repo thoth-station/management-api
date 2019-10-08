@@ -17,6 +17,7 @@
 
 """Implementation of Management API v1."""
 
+import os
 from itertools import islice
 import logging
 import typing
