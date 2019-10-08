@@ -39,8 +39,11 @@ _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
 
 
-def get_info():
+def get_info(secret: str):
     """Get information about Thoth deployment."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
     return {
         "deployment_name": os.getenv("THOTH_DEPLOYMENT_NAME"),
         "s3_endpoint_url": os.getenv("THOTH_S3_ENDPOINT_URL"),
