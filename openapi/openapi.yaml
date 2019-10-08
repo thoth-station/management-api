@@ -11,6 +11,13 @@ paths:
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: get_info
       summary: Get information about Thoth deployment.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to obtain Thoth's deployment information.
+          schema:
+            type: string
       responses:
         "200":
           description: A core information about Thoth deployment.
