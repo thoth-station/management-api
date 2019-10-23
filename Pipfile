@@ -12,13 +12,17 @@ grpcio-opentracing = "*"
 grpcio-tools = "*"
 gunicorn = "*"
 jaeger-client = "*"
-openapi-spec-validator = "<=0.2.4"
+jsonschema = "*"
+openapi-spec-validator = "*"
 opentracing-instrumentation = "*"
 prometheus-client = "*"
 prometheus-flask-exporter = "*"
 requests = "*"
 thoth-common = "*"
 thoth-storages = "*"
+
+[requires]
+python_version = "3.6"
 
 [dev-packages]
 pytest = "*"

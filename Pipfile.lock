@@ -1,10 +1,12 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6ff05ef2fbaad37a3c48e1d7d04ea8727143b6a16d638ff9fae107de4c7f6938"
+            "sha256": "5cc3865df8fa2899539b06af2a59c8a1294dcd0ccc05594a99a12c990ea40583"
         },
         "pipfile-spec": 6,
-        "requires": {},
+        "requires": {
+            "python_version": "3.6"
+        },
         "sources": [
             {
                 "name": "pypi",
@@ -134,6 +136,9 @@
             "version": "==1.2.2"
         },
         "connexion": {
+            "extras": [
+                "swagger-ui"
+            ],
             "hashes": [
                 "sha256:6e0569b646f2e6229923dc4e4c6e0325e223978bd19105779fd81e16bcb22fdf",
                 "sha256:7b4268e9ea837241e530738b35040345b78c8748d05d2c22805350aca0cd5b1c"
@@ -415,6 +420,7 @@
                 "sha256:2fa0684276b6333ff3c0b1b27081f4b2305f0a36cf702a23db50edb141893c3f",
                 "sha256:94c0a13b4a0616458b42529091624e66700a17f847453e52279e35509a5b7631"
             ],
+            "index": "pypi",
             "version": "==3.1.1"
         },
         "kubernetes": {
@@ -513,12 +519,12 @@
         },
         "openapi-spec-validator": {
             "hashes": [
-                "sha256:14684aaec4c4f30e911132ffad3c5863047908251647f49114d249dcc2d41f4e",
-                "sha256:48c83d77b98a1b046973e2cd26b441a6db60a858382e9c3d7d8e63c940a7878f",
-                "sha256:5946bab0b5c0e4bd915dbcac308561cb7b2f1c219a9b447f93ae26752f9328c6"
+                "sha256:0caacd9829e9e3051e830165367bf58d436d9487b29a09220fa7edb9f47ff81b",
+                "sha256:d4da8aef72bf5be40cf0df444abd20009a41baf9048a8e03750c07a934f1bdd8",
+                "sha256:e489c7a273284bc78277ac22791482e8058d323b4a265015e9fcddf6a8045bcd"
             ],
             "index": "pypi",
-            "version": "==0.2.4"
+            "version": "==0.2.8"
         },
         "openshift": {
             "hashes": [
