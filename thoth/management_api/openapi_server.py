@@ -48,6 +48,8 @@ _LOGGER.setLevel(logging.DEBUG if bool(int(os.getenv("THOTH_MANAGEMENT_API_DEBUG
 _LOGGER.info(f"This is Management API v%s", __version__)
 _LOGGER.debug("DEBUG mode is enabled!")
 
+_THOTH_API_HTTPS = bool(int(os.getenv("THOTH_API_HTTPS", 1)))
+
 # Expose for uWSGI.
 app = connexion.FlaskApp(__name__, specification_dir=Configuration.SWAGGER_YAML_PATH, debug=True)
 
@@ -102,6 +104,8 @@ def before_request_callback():
 @metrics.do_not_track()
 def base_url():
     """Redirect to UI by default."""
+    # https://github.com/pallets/flask/issues/773
+    request.environ['wsgi.url_scheme'] = 'https' if _THOTH_API_HTTPS else 'http'
     return redirect("api/v1/ui")
 
 
