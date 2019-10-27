@@ -5,12 +5,13 @@ metadata:
   annotations:
     description: "This is Thoth - Management API"
     openshift.io/display-name: "Thoth Core: Management API"
-    version: 0.8.1
+    version: 0.9.0
     tags: thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
       This template defines resources needed to deploy Thoth Management API on OpenShift.
     template.openshift.io/provider-display-name: "Red Hat, Inc."
+    thoth-station.ninja/template-version: 0.9.0
   labels:
     template: management-api-deployment
     app: thoth
@@ -39,6 +40,8 @@ objects:
     apiVersion: v1
     metadata:
       name: management-api
+      annotations:
+        thoth-station.ninja/template-version: 0.9.0
       labels:
         app: thoth
         component: management-api
@@ -55,6 +58,8 @@ objects:
         app: thoth
         component: management-api
         service: management-api
+      annotations:
+        thoth-station.ninja/template-version: 0.9.0
       name: management-api
     spec:
       ports:
@@ -71,6 +76,8 @@ objects:
         app: thoth
         component: management-api
         service: management-api
+      annotations:
+        thoth-station.ninja/template-version: 0.9.0
       name: management-api
     spec:
       replicas: 1
