@@ -33,6 +33,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 from thoth.common import datetime2datetime_str
 from thoth.common import init_logging
 from thoth.storages import GraphDatabase
+from thoth.storages.exceptions import DatabaseNotInitialized
 from thoth.management_api import __version__
 from thoth.management_api.configuration import Configuration
 from thoth.management_api.configuration import init_jaeger_tracer
@@ -90,7 +91,13 @@ def before_request_callback():
     if method == "GET" and path == "/metrics":
         graph = GraphDatabase()
         graph.connect()
-        _API_GAUGE_METRIC.set(int(graph.is_schema_up2date()))
+        try:
+            _API_GAUGE_METRIC.set(int(graph.is_schema_up2date()))
+        except DatabaseNotInitialized as exc:
+            # This can happen if database is erased after the service has been started as we
+            # have passed readiness probe with this check.
+            _LOGGER.exception("Cannot determine database schema as database is not initialized: %s", str(exc))
+            _API_GAUGE_METRIC.set(0)
 
 
 @app.route("/")
