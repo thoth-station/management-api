@@ -109,7 +109,7 @@ def post_solve_python(
     graph.connect()
     run_parameters = {
         'packages': packages,
-        'indexes': list(graph.get_python_package_index_urls()),
+        'indexes': graph.get_python_package_index_urls_all(),
         'debug': debug,
         'transitive': transitive,
     }
@@ -329,7 +329,7 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
             f"installed solvers: {', '.join(list(solvers_installed))}",
         }, 404
 
-    indexes = list(graph.get_python_package_index_urls())
+    indexes = graph.get_python_package_index_urls_all()
     analyses = []
     for package_name, versions in graph.retrieve_unsolvable_python_packages(solver_name).items():
         for package_version in versions:
