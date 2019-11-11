@@ -156,6 +156,19 @@ def list_solve_python_results(page: int = 0):
     return _do_listing(SolverResultsStore, page)
 
 
+def list_python_package_indexes(secret: str):
+    """List registered Python package indexes in the graph database."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    graph = GraphDatabase()
+    graph.connect()
+    return {
+        "enabled": graph.get_python_package_index_all(enabled=True),
+        "disabled": graph.get_python_package_index_all(enabled=False),
+    }
+
+
 def list_solvers():
     """List available registered solvers."""
     # We are fine with 500 here in case of some OpenShift/configuration failures.
