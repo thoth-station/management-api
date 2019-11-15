@@ -33,7 +33,6 @@ from thoth.storages import PackageAnalysisResultsStore
 from thoth.storages.exceptions import NotFoundError
 
 from .configuration import Configuration
-from .openapi_server import GRAPH
 
 
 PAGINATION_SIZE = 100
@@ -60,6 +59,8 @@ def get_info(secret: str):
 
 def post_register_python_package_index(secret: str, index: dict, enabled: bool = False) -> tuple:
     """Register the given Python package index in the graph database."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
@@ -74,6 +75,8 @@ def post_register_python_package_index(secret: str, index: dict, enabled: bool =
 
 def post_set_python_package_index_state(secret: str, index_url: dict, enabled: bool) -> tuple:
     """Disable or enable a Python package index."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
@@ -92,6 +95,8 @@ def post_solve_python(
     transitive: bool = False,
 ):
     """Schedule analysis for the given Python package."""
+    from .openapi_server import GRAPH
+
     parameters = locals()
 
     package_name = python_package.pop("package_name")
@@ -153,6 +158,8 @@ def list_solve_python_results(page: int = 0):
 
 def list_python_package_indexes(secret: str):
     """List registered Python package indexes in the graph database."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
@@ -218,6 +225,8 @@ def get_dependency_monkey_python_status(analysis_id: str):
 
 def erase_graph(secret: str):
     """Clean content of the graph database."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
@@ -300,6 +309,8 @@ def get_dependency_monkey_report(analysis_id: str) -> tuple:
 
 def initialize_schema(secret: str):
     """Initialize schema in graph database."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
@@ -315,6 +326,8 @@ def initialize_schema(secret: str):
 
 def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
     """Schedule solving of unsolvable packages for the given solver."""
+    from .openapi_server import GRAPH
+
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
