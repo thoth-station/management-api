@@ -80,6 +80,11 @@ application.secret_key = Configuration.APP_SECRET_KEY
 metrics.info("management_api_info", "Management API info", version=__version__)
 _API_GAUGE_METRIC = metrics.info("management_api_schema_up2date", "User API schema up2date")
 
+# Instantiate one GraphDatabase adapter in the whole application (one per wsgi worker) to correctly
+# reuse connection pooling from one instance.
+GRAPH = GraphDatabase()
+GRAPH.connect()
+
 
 @application.before_request
 def before_request_callback():
@@ -89,10 +94,8 @@ def before_request_callback():
 
     # Update up2date metric exposed.
     if method == "GET" and path == "/metrics":
-        graph = GraphDatabase()
-        graph.connect()
         try:
-            _API_GAUGE_METRIC.set(int(graph.is_schema_up2date()))
+            _API_GAUGE_METRIC.set(int(GRAPH.is_schema_up2date()))
         except DatabaseNotInitialized as exc:
             # This can happen if database is erased after the service has been started as we
             # have passed readiness probe with this check.
@@ -131,10 +134,8 @@ def _healthiness():
 @metrics.do_not_track()
 def api_readiness():
     """Report readiness for OpenShift readiness probe."""
-    graph = GraphDatabase()
-    graph.connect()
     try:
-        if not graph.is_schema_up2date():
+        if not GRAPH.is_schema_up2date():
             _LOGGER.warning("Database schema is not up to date")
             return jsonify({"status": "Database schema is not up to date"}), 503, {"ContentType": "application/json"}
     except DatabaseNotInitialized as exc:
