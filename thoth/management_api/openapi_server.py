@@ -79,7 +79,6 @@ application.secret_key = Configuration.APP_SECRET_KEY
 # static information as metric
 metrics.info("management_api_info", "Management API info", version=__version__)
 _API_GAUGE_METRIC = metrics.info("management_api_schema_up2date", "User API schema up2date")
-
 # Instantiate one GraphDatabase adapter in the whole application (one per wsgi worker) to correctly
 # reuse connection pooling from one instance.
 GRAPH = GraphDatabase()
