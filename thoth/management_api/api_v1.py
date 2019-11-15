@@ -33,13 +33,12 @@ from thoth.storages import PackageAnalysisResultsStore
 from thoth.storages.exceptions import NotFoundError
 
 from .configuration import Configuration
+from .openapi_server import GRAPH
 
 
 PAGINATION_SIZE = 100
 _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
-_GRAPH = GraphDatabase()
-_GRAPH.connect()
 
 
 def get_info(secret: str):
@@ -64,7 +63,7 @@ def post_register_python_package_index(secret: str, index: dict, enabled: bool =
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    _GRAPH.register_python_package_index(
+    GRAPH.register_python_package_index(
         url=index["url"],
         warehouse_api_url=index["warehouse_api_url"],
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
@@ -79,7 +78,7 @@ def post_set_python_package_index_state(secret: str, index_url: dict, enabled: b
         return {"error": "Wrong secret provided"}, 401
 
     try:
-        _GRAPH.set_python_package_index_state(index_url, enabled=enabled)
+        GRAPH.set_python_package_index_state(index_url, enabled=enabled)
     except NotFoundError as exc:
         return {"error": str(exc)}, 404
 
@@ -105,7 +104,7 @@ def post_solve_python(
 
     run_parameters = {
         'packages': packages,
-        'indexes': _GRAPH.get_python_package_index_urls_all(),
+        'indexes': GRAPH.get_python_package_index_urls_all(),
         'debug': debug,
         'transitive': transitive,
     }
@@ -158,8 +157,8 @@ def list_python_package_indexes(secret: str):
         return {"error": "Wrong secret provided"}, 401
 
     return {
-        "enabled": _GRAPH.get_python_package_index_all(enabled=True),
-        "disabled": _GRAPH.get_python_package_index_all(enabled=False),
+        "enabled": GRAPH.get_python_package_index_all(enabled=True),
+        "disabled": GRAPH.get_python_package_index_all(enabled=False),
     }
 
 
@@ -222,8 +221,8 @@ def erase_graph(secret: str):
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    _GRAPH.drop_all()
-    _GRAPH.initialize_schema()
+    GRAPH.drop_all()
+    GRAPH.initialize_schema()
     return {}, 201
 
 
@@ -305,7 +304,7 @@ def initialize_schema(secret: str):
         return {"error": "Wrong secret provided"}, 401
 
     try:
-        _GRAPH.initialize_schema()
+        GRAPH.initialize_schema()
     except Exception as exc:
         return {
             "error": str(exc)
@@ -329,9 +328,9 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
             f"installed solvers: {', '.join(list(solvers_installed))}",
         }, 404
 
-    indexes = _GRAPH.get_python_package_index_urls_all()
+    indexes = GRAPH.get_python_package_index_urls_all()
     analyses = []
-    for package_name, versions in _GRAPH.retrieve_unsolvable_python_packages(solver_name).items():
+    for package_name, versions in GRAPH.retrieve_unsolvable_python_packages(solver_name).items():
         for package_version in versions:
             analysis_id = _OPENSHIFT.schedule_solver(
                 packages=f"{package_name}=={package_version}",
