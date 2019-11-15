@@ -38,6 +38,8 @@ from .configuration import Configuration
 PAGINATION_SIZE = 100
 _LOGGER = logging.getLogger(__name__)
 _OPENSHIFT = OpenShift()
+_GRAPH = GraphDatabase()
+_GRAPH.connect()
 
 
 def get_info(secret: str):
@@ -62,9 +64,7 @@ def post_register_python_package_index(secret: str, index: dict, enabled: bool =
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    graph = GraphDatabase()
-    graph.connect()
-    graph.register_python_package_index(
+    _GRAPH.register_python_package_index(
         url=index["url"],
         warehouse_api_url=index["warehouse_api_url"],
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
@@ -78,10 +78,8 @@ def post_set_python_package_index_state(secret: str, index_url: dict, enabled: b
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    graph = GraphDatabase()
-    graph.connect()
     try:
-        graph.set_python_package_index_state(index_url, enabled=enabled)
+        _GRAPH.set_python_package_index_state(index_url, enabled=enabled)
     except NotFoundError as exc:
         return {"error": str(exc)}, 404
 
@@ -105,11 +103,9 @@ def post_solve_python(
 
     packages = package_name + (version_specifier if version_specifier else "")
 
-    graph = GraphDatabase()
-    graph.connect()
     run_parameters = {
         'packages': packages,
-        'indexes': graph.get_python_package_index_urls_all(),
+        'indexes': _GRAPH.get_python_package_index_urls_all(),
         'debug': debug,
         'transitive': transitive,
     }
@@ -161,11 +157,9 @@ def list_python_package_indexes(secret: str):
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    graph = GraphDatabase()
-    graph.connect()
     return {
-        "enabled": graph.get_python_package_index_all(enabled=True),
-        "disabled": graph.get_python_package_index_all(enabled=False),
+        "enabled": _GRAPH.get_python_package_index_all(enabled=True),
+        "disabled": _GRAPH.get_python_package_index_all(enabled=False),
     }
 
 
@@ -228,10 +222,8 @@ def erase_graph(secret: str):
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    adapter = GraphDatabase()
-    adapter.connect()
-    adapter.drop_all()
-    adapter.initialize_schema()
+    _GRAPH.drop_all()
+    _GRAPH.initialize_schema()
     return {}, 201
 
 
@@ -312,10 +304,8 @@ def initialize_schema(secret: str):
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    graph = GraphDatabase()
-    graph.connect()
     try:
-        graph.initialize_schema()
+        _GRAPH.initialize_schema()
     except Exception as exc:
         return {
             "error": str(exc)
@@ -331,9 +321,6 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
 
     parameters = {"solver_name": solver_name}
 
-    graph = GraphDatabase()
-    graph.connect()
-
     solvers_installed = _OPENSHIFT.get_solver_names()
     if solver_name not in solvers_installed:
         return {
@@ -342,9 +329,9 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
             f"installed solvers: {', '.join(list(solvers_installed))}",
         }, 404
 
-    indexes = graph.get_python_package_index_urls_all()
+    indexes = _GRAPH.get_python_package_index_urls_all()
     analyses = []
-    for package_name, versions in graph.retrieve_unsolvable_python_packages(solver_name).items():
+    for package_name, versions in _GRAPH.retrieve_unsolvable_python_packages(solver_name).items():
         for package_version in versions:
             analysis_id = _OPENSHIFT.schedule_solver(
                 packages=f"{package_name}=={package_version}",
