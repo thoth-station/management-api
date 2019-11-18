@@ -95,9 +95,8 @@ def post_solve_python(
     transitive: bool = False,
 ):
     """Schedule analysis for the given Python package."""
-    from .openapi_server import GRAPH
-
     parameters = locals()
+    from .openapi_server import GRAPH
 
     package_name = python_package.pop("package_name")
 
