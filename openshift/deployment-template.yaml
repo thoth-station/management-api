@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: "This is Thoth - Management API"
     openshift.io/display-name: "Thoth Core: Management API"
-    version: 0.9.0
+    version: 0.9.1
     tags: thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
