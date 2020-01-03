@@ -5,7 +5,7 @@ metadata:
   annotations:
     description: "This is Thoth - Management API"
     openshift.io/display-name: "Thoth Core: Management API"
-    version: 0.9.0
+    version: 0.9.1
     tags: thoth,management-api,ai-stacks,aistacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
@@ -91,12 +91,14 @@ objects:
           serviceAccountName: "${SERVICE_ACCOUNT_NAME}"
           containers:
             - name: management-api-openapi
-              env: &env
+              env:
                 - name: APP_MODULE
                   value: "thoth.management_api.openapi_server:app"
                 - name: KUBERNETES_API_URL
                   value: "https://kubernetes.default.svc.cluster.local"
                 - name: KUBERNETES_VERIFY_TLS
+                  value: "0"
+                - name: THOTH_MANAGEMENT_API_RUN_MIGRATIONS
                   value: "0"
                 - name: AMUN_API_URL
                   valueFrom:

@@ -117,6 +117,13 @@ def before_request_callback():
             _API_GAUGE_METRIC.set(0)
 
 
+@application.before_first_request
+def before_first_request_callback():
+    """Callback registered, runs before first request to this service."""
+    if bool(int(os.getenv("THOTH_MANAGEMENT_API_RUN_MIGRATIONS", 0))):
+        GRAPH.initialize_schema()
+
+
 @app.route("/")
 @metrics.do_not_track()
 def base_url():
