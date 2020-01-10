@@ -546,6 +546,21 @@ paths:
                         "python_version": "3.6"
                       }
                     }
+                runtime_environment:
+                  type: object
+                  description: Runtime environment used as a hint for resolver.
+                  example:
+                    {
+                      "operating_system": {
+                        "name": "rhel",
+                        "version": "8.0"
+                      },
+                      "hardware": {
+                        "cpu_family": 5,
+                        "cpu_model": 5
+                      },
+                      "python_version": "3.6",
+                    }
                 context:
                   type: object
                   required:

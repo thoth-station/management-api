@@ -21,6 +21,9 @@ import os
 from itertools import islice
 import logging
 import typing
+from typing import Any
+from typing import Optional
+from typing import Dict
 
 from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
@@ -186,13 +189,14 @@ def list_solvers():
 
 
 def post_dependency_monkey_python(
-    input: dict,
-    seed: int = None,
+    input: Dict[str, Any],
+    seed: Optional[int] = None,
     dry_run: bool = False,
-    decision: str = None,
+    decision: Optional[str] = None,
     debug: bool = False,
-    count: int = None,
-    limit_latest_versions: int = None,
+    count: Optional[int] = None,
+    limit_latest_versions: Optional[int] = None,
+    runtime_environment: Optional[Dict[str, Any]] = None,
 ):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
     requirements = input.pop("requirements")
