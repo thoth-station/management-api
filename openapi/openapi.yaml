@@ -546,6 +546,25 @@ paths:
                         "python_version": "3.6"
                       }
                     }
+                pipeline:
+                  type: object
+                  description: Resolver pipeline configuration.
+                  example:
+                    {
+                      "boots": [
+                        {"name": "UbiBoot", "configuration": {}},
+                        {"name": "VersionClashBoot", "configuration": {}}
+                      ],
+                      "sieves": [
+                        {"name": "CutLockedSieve", "configuration": {}},
+                        {"name": "CutPreReleasesSieve", "configuration": {}},
+                        {"name": "PackageIndexSieve", "configuration": {}},
+                        {"name": "SolvedSieve", "configuration": {"without_error": true}}
+                      ],
+                      "steps": [],
+                      "strides": [],
+                      "wraps": []
+                    }
                 runtime_environment:
                   type: object
                   description: Runtime environment used as a hint for resolver.
