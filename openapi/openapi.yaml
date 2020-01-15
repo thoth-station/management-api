@@ -559,7 +559,7 @@ paths:
                         {"name": "CutLockedSieve", "configuration": {}},
                         {"name": "CutPreReleasesSieve", "configuration": {}},
                         {"name": "PackageIndexSieve", "configuration": {}},
-                        {"name": "SolvedSieve", "configuration": {"without_error": True}}
+                        {"name": "SolvedSieve", "configuration": {"without_error": true}}
                       ],
                       "steps": [],
                       "strides": [],
