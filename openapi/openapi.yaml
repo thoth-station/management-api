@@ -597,7 +597,8 @@ paths:
                       type: array
                       example: [pipenv]
                       description: Python packages to be installed from PyPI.
-                      items: string
+                      items:
+                        type: string
                     packages:
                       type: array
                       example: [which, python38]
