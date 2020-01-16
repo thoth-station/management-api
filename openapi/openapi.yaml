@@ -593,9 +593,14 @@ paths:
                       type: string
                       description: Identifier to be used for inspection jobs.
                       example: test
+                    python_packages:
+                      type: array
+                      example: [pipenv]
+                      description: Python packages to be installed from PyPI.
+                      items: string
                     packages:
                       type: array
-                      example: [pipenv, which, python36]
+                      example: [which, python38]
                       description: Packages to be installed.
                       items:
                         type: string
