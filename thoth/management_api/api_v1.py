@@ -196,12 +196,12 @@ def post_dependency_monkey_python(
     debug: bool = False,
     count: Optional[int] = None,
     limit_latest_versions: Optional[int] = None,
-    runtime_environment: Optional[Dict[str, Any]] = None,
 ):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
     requirements = input.pop("requirements")
     context = input.pop("context")
     pipeline = input.pop("pipeline", None)
+    runtime_environment = input.pop("runtime_environment", None)
     parameters = locals()
     parameters.pop("input")
 
