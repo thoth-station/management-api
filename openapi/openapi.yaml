@@ -726,6 +726,7 @@ paths:
           in: query
           schema:
             type: integer
+            default: 1
           required: false
           description: Number of stacks that should be generated.
         - name: limit_latest_versions
