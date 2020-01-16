@@ -601,7 +601,13 @@ paths:
                     packages:
                       type: array
                       example: [which, python38]
-                      description: Packages to be installed.
+                      description: Native packages to be installed.
+                      items:
+                        type: string
+                    python_packages:
+                      type: array
+                      example: [pipenv]
+                      description: Python packages to be installed.
                       items:
                         type: string
                     build:
