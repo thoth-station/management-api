@@ -977,6 +977,94 @@ paths:
         "404":
           description: If the given Python package index was not found.
 
+  /analyze:
+    post:
+      tags: ["Image Analysis"]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_analyze
+      summary: |
+        Analyze the given image asynchronously, image is marked as an internal
+        container image that can be used during recommendations.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to adjust the given Python package index.
+          schema:
+            type: string
+        - name: image
+          in: query
+          required: true
+          description: >
+            Name of image - can also specify remote registry to pull
+            image from.
+          schema:
+            type: string
+        - name: registry_user
+          in: query
+          required: false
+          description: >
+            Registry user to be used for pulling images from registry.
+          schema:
+            type: string
+        - name: registry_password
+          in: query
+          required: false
+          description: >
+            Registry password or token to be used for pulling images from
+            registry.
+          schema:
+            type: string
+        - name: environment_type
+          in: query
+          required: false
+          description: >
+            Type of environment (runtime or buildtime) which is being analyzed.
+          schema:
+            type: string
+            enum:
+              - buildtime
+              - runtime
+            default: runtime
+        - name: origin
+          in: query
+          required: false
+          description: >
+            A remote where the image is being used. This is used for tracking as well as
+            for automated reporting when results are available.
+          schema:
+            type: string
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analyzer in a verbose mode so developers can debug
+            analyzer.
+          schema:
+            type: boolean
+            default: false
+        - name: verify_tls
+          in: query
+          required: false
+          description: >
+            Verify TLS certificates of registry from where images are
+            pulled from.
+          schema:
+            type: boolean
+            default: true
+      responses:
+        "202":
+          description: Successful response with analyzer id.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResponse"
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResponseError"
 
   /graph/performance-indicators:
     get:
@@ -1528,3 +1616,30 @@ components:
             type: boolean
             description: Use secured connection to warehouse.
             example: true
+    AnalysisResponse:
+      type: object
+      description: Response for a submitted analysis.
+      properties:
+        analysis_id:
+          type: string
+          description: >
+            An id of submitted analysis for checking its status and its results.
+        parameters:
+          type: object
+          description: >
+            Parameters echoed back to user (with default parameters if omitted).
+      required:
+        - analysis_id
+        - parameters
+    AnalysisResponseError:
+      type: object
+      required:
+        - error
+        - parameters
+      properties:
+        error:
+          type: string
+          description: Error information for user.
+        parameters:
+          type: object
+          description: Parameters echoed back to user for debugging.
