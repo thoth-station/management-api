@@ -24,6 +24,7 @@ import typing
 from typing import Any
 from typing import Optional
 from typing import Dict
+from typing import Tuple
 
 from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
@@ -225,6 +226,35 @@ def get_dependency_monkey_python_status(analysis_id: str):
     return _get_job_status(
         locals(), "dependency-monkey-", Configuration.THOTH_MIDDLETIER_NAMESPACE
     )
+
+
+def post_analyze(
+    secret: str,
+    image: str,
+    debug: bool = False,
+    registry_user: str = None,
+    registry_password: str = None,
+    environment_type: str = None,
+    origin: str = None,
+    verify_tls: bool = True,
+) -> Tuple[Dict[str, Any], int]:
+    """Run an analyzer in a restricted namespace."""
+    parameters = locals()
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    parameters.pop("secret", None)
+    parameters["environment_type"] = parameters.get("runtime_environment") or "runtime"
+    parameters["is_external"] = False
+
+    response, status_code = _do_schedule(
+        parameters,
+        _OPENSHIFT.schedule_package_extract,
+        output=Configuration.THOTH_ANALYZER_OUTPUT
+    )
+
+    return response, status_code
 
 
 def erase_graph(secret: str):

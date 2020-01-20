@@ -44,6 +44,7 @@ class Configuration:
     THOTH_MIDDLETIER_NAMESPACE = os.environ['THOTH_MIDDLETIER_NAMESPACE']
     THOTH_SOLVER_SUBGRAPH_CHECK_API = THOTH_RESULT_API_URL + '/api/v1/subgraph-check'
     THOTH_PACKAGE_ANALYZER_OUTPUT = THOTH_RESULT_API_URL + '/api/v1/package-analysis-result'
+    THOTH_ANALYZER_OUTPUT = THOTH_RESULT_API_URL + "/api/v1/analysis-result"
 
     JAEGER_HOST = os.getenv("JAEGER_HOST", "localhost")
 
