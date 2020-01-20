@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+THOTH_MANAGEMENT_API_RUN_MIGRATIONS=${THOTH_MANAGEMENT_API_RUN_MIGRATIONS:-0}
+
+if [[ "${THOTH_MANAGEMENT_API_RUN_MIGRATIONS}" -ne 0 ]]; then
+	set -ex
+fi
+
+exec /usr/libexec/s2i/run
