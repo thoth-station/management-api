@@ -522,25 +522,7 @@ paths:
                       "source": [
                       ],
                       "packages": {
-                        "absl-py": "==0.6.1",
-                        "astor": "==0.7.1",
-                        "bleach": "==1.5.0",
-                        "gast": "==0.2.0",
-                        "grpcio": "==1.9.1",
-                        "html5lib": ">1.0",
-                        "markdown": "==3.0.1",
-                        "numpy": "==1.15.4",
-                        "olefile": "==0.42.1",
-                        "pillow": "==5.0.0",
-                        "protobuf": "==3.6.1",
-                        "setuptools": "==40.6.2",
-                        "six": "==1.9.0",
-                        "tensorboard": "==1.10.0",
-                        "tensorflow": "==1.9.0",
-                        "termcolor": "==1.1.0",
-                        "webencodings": "==0.5.1",
-                        "werkzeug": "==0.14.1",
-                        "wheel": "==0.32.3"
+                        "tensorflow": "*"
                       },
                       "requires": {
                         "python_version": "3.6"
@@ -571,8 +553,8 @@ paths:
                   example:
                     {
                       "operating_system": {
-                        "name": "rhel",
-                        "version": "8.0"
+                        "name": "ubi",
+                        "version": "8"
                       },
                       "hardware": {
                         "cpu_family": 5,
@@ -588,7 +570,7 @@ paths:
                     base:
                       type: string
                       description: Base image to build stack upon.
-                      example: fedora:29
+                      example: quay.io/thoth-station/s2i-thoth-ubi8-py36
                     identifier:
                       type: string
                       description: Identifier to be used for inspection jobs.
@@ -601,7 +583,7 @@ paths:
                         type: string
                     packages:
                       type: array
-                      example: [which, python38]
+                      example: [which]
                       description: Packages to be installed.
                       items:
                         type: string
@@ -621,11 +603,11 @@ paths:
                             cpu:
                               type: string
                               description: CPU requests.
-                              example: 500m
+                              example: "1"
                             memory:
                               type: string
                               description: Memoery requests.
-                              example: 512Mi
+                              example: 1Gi
                             hardware:
                               type: object
                               description: Set hardware requirements for run time.
@@ -666,11 +648,11 @@ paths:
                             cpu:
                               type: string
                               description: CPU requests.
-                              example: 500m
+                              example: "1"
                             memory:
                               type: string
                               description: Memoery requests.
-                              example: 512Mi
+                              example: 1Gi
                             hardware:
                               type: object
                               description: Set hardware requirements for run time.
@@ -698,7 +680,7 @@ paths:
                     script:
                       type: string
                       description: A script to validate stack with or URL to script to be used.
-                      example: https://raw.githubusercontent.com/fridex/tf-benchmark-mock/master/benchmark.py
+                      example: https://raw.githubusercontent.com/thoth-station/performance/master/tensorflow/conv2d.py
       parameters:
         - name: seed
           in: query
