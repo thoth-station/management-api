@@ -553,7 +553,7 @@ paths:
                   example:
                     {
                       "operating_system": {
-                        "name": "ubi",
+                        "name": "rhel",
                         "version": "8"
                       },
                       "hardware": {
