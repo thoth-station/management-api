@@ -587,6 +587,22 @@ paths:
                       description: Packages to be installed.
                       items:
                         type: string
+                    package_manager:
+                      type: string
+                      description: Package manager to be used for installing dependencies.
+                      enum:
+                        - micropipenv
+                        - pipenv
+                      default: micropipenv
+                    allowed_failures:
+                      type: integer
+                      default: 1
+                      example: 1
+                    batch_size:
+                      type: integer
+                      default: 1
+                      example: 1
+                      description: Number of inspection runs
                     build:
                       type: object
                       description: Buildtime requirements and requests.
