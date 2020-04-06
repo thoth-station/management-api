@@ -7,14 +7,14 @@ metadata:
       This is Thoth Management API BuildConfig, this template is meant to be used by
       Bots, but could also be used by humans...
     openshift.io/display-name: "Thoth Core: Management API BuildConfig"
-    version: 0.9.1
+    version: 0.9.2
     tags: thoth,thoth-management-api,ai-stacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
       This is Thoth Management API BuildConfig, this template is meant to be used
       by Bots, but could also be used by humans...
     template.openshift.io/provider-display-name: "Red Hat, Inc."
-    thoth-station.ninja/template-version: 0.9.1
+    thoth-station.ninja/template-version: 0.9.2
   labels:
     template: management-api-buildconfig
     app: thoth
@@ -52,18 +52,18 @@ objects:
     metadata:
       name: management-api
       annotations:
-        thoth-station.ninja/template-version: 0.9.1
+        thoth-station.ninja/template-version: 0.9.2
       labels:
         app: thoth
         component: management-api
     spec:
       resources:
         requests:
-          cpu: 500m
-          memory: 512Mi
+          cpu: 1
+          memory: 1Gi
         limits:
-          cpu: 1000m
-          memory: 768Mi
+          cpu: 1
+          memory: 1Gi
       output:
         to:
           kind: ImageStreamTag
