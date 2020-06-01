@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # thoth-management-api
-# Copyright(C) 2018, 2019 Fridolin Pokorny
+# Copyright(C) 2018, 2019, 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ class Configuration:
     THOTH_MIDDLETIER_NAMESPACE = os.environ['THOTH_MIDDLETIER_NAMESPACE']
     THOTH_SOLVER_SUBGRAPH_CHECK_API = THOTH_RESULT_API_URL + '/api/v1/subgraph-check'
     THOTH_PACKAGE_ANALYZER_OUTPUT = THOTH_RESULT_API_URL + '/api/v1/package-analysis-result'
+    THOTH_ANALYZER_OUTPUT = THOTH_RESULT_API_URL + "/api/v1/analysis-result"
 
     JAEGER_HOST = os.getenv("JAEGER_HOST", "localhost")
 

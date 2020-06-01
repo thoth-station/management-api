@@ -7,14 +7,14 @@ metadata:
       This is Thoth Management API BuildConfig, this template is meant to be used by
       Bots, but could also be used by humans...
     openshift.io/display-name: "Thoth Core: Management API BuildConfig"
-    version: 0.9.0
+    version: 0.9.2
     tags: thoth,thoth-management-api,ai-stacks
     template.openshift.io/documentation-url: https://github.com/Thoth-Station/
     template.openshift.io/long-description: >
       This is Thoth Management API BuildConfig, this template is meant to be used
       by Bots, but could also be used by humans...
     template.openshift.io/provider-display-name: "Red Hat, Inc."
-    thoth-station.ninja/template-version: 0.9.0
+    thoth-station.ninja/template-version: 0.9.2
   labels:
     template: management-api-buildconfig
     app: thoth
@@ -52,18 +52,18 @@ objects:
     metadata:
       name: management-api
       annotations:
-        thoth-station.ninja/template-version: 0.9.0
+        thoth-station.ninja/template-version: 0.9.2
       labels:
         app: thoth
         component: management-api
     spec:
       resources:
         requests:
-          cpu: 500m
-          memory: 512Mi
+          cpu: "1"
+          memory: 1Gi
         limits:
-          cpu: 1000m
-          memory: 768Mi
+          cpu: "1"
+          memory: 1Gi
       output:
         to:
           kind: ImageStreamTag
@@ -84,16 +84,16 @@ objects:
               value: "1"
             - name: UPGRADE_PIP_TO_LATEST
               value: ""
-            - name: WEB_CONCURRENCY
-              value: "4"
             - name: "THOTH_DRY_RUN"
               value: "1"
             - name: "THOTH_ADVISE"
               value: ${THOTH_ADVISE}
+            - name: "THOTH_ERROR_FALLBACK"
+              value: "1"
             - name: "THAMOS_VERBOSE"
               value: "1"
             - name: "THAMOS_DEBUG"
-              value: "1"
+              value: "0"
             - name: "THAMOS_CONFIG_TEMPLATE"
               value: ".thoth.yaml"
             - name: "THAMOS_CONFIG_EXPAND_ENV"

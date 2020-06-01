@@ -522,49 +522,102 @@ paths:
                       "source": [
                       ],
                       "packages": {
-                        "absl-py": "==0.6.1",
-                        "astor": "==0.7.1",
-                        "bleach": "==1.5.0",
-                        "gast": "==0.2.0",
-                        "grpcio": "==1.9.1",
-                        "html5lib": ">1.0",
-                        "markdown": "==3.0.1",
-                        "numpy": "==1.15.4",
-                        "olefile": "==0.42.1",
-                        "pillow": "==5.0.0",
-                        "protobuf": "==3.6.1",
-                        "setuptools": "==40.6.2",
-                        "six": "==1.9.0",
-                        "tensorboard": "==1.10.0",
-                        "tensorflow": "==1.9.0",
-                        "termcolor": "==1.1.0",
-                        "webencodings": "==0.5.1",
-                        "werkzeug": "==0.14.1",
-                        "wheel": "==0.32.3"
+                        "tensorflow": "*"
                       },
                       "requires": {
                         "python_version": "3.6"
                       }
                     }
+                pipeline:
+                  type: object
+                  description: Resolver pipeline configuration.
+                  example:
+                    boots:
+                      - name: "UbiBoot"
+                        configuration: {}
+                      - name: "VersionClashBoot"
+                        configuration: {}
+                    sieves:
+                      - name: "CutLockedSieve"
+                        configuration: {}
+                      - name: "CutPreReleasesSieve"
+                        configuration: {}
+                      - name: "PackageIndexSieve"
+                        configuration: {}
+                      - name: "SolvedSieve"
+                        configuration:
+                          without_error: true
+                      - name: "FilterIndexSieve"
+                        configuration:
+                          package_name: "tensorflow"
+                          index_url:
+                            - "https://pypi.org/simple"
+                            - "https://tensorflow.pypi.thoth-station.ninja/index/manylinux2010/AVX2/simple"
+                    steps: []
+                    strides: []
+                    wraps: []
+                runtime_environment:
+                  type: object
+                  description: Runtime environment used as a hint for resolver.
+                  example:
+                    {
+                      "operating_system": {
+                        "name": "rhel",
+                        "version": "8"
+                      },
+                      "hardware": {
+                        "cpu_family": 5,
+                        "cpu_model": 5
+                      },
+                      "python_version": "3.6",
+                    }
                 context:
                   type: object
+                  additionalProperties: true
                   required:
                     - base
                   properties:
                     base:
                       type: string
                       description: Base image to build stack upon.
-                      example: fedora:29
+                      example: quay.io/thoth-station/s2i-thoth-ubi8-py36
                     identifier:
                       type: string
                       description: Identifier to be used for inspection jobs.
                       example: test
+                    python_packages:
+                      type: array
+                      example: [pipenv]
+                      description: Python packages to be installed from PyPI.
+                      items:
+                        type: string
                     packages:
                       type: array
-                      example: [pipenv, which, python36]
+                      example: [which]
                       description: Packages to be installed.
                       items:
                         type: string
+                    package_manager:
+                      type: string
+                      description: Package manager to be used for installing dependencies.
+                      enum:
+                        - micropipenv
+                        - pipenv
+                      default: micropipenv
+                    allowed_failures:
+                      type: integer
+                      default: 1
+                      example: 1
+                    batch_size:
+                      type: integer
+                      default: 1
+                      example: 1
+                      description: Number of inspection runs
+                    parallelism:
+                      type: integer
+                      default: 1
+                      example: 1
+                      description: Number of inspections that can run in parallel
                     build:
                       type: object
                       description: Buildtime requirements and requests.
@@ -581,11 +634,11 @@ paths:
                             cpu:
                               type: string
                               description: CPU requests.
-                              example: 500m
+                              example: "1"
                             memory:
                               type: string
                               description: Memoery requests.
-                              example: 512Mi
+                              example: 1Gi
                             hardware:
                               type: object
                               description: Set hardware requirements for run time.
@@ -626,11 +679,11 @@ paths:
                             cpu:
                               type: string
                               description: CPU requests.
-                              example: 500m
+                              example: "1"
                             memory:
                               type: string
                               description: Memoery requests.
-                              example: 512Mi
+                              example: 1Gi
                             hardware:
                               type: object
                               description: Set hardware requirements for run time.
@@ -658,7 +711,7 @@ paths:
                     script:
                       type: string
                       description: A script to validate stack with or URL to script to be used.
-                      example: https://raw.githubusercontent.com/fridex/tf-benchmark-mock/master/benchmark.py
+                      example: https://raw.githubusercontent.com/thoth-station/performance/master/tensorflow/conv2d.py
       parameters:
         - name: seed
           in: query
@@ -692,6 +745,7 @@ paths:
           in: query
           schema:
             type: integer
+            default: 1
           required: false
           description: Number of stacks that should be generated.
         - name: limit_latest_versions
@@ -936,6 +990,94 @@ paths:
         "404":
           description: If the given Python package index was not found.
 
+  /analyze:
+    post:
+      tags: ["Image Analysis"]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_analyze
+      summary: |
+        Analyze the given image asynchronously, image is marked as an internal
+        container image that can be used during recommendations.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to adjust the given Python package index.
+          schema:
+            type: string
+        - name: image
+          in: query
+          required: true
+          description: >
+            Name of image - can also specify remote registry to pull
+            image from.
+          schema:
+            type: string
+        - name: registry_user
+          in: query
+          required: false
+          description: >
+            Registry user to be used for pulling images from registry.
+          schema:
+            type: string
+        - name: registry_password
+          in: query
+          required: false
+          description: >
+            Registry password or token to be used for pulling images from
+            registry.
+          schema:
+            type: string
+        - name: environment_type
+          in: query
+          required: false
+          description: >
+            Type of environment (runtime or buildtime) which is being analyzed.
+          schema:
+            type: string
+            enum:
+              - buildtime
+              - runtime
+            default: runtime
+        - name: origin
+          in: query
+          required: false
+          description: >
+            A remote where the image is being used. This is used for tracking as well as
+            for automated reporting when results are available.
+          schema:
+            type: string
+        - name: debug
+          in: query
+          required: false
+          description: >
+            Run the given analyzer in a verbose mode so developers can debug
+            analyzer.
+          schema:
+            type: boolean
+            default: false
+        - name: verify_tls
+          in: query
+          required: false
+          description: >
+            Verify TLS certificates of registry from where images are
+            pulled from.
+          schema:
+            type: boolean
+            default: true
+      responses:
+        "202":
+          description: Successful response with analyzer id.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResponse"
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResponseError"
 
   /graph/performance-indicators:
     get:
@@ -1487,3 +1629,30 @@ components:
             type: boolean
             description: Use secured connection to warehouse.
             example: true
+    AnalysisResponse:
+      type: object
+      description: Response for a submitted analysis.
+      properties:
+        analysis_id:
+          type: string
+          description: >
+            An id of submitted analysis for checking its status and its results.
+        parameters:
+          type: object
+          description: >
+            Parameters echoed back to user (with default parameters if omitted).
+      required:
+        - analysis_id
+        - parameters
+    AnalysisResponseError:
+      type: object
+      required:
+        - error
+        - parameters
+      properties:
+        error:
+          type: string
+          description: Error information for user.
+        parameters:
+          type: object
+          description: Parameters echoed back to user for debugging.
