@@ -61,7 +61,9 @@ def get_info(secret: str):
     }
 
 
-def post_register_python_package_index(secret: str, index: dict, enabled: bool = False) -> tuple:
+def post_register_python_package_index(
+    secret: str, index: dict, enabled: bool = False
+) -> tuple:
     """Register the given Python package index in the graph database."""
     from .openapi_server import GRAPH
 
@@ -77,7 +79,9 @@ def post_register_python_package_index(secret: str, index: dict, enabled: bool =
     return {}, 201
 
 
-def post_set_python_package_index_state(secret: str, index_url: dict, enabled: bool) -> tuple:
+def post_set_python_package_index_state(
+    secret: str, index_url: dict, enabled: bool
+) -> tuple:
     """Disable or enable a Python package index."""
     from .openapi_server import GRAPH
 
@@ -111,14 +115,16 @@ def post_solve_python(
     packages = package_name + (version_specifier if version_specifier else "")
 
     run_parameters = {
-        'packages': packages,
-        'indexes': GRAPH.get_python_package_index_urls_all(enabled=True),
-        'debug': debug,
-        'transitive': transitive,
+        "packages": packages,
+        "indexes": GRAPH.get_python_package_index_urls_all(enabled=True),
+        "debug": debug,
+        "transitive": transitive,
     }
 
     response, status_code = _do_schedule(
-        run_parameters, _OPENSHIFT.schedule_all_solvers, output=Configuration.THOTH_SOLVER_OUTPUT
+        run_parameters,
+        _OPENSHIFT.schedule_all_solvers,
+        output=Configuration.THOTH_SOLVER_OUTPUT,
     )
 
     # Handle a special case where no solvers for the given name were found.
@@ -181,12 +187,7 @@ def list_solvers():
         solver_info["solver_name"] = solver_name
         python_solvers.append(solver_info)
 
-    return {
-        "solvers": {
-            "python": python_solvers
-        },
-        "parameters": {}
-    }
+    return {"solvers": {"python": python_solvers}, "parameters": {}}
 
 
 def post_dependency_monkey_python(
@@ -251,7 +252,7 @@ def post_analyze(
     response, status_code = _do_schedule(
         parameters,
         _OPENSHIFT.schedule_package_extract,
-        output=Configuration.THOTH_ANALYZER_OUTPUT
+        output=Configuration.THOTH_ANALYZER_OUTPUT,
     )
 
     return response, status_code
@@ -307,7 +308,7 @@ def get_performance_indicators():
         "performance-indicators": [
             model_class.__name__ for model_class in ALL_PERFORMANCE_MODELS
         ],
-        "parameters": {}
+        "parameters": {},
     }
 
 
@@ -351,9 +352,7 @@ def initialize_schema(secret: str):
     try:
         GRAPH.initialize_schema()
     except Exception as exc:
-        return {
-            "error": str(exc)
-        }, 500
+        return {"error": str(exc)}, 500
 
     return {}, 201
 
@@ -369,15 +368,20 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
 
     solvers_installed = _OPENSHIFT.get_solver_names()
     if solver_name not in solvers_installed:
-        return {
-            "parameters": parameters,
-            "error": f"Solver with name {solver_name!r} is not installed, "
-            f"installed solvers: {', '.join(list(solvers_installed))}",
-        }, 404
+        return (
+            {
+                "parameters": parameters,
+                "error": f"Solver with name {solver_name!r} is not installed, "
+                f"installed solvers: {', '.join(list(solvers_installed))}",
+            },
+            404,
+        )
 
     indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
     analyses = []
-    for package_name, versions in GRAPH.retrieve_unsolvable_python_packages(solver_name).items():
+    for package_name, versions in GRAPH.retrieve_unsolvable_python_packages(
+        solver_name
+    ).items():
         for package_version in versions:
             analysis_id = _OPENSHIFT.schedule_solver(
                 packages=f"{package_name}=={package_version}",
@@ -388,17 +392,15 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
                 transitive=False,
             )
 
-            analyses.append({
-                "package_name": package_name,
-                "package_version": package_version,
-                "analysis_id": analysis_id,
-            })
+            analyses.append(
+                {
+                    "package_name": package_name,
+                    "package_version": package_version,
+                    "analysis_id": analysis_id,
+                }
+            )
 
-    response = {
-        "parameters": parameters,
-        "index_urls": indexes,
-        "analyses": analyses,
-    }
+    response = {"parameters": parameters, "index_urls": indexes, "analyses": analyses}
 
     if analyses:
         return response, 202
@@ -503,20 +505,11 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
         log = _OPENSHIFT.get_job_log(job_id, namespace=namespace)
     except OpenShiftNotFound:
         return (
-            {
-                "parameters": parameters,
-                "error": f"No job with id {job_id} found",
-            },
+            {"parameters": parameters, "error": f"No job with id {job_id} found"},
             404,
         )
 
-    return (
-        {
-            "parameters": parameters,
-            "log": log,
-        },
-        200,
-    )
+    return ({"parameters": parameters, "log": log}, 200)
 
 
 def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
@@ -529,10 +522,7 @@ def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
         status = _OPENSHIFT.get_job_status_report(job_id, namespace=namespace)
     except OpenShiftNotFound:
         return (
-            {
-                "parameters": parameters,
-                "error": f"No job with id {job_id} found"
-            },
+            {"parameters": parameters, "error": f"No job with id {job_id} found"},
             404,
         )
     return {"parameters": parameters, "status": status}
@@ -556,7 +546,7 @@ def post_analyze_package(
     package_version: str,
     index_url: str,
     debug: bool,
-    dry_run: bool
+    dry_run: bool,
 ):
     """Fetch digests for packages in Python ecosystem."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
@@ -568,7 +558,7 @@ def post_analyze_package(
     return _do_schedule(
         parameters,
         _OPENSHIFT.schedule_package_analyzer,
-        output=Configuration.THOTH_PACKAGE_ANALYZER_OUTPUT
+        output=Configuration.THOTH_PACKAGE_ANALYZER_OUTPUT,
     )
 
 
@@ -584,9 +574,13 @@ def get_analyze_package(analysis_id: str):
 
 def get_analyze_package_log(analysis_id: str):
     """Get package analyzer log."""
-    return _get_job_log(locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE)
+    return _get_job_log(
+        locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE
+    )
 
 
 def get_analyze_package_status(analysis_id: str):
     """Get status of an ecosystem package-analyzer."""
-    return _get_job_status(locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE)
+    return _get_job_status(
+        locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE
+    )

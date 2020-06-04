@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Stub
+# management-api
 # Copyright(C) 2019, 2020 Christoph Görn
 #
 # This program is free software: you can redistribute it and / or modify
@@ -43,7 +43,11 @@ from thoth.management_api.configuration import init_jaeger_tracer
 init_logging(logging_env_var_start="THOTH_MANAGEMENT_API_LOG_")
 
 _LOGGER = logging.getLogger("thoth.management_api")
-_LOGGER.setLevel(logging.DEBUG if bool(int(os.getenv("THOTH_MANAGEMENT_API_DEBUG", 0))) else logging.INFO)
+_LOGGER.setLevel(
+    logging.DEBUG
+    if bool(int(os.getenv("THOTH_MANAGEMENT_API_DEBUG", 0)))
+    else logging.INFO
+)
 
 _LOGGER.info(f"This is Management API v%s", __version__)
 _LOGGER.debug("DEBUG mode is enabled!")
@@ -51,7 +55,9 @@ _LOGGER.debug("DEBUG mode is enabled!")
 _THOTH_API_HTTPS = bool(int(os.getenv("THOTH_API_HTTPS", 1)))
 
 # Expose for uWSGI.
-app = connexion.FlaskApp(__name__, specification_dir=Configuration.SWAGGER_YAML_PATH, debug=True)
+app = connexion.FlaskApp(
+    __name__, specification_dir=Configuration.SWAGGER_YAML_PATH, debug=True
+)
 
 app.add_api(
     "openapi.yaml",
@@ -78,7 +84,9 @@ application.secret_key = Configuration.APP_SECRET_KEY
 
 # static information as metric
 metrics.info("management_api_info", "Management API info", version=__version__)
-_API_GAUGE_METRIC = metrics.info("management_api_schema_up2date", "User API schema up2date")
+_API_GAUGE_METRIC = metrics.info(
+    "management_api_schema_up2date", "User API schema up2date"
+)
 # Instantiate one GraphDatabase adapter in the whole application (one per wsgi worker) to correctly
 # reuse connection pooling from one instance.
 GRAPH = GraphDatabase()
@@ -98,7 +106,10 @@ def before_request_callback():
         except DatabaseNotInitialized as exc:
             # This can happen if database is erased after the service has been started as we
             # have passed readiness probe with this check.
-            _LOGGER.exception("Cannot determine database schema as database is not initialized: %s", str(exc))
+            _LOGGER.exception(
+                "Cannot determine database schema as database is not initialized: %s",
+                str(exc),
+            )
             _API_GAUGE_METRIC.set(0)
 
 
@@ -114,7 +125,7 @@ def before_first_request_callback():
 def base_url():
     """Redirect to UI by default."""
     # https://github.com/pallets/flask/issues/773
-    request.environ['wsgi.url_scheme'] = 'https' if _THOTH_API_HTTPS else 'http'
+    request.environ["wsgi.url_scheme"] = "https" if _THOTH_API_HTTPS else "http"
     return redirect("api/v1/ui/")
 
 
@@ -133,7 +144,11 @@ def api_v1():
 
 
 def _healthiness():
-    return jsonify({"status": "ready", "version": __version__}), 200, {"ContentType": "application/json"}
+    return (
+        jsonify({"status": "ready", "version": __version__}),
+        200,
+        {"ContentType": "application/json"},
+    )
 
 
 @app.route("/readiness")
@@ -168,7 +183,10 @@ def internal_server_error(exc):
         jsonify(
             {
                 "error": "Internal server error occurred, please contact administrator with provided details.",
-                "details": {"type": exc.__class__.__name__, "datetime": datetime2datetime_str(datetime.utcnow())},
+                "details": {
+                    "type": exc.__class__.__name__,
+                    "datetime": datetime2datetime_str(datetime.utcnow()),
+                },
             }
         ),
         500,
