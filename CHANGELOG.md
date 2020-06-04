@@ -5,4 +5,3 @@
 ### Added
 
 * Initial Management API implementation
-
