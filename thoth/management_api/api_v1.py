@@ -210,7 +210,6 @@ def post_dependency_monkey_python(
     return _do_schedule(
         parameters,
         _OPENSHIFT.schedule_dependency_monkey,
-        report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT,
         stack_output=Configuration.THOTH_DEPENDENCY_MONKEY_STACK_OUTPUT,
     )
 
