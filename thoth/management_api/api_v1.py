@@ -270,33 +270,6 @@ def erase_graph(secret: str):
     return {}, 201
 
 
-def sync_graph(
-    secret: str,
-    only_solver_documents: bool,
-    only_analysis_documents: bool,
-    only_package_analyzer_documents: bool,
-    only_inspection_documents: bool,
-    only_adviser_documents: bool,
-    only_provenance_checker_documents: bool,
-    only_dependency_monkey_documents: bool,
-):
-    """Clean content of the graph database."""
-    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
-        return {"error": "Wrong secret provided"}, 401
-
-    job_id = _OPENSHIFT.schedule_graph_sync_multiple(
-        only_solver_documents=only_solver_documents,
-        only_analysis_documents=only_analysis_documents,
-        only_package_analyzer_documents=only_package_analyzer_documents,
-        only_inspection_documents=only_inspection_documents,
-        only_adviser_documents=only_adviser_documents,
-        only_provenance_checker_documents=only_provenance_checker_documents,
-        only_dependency_monkey_documents=only_dependency_monkey_documents,
-    )
-
-    return {"job_id": job_id}, 201
-
-
 def get_graph_version():
     """Get version of Thoth's storages package installed."""
     return {"thoth-storages": thoth_storages_version}, 200
