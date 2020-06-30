@@ -40,20 +40,9 @@ class Configuration:
     SWAGGER_YAML_PATH = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "../../openapi"
     )
-    THOTH_RESULT_API_URL = os.environ["THOTH_RESULT_API_URL"]
-    THOTH_SOLVER_OUTPUT = THOTH_RESULT_API_URL + "/api/v1/solver-result"
     THOTH_DEPENDENCY_MONKEY_STACK_OUTPUT = _AMUN_API_URL
-    THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT = (
-        THOTH_RESULT_API_URL + "/api/v1/dependency-monkey-report"
-    )
     THOTH_MANAGEMENT_API_TOKEN = os.environ["THOTH_MANAGEMENT_API_TOKEN"]
     THOTH_MIDDLETIER_NAMESPACE = os.environ["THOTH_MIDDLETIER_NAMESPACE"]
-    THOTH_SOLVER_SUBGRAPH_CHECK_API = THOTH_RESULT_API_URL + "/api/v1/subgraph-check"
-    THOTH_PACKAGE_ANALYZER_OUTPUT = (
-        THOTH_RESULT_API_URL + "/api/v1/package-analysis-result"
-    )
-    THOTH_ANALYZER_OUTPUT = THOTH_RESULT_API_URL + "/api/v1/analysis-result"
-
     JAEGER_HOST = os.getenv("JAEGER_HOST", "localhost")
 
     OPENAPI_PORT = 8080

@@ -124,7 +124,6 @@ def post_solve_python(
     response, status_code = _do_schedule(
         run_parameters,
         _OPENSHIFT.schedule_all_solvers,
-        output=Configuration.THOTH_SOLVER_OUTPUT,
     )
 
     # Handle a special case where no solvers for the given name were found.
@@ -210,7 +209,6 @@ def post_dependency_monkey_python(
     return _do_schedule(
         parameters,
         _OPENSHIFT.schedule_dependency_monkey,
-        report_output=Configuration.THOTH_DEPENDENCY_MONKEY_REPORT_OUTPUT,
         stack_output=Configuration.THOTH_DEPENDENCY_MONKEY_STACK_OUTPUT,
     )
 
@@ -252,7 +250,6 @@ def post_analyze(
     response, status_code = _do_schedule(
         parameters,
         _OPENSHIFT.schedule_package_extract,
-        output=Configuration.THOTH_ANALYZER_OUTPUT,
     )
 
     return response, status_code
@@ -385,10 +382,8 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
         for package_version in versions:
             analysis_id = _OPENSHIFT.schedule_solver(
                 packages=f"{package_name}=={package_version}",
-                output=Configuration.THOTH_SOLVER_OUTPUT,
                 solver=solver_name,
                 indexes=indexes,
-                subgraph_check_api=Configuration.THOTH_SOLVER_SUBGRAPH_CHECK_API,
                 transitive=False,
             )
 
@@ -509,7 +504,7 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
             404,
         )
 
-    return ({"parameters": parameters, "log": log}, 200)
+    return {"parameters": parameters, "log": log}, 200
 
 
 def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
@@ -558,7 +553,6 @@ def post_analyze_package(
     return _do_schedule(
         parameters,
         _OPENSHIFT.schedule_package_analyzer,
-        output=Configuration.THOTH_PACKAGE_ANALYZER_OUTPUT,
     )
 
 
