@@ -427,11 +427,19 @@ def _do_listing(adapter_class, page: int) -> tuple:
 
 
 def _get_document(
-    adapter_class, analysis_id: str, name_prefix: str = None, namespace: str = None
+    adapter_class, analysis_id: str, name_prefix: str = None, namespace: str = None,
 ) -> tuple:
     """Perform actual document retrieval."""
     # Parameters to be reported back to a user of API.
     parameters = {"analysis_id": analysis_id}
+    if not analysis_id or not name_prefix:
+        return (
+            {
+                "error": "No analysis id or name prefix provided",
+                "parameters": parameters,
+            },
+            400,
+        )
     if not analysis_id.startswith(name_prefix):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
@@ -498,6 +506,8 @@ def _get_document(
 def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
     """Get job log based on analysis id."""
     job_id = parameters.get("analysis_id")
+    if job_id is None:
+        return {"error": "No analysis id provided", "parameters": parameters}, 400
     if not job_id.startswith(name_prefix):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
@@ -515,6 +525,8 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
 def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
     """Get status for a job."""
     job_id = parameters.get("analysis_id")
+    if job_id is None:
+        return {"error": "No analysis id provided", "parameters": parameters}, 400
     if not job_id.startswith(name_prefix):
         return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
 
