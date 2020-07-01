@@ -911,11 +911,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:b91d55d014555a13a3c993d86a26f1ae49d81866c3ba5de9184b135625b0bfc1",
-                "sha256:e19f4bfb7319de6d771210a97e9ee186b13a3dbb1598c404e207c5425c23f504"
+                "sha256:2550322805a7e3b91ae3d3088946347b561124cd436f9f4a73e3bca14be4c5d0",
+                "sha256:f87326fd34a94ebe24a99f5eece4e03f48e40145d88a2214b5fa36e941a161b0"
             ],
             "index": "pypi",
-            "version": "==0.13.9"
+            "version": "==0.14.0"
         },
         "thoth-python": {
             "hashes": [
