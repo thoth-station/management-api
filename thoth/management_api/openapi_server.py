@@ -95,7 +95,7 @@ GRAPH.connect()
 
 @application.before_request
 def before_request_callback():
-    """Callback registered, runs before each request to this service."""
+    """Register callback, runs before each request to this service."""
     method = request.method
     path = request.path
 
@@ -115,7 +115,7 @@ def before_request_callback():
 
 @application.before_first_request
 def before_first_request_callback():
-    """Callback registered, runs before first request to this service."""
+    """Register callback, runs before first request to this service."""
     if bool(int(os.getenv("THOTH_MANAGEMENT_API_RUN_MIGRATIONS", 0))):
         GRAPH.initialize_schema()
 
