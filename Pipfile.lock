@@ -579,11 +579,11 @@
         },
         "opentracing-instrumentation": {
             "hashes": [
-                "sha256:918b1f52e3db035002bb26a366bb6cbaea9715d567015ce9f514e08047f84185",
-                "sha256:a8fb8499c6ab71665313c179e327b406bfa09b0277bd7cb02b2941eaa659d8dd"
+                "sha256:ae9b48a5b6e47189887fff9785230b13141659bb3bf3e2700e4c7470ae5d27b4",
+                "sha256:d94801aebab95b7e8f3eeb80ee0e5e886ad4f1761bcadff9b5d1d3d04560c04a"
             ],
             "index": "pypi",
-            "version": "==3.2.1"
+            "version": "==3.3.1"
         },
         "packaging": {
             "hashes": [
