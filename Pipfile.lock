@@ -98,17 +98,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:ae57df1fbad7e29954a160d77cbf650d6562eb0d304c1206afa71d914e771a66",
-                "sha256:cbe618d61cb8f75cd9495ea36e69bad7c8984eb11f02ad247be4c9a2eb7eb647"
+                "sha256:1776200c04152dd308e297cd18abb183d93383587dca358a768155507f15965b",
+                "sha256:944c02dbf96dbaf52498acdbea60d4eb2aa717f40a797f86f8d47d8905e02441"
             ],
-            "version": "==1.14.17"
+            "version": "==1.14.19"
         },
         "botocore": {
             "hashes": [
-                "sha256:5528c04c360019c24f2706ce82872c9ab767a8c581beffdfdaf006cce7499cac",
-                "sha256:d65b5574dad8c221344496352245828d9ffecaa0868199eb04ccd2eb2ff09133"
+                "sha256:4eef7d38de1bee3bb60a66d53a73d47ec5ea30d3d43befa90840ba1d52791971",
+                "sha256:7890e83cd28967f854fd54d6c8bdb009868aec1c31a71dcc82e4577562f1affb"
             ],
-            "version": "==1.17.17"
+            "version": "==1.17.19"
         },
         "cachetools": {
             "hashes": [
@@ -890,9 +890,9 @@
         },
         "sqlalchemy-utils": {
             "hashes": [
-                "sha256:be319a16022b6a01e1d6c838340485beb4d34fd9c1c19d2303356804fa0faa09"
+                "sha256:fb66e9956e41340011b70b80f898fde6064ec1817af77199ee21ace71d7d6ab0"
             ],
-            "version": "==0.36.7"
+            "version": "==0.36.8"
         },
         "swagger-ui-bundle": {
             "hashes": [
@@ -926,11 +926,11 @@
         },
         "thoth-storages": {
             "hashes": [
-                "sha256:9bc8993e1cbcd868269f28a1c438ccdf97ed7b773cc967e94ede688fd9fe107b",
-                "sha256:d93ca7fba28ee5fcca1f1a6a8d4eecf233eaa51c3dfd760656ba37a056834970"
+                "sha256:92bf248c8d91ee0195b485d17fb11c7f3f32c2785b59806f35b0e7a8c74a9ef5",
+                "sha256:b198272ffdc8c3b81fd31b006fb619e7981e018d5359fede06866e33f05c5b66"
             ],
             "index": "pypi",
-            "version": "==0.24.0"
+            "version": "==0.24.2"
         },
         "threadloop": {
             "hashes": [
