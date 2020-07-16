@@ -883,3 +883,25 @@
 * New connexion requires swagger-ui extras
 * Provide API management token
 * Lower deployment requests and limits
+
+## Release 0.6.2 (2020-07-16T07:04:48)
+* Add maintainer
+* :pushpin: Automatic update of dependency sentry-sdk from 0.16.0 to 0.16.1 (#499)
+* :pushpin: Automatic update of dependency thoth-storages from 0.24.2 to 0.24.3 (#498)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.14.1 to 0.15.0 (#497)
+* :pushpin: Automatic update of dependency thoth-storages from 0.24.0 to 0.24.2 (#495)
+* Remove templates handled by thoth-application (#494)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.15.1 to 0.16.0 (#492)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.0 to 0.14.1 (#491)
+* Fix pre-commit issues (#490)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.13.0 to 0.14.1 (#488)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.13.0 to 0.14.1 (#475)
+* :pushpin: Automatic update of dependency opentracing-instrumentation from 3.2.1 to 3.3.1 (#474)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.9 to 0.14.0 (#487)
+* :pushpin: Automatic update of dependency thoth-common from 0.13.9 to 0.14.0 (#483)
+* :pushpin: Automatic update of dependency requests from 2.23.0 to 2.24.0 (#476)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.14.4 to 0.15.1 (#485)
+* :pushpin: Automatic update of dependency thoth-storages from 0.22.12 to 0.24.0 (#484)
+* Fixed pre-commit errors (#482)
+* Remove result-api bits
+* Update OWNERS
