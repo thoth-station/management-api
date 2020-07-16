@@ -21,6 +21,8 @@ managers:
       maintainers:
         - fridex
         - goern
+        - sesheta
+        - pacospace
       assignees:
         - sesheta
       labels: [bot]
