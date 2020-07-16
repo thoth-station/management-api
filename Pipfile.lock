@@ -98,17 +98,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:e6ab26155b2f83798218106580ab2b3cd47691e25aba912e0351502eda8d86e0",
-                "sha256:f7aa33b382cc9e73ef7f590b885e72732ad2bd9628c5e312c9aeb8ba011c6820"
+                "sha256:5c2fa8ac4e4a4800d02b11d75b71bb8fcc190d6fbb15d957f99661414e655e10",
+                "sha256:b093e00e98ab31f98d444efad1738ab4795226f0b05abc6655d747f286f9baf9"
             ],
-            "version": "==1.14.20"
+            "version": "==1.14.21"
         },
         "botocore": {
             "hashes": [
-                "sha256:d1bf8c2085719221683edf54913c6155c68705f26ab4a72c45e4de5176a8cf7b",
-                "sha256:e7fee600092b51ca8016c541d5c50a8b39179d5c184ec3fd430400d99ba0c55a"
+                "sha256:9c4694e413c344ca2fb1175f33a97265dbf7f8a5943fbeafde3161d080b72308",
+                "sha256:fcbcda16c815744482be4206ed098f4d08f2dfddfb1fcfa0f822f4cfd94adb85"
             ],
-            "version": "==1.17.20"
+            "version": "==1.17.21"
         },
         "cachetools": {
             "hashes": [
@@ -229,10 +229,10 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:b0e4ecc40ed18b8d12141df6af772efa4aba65e7eda470c258581443418ee753",
-                "sha256:eefbb977d026d617e5d33b82b6c266d3be3bb7b44d370b692dded7319121f842"
+                "sha256:167b1bcc51da05d32a1a843815967b4fa81a556e4c9c3377e766f136a2a30f65",
+                "sha256:2b6bb2a6578233bb78f755fc7eb54e0b71f8eb1314d25baeef93b88ad10524fa"
             ],
-            "version": "==1.19.0"
+            "version": "==1.19.1"
         },
         "grpcio": {
             "hashes": [
@@ -911,11 +911,11 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:3be8f2c15e4decb277d3cef0f7327e30374a21761b02d9d9b1e35d06205def1c",
-                "sha256:536f6bd57d5d47f65fbcabad28aef0fb07f822cc61b9f1970e91ca2b7b4836de"
+                "sha256:57c28514d60219b1f35ecfddace63333d00cf824ee725054965c7c2f957be90e",
+                "sha256:b4115bb7622f298cf98660c4650154d9a19c80cc5ca5ffd871c586d3b7a9de32"
             ],
             "index": "pypi",
-            "version": "==0.14.1"
+            "version": "==0.14.2"
         },
         "thoth-python": {
             "hashes": [
