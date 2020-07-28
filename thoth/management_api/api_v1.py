@@ -181,7 +181,7 @@ def list_solvers():
     # We are fine with 500 here in case of some OpenShift/configuration failures.
     python_solvers = []
     for solver_name in _OPENSHIFT.get_solver_names():
-        solver_info = GraphDatabase.parse_python_solver_name(solver_name)
+        solver_info = _OPENSHIFT.parse_python_solver_name(solver_name)
         solver_info["solver_name"] = solver_name
         python_solvers.append(solver_info)
 
