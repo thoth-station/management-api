@@ -29,7 +29,6 @@ from typing import Tuple
 from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages import __version__ as thoth_storages_version
-from thoth.storages import GraphDatabase
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
@@ -181,7 +180,7 @@ def list_solvers():
     # We are fine with 500 here in case of some OpenShift/configuration failures.
     python_solvers = []
     for solver_name in _OPENSHIFT.get_solver_names():
-        solver_info = GraphDatabase.parse_python_solver_name(solver_name)
+        solver_info = _OPENSHIFT.parse_python_solver_name(solver_name)
         solver_info["solver_name"] = solver_name
         python_solvers.append(solver_info)
 
