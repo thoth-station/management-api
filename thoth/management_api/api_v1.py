@@ -351,7 +351,7 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
     ).items():
         for package_version in versions:
             analysis_id = _OPENSHIFT.schedule_solver(
-                packages=f"{package_name}=={package_version}",
+                packages=f"{package_name}==={package_version}",
                 solver=solver_name,
                 indexes=indexes,
                 transitive=False,
