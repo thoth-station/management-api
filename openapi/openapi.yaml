@@ -570,6 +570,7 @@ paths:
                         "cpu_model": 5
                       },
                       "python_version": "3.6",
+                      "platform": "linux-x86_64"
                     }
                 context:
                   type: object
