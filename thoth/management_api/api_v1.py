@@ -32,7 +32,6 @@ from thoth.storages import __version__ as thoth_storages_version
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyReportsStore
-from thoth.storages import PackageAnalysisResultsStore
 from thoth.storages.exceptions import NotFoundError
 
 from .configuration import Configuration
@@ -514,46 +513,4 @@ def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
             "cached": False,
         },
         202,
-    )
-
-
-def post_analyze_package(
-    secret: str,
-    package_name: str,
-    package_version: str,
-    index_url: str,
-    debug: bool,
-    dry_run: bool,
-):
-    """Fetch digests for packages in Python ecosystem."""
-    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
-        return {"error": "Wrong secret provided"}, 401
-
-    parameters = locals()
-    parameters.pop("secret")
-
-    return _do_schedule(parameters, _OPENSHIFT.schedule_package_analyzer,)
-
-
-def get_analyze_package(analysis_id: str):
-    """Retrieve the given package analyzer result."""
-    return _get_document(
-        PackageAnalysisResultsStore,
-        analysis_id,
-        name_prefix="package-analyzer-",
-        namespace=Configuration.THOTH_MIDDLETIER_NAMESPACE,
-    )
-
-
-def get_analyze_package_log(analysis_id: str):
-    """Get package analyzer log."""
-    return _get_job_log(
-        locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE
-    )
-
-
-def get_analyze_package_status(analysis_id: str):
-    """Get status of an ecosystem package-analyzer."""
-    return _get_job_status(
-        locals(), "package-analyzer", Configuration.THOTH_MIDDLETIER_NAMESPACE
     )
