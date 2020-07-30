@@ -364,21 +364,11 @@ paths:
                     type: object
                     description: Status information about the analysis run.
                     required:
-                      - container
-                      - exit_code
                       - finished_at
                       - reason
                       - started_at
                       - state
                     properties:
-                      container:
-                        type: string
-                        description: SHA of container image in which the analysis is done.
-                        nullable: true
-                      exit_code:
-                        type: integer
-                        description: Return code of the process perfoming analysis.
-                        nullable: true
                       finished_at:
                         type: string
                         description: >

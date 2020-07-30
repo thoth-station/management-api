@@ -153,7 +153,9 @@ def get_solve_python_log(analysis_id: str):
 
 def get_solve_python_status(analysis_id: str):
     """Get status of an ecosystem solver."""
-    return _get_job_status(locals(), "solver", Configuration.THOTH_MIDDLETIER_NAMESPACE)
+    return _get_workflow_status(
+        locals(), "solver", Configuration.THOTH_MIDDLETIER_NAMESPACE
+    )
 
 
 def list_solve_python_results(page: int = 0):
@@ -219,7 +221,7 @@ def get_dependency_monkey_python_log(analysis_id: str):
 
 def get_dependency_monkey_python_status(analysis_id: str):
     """Get dependency monkey container status."""
-    return _get_job_status(
+    return _get_workflow_status(
         locals(), "dependency-monkey-", Configuration.THOTH_MIDDLETIER_NAMESPACE
     )
 
@@ -486,22 +488,27 @@ def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
     return {"parameters": parameters, "log": log}, 200
 
 
-def _get_job_status(parameters: dict, name_prefix: str, namespace: str):
-    """Get status for a job."""
-    job_id = parameters.get("analysis_id")
-    if job_id is None:
-        return {"error": "No analysis id provided", "parameters": parameters}, 400
-    if not job_id.startswith(name_prefix):
-        return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
+def _get_workflow_status(parameters: dict, name_prefix: str, namespace: str):
+    """Get status for a argo workflow."""
+    workflow_id = parameters.get("analysis_id")
+    if workflow_id is None:
+        return {"error": "No workflow id provided", "parameters": parameters}, 400
+    if not workflow_id.startswith(name_prefix):
+        return {"error": "Wrong workflow id provided", "parameters": parameters}, 400
 
     try:
-        status = _OPENSHIFT.get_job_status_report(job_id, namespace=namespace)
+        status = _OPENSHIFT.get_workflow_status_report(
+            workflow_id=workflow_id, namespace=namespace
+        )
     except OpenShiftNotFound:
         return (
-            {"parameters": parameters, "error": f"No job with id {job_id} found"},
+            {
+                "parameters": parameters,
+                "error": f"Requested status for workflow {workflow_id!r} was not found",
+            },
             404,
         )
-    return {"parameters": parameters, "status": status}
+    return {"parameters": parameters, "status": status}, 200
 
 
 def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
