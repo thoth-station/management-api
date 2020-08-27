@@ -905,3 +905,36 @@
 * Fixed pre-commit errors (#482)
 * Remove result-api bits
 * Update OWNERS
+
+## Release 0.6.3 (2020-08-27T19:23:39)
+### Features
+* Added new workflow status method (#528)
+* Do exact match for the given version when scheduling solvers (#523)
+* Remove package analyzer, it has been archived
+* Provide missing platform to dependency monkey run (#520)
+* Remove GraphDatabase
+* Fix parse python solve name
+* Remove latest versions restrictions (#510)
+* Remove endpoints for graph sync job
+### Improvements
+* Fix obtaining logs for DM and solvers when Argo workflows are used
+* :arrow_down: removed the files as they are no longer required
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-common from 0.16.1 to 0.17.0
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.15.4 to 0.16.0 (#530)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.16.2 to 0.17.0 (#536)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.0 to 0.25.5 (#535)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.16.2 to 0.17.0 (#534)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.0 to 0.25.5 (#533)
+* :pushpin: Automatic update of dependency thoth-common from 0.16.0 to 0.16.1 (#532)
+* :pushpin: Automatic update of dependency pytest from 6.0.0 to 6.0.1 (#526)
+* :pushpin: Automatic update of dependency thoth-storages from 0.24.5 to 0.25.0 (#525)
+* :pushpin: Automatic update of dependency thoth-common from 0.15.0 to 0.16.0 (#524)
+* :pushpin: Automatic update of dependency pytest from 5.4.3 to 6.0.0 (#521)
+* :pushpin: Automatic update of dependency thoth-common from 0.14.2 to 0.15.0 (#519)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.16.1 to 0.16.2 (#517)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.16.1 to 0.16.2 (#515)
+* :pushpin: Automatic update of dependency thoth-storages from 0.24.4 to 0.24.5 (#514)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.15.0 to 0.15.4 (#513)
+* :pushpin: Automatic update of dependency openapi-spec-validator from 0.2.8 to 0.2.9 (#512)
+* :pushpin: Automatic update of dependency thoth-storages from 0.24.3 to 0.24.4 (#509)
