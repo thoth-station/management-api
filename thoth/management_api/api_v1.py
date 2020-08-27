@@ -148,7 +148,9 @@ def get_solve_python(analysis_id: str):
 
 def get_solve_python_log(analysis_id: str):
     """Get solver log."""
-    return _get_job_log(locals(), "solver", Configuration.THOTH_MIDDLETIER_NAMESPACE)
+    return _get_log(
+        "solverany", analysis_id, namespace=Configuration.THOTH_MIDDLETIER_NAMESPACE
+    )
 
 
 def get_solve_python_status(analysis_id: str):
@@ -214,8 +216,8 @@ def post_dependency_monkey_python(
 
 def get_dependency_monkey_python_log(analysis_id: str):
     """Get dependency monkey container log."""
-    return _get_job_log(
-        locals(), "dependency-monkey-", Configuration.THOTH_MIDDLETIER_NAMESPACE
+    return _get_log(
+        "dm", analysis_id, namespace=Configuration.THOTH_MIDDLETIER_NAMESPACE
     )
 
 
@@ -469,23 +471,24 @@ def _get_document(
         )
 
 
-def _get_job_log(parameters: dict, name_prefix: str, namespace: str):
-    """Get job log based on analysis id."""
-    job_id = parameters.get("analysis_id")
-    if job_id is None:
-        return {"error": "No analysis id provided", "parameters": parameters}, 400
-    if not job_id.startswith(name_prefix):
-        return {"error": "Wrong analysis id provided", "parameters": parameters}, 400
-
+def _get_log(
+    node_name: str, analysis_id: str, namespace: str
+) -> typing.Tuple[typing.Dict[str, typing.Any], int]:
+    """Get log for a node in a workflow."""
+    result = {"parameters": {"analysis_id": analysis_id}}
     try:
-        log = _OPENSHIFT.get_job_log(job_id, namespace=namespace)
-    except OpenShiftNotFound:
-        return (
-            {"parameters": parameters, "error": f"No job with id {job_id} found"},
-            404,
+        log = _OPENSHIFT.get_workflow_node_log(node_name, analysis_id, namespace)
+    except NotFoundError as exc:
+        _LOGGER.exception(f"Log for {analysis_id} were not found: {str(exc)}")
+        result.update(
+            {
+                "error": f"Log for analysis {analysis_id} was not found or it has not started yet"
+            }
         )
-
-    return {"parameters": parameters, "log": log}, 200
+        return result, 404
+    else:
+        result.update({"log": log})
+        return result, 200
 
 
 def _get_workflow_status(parameters: dict, name_prefix: str, namespace: str):
