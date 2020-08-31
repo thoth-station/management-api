@@ -938,3 +938,9 @@
 * :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.15.0 to 0.15.4 (#513)
 * :pushpin: Automatic update of dependency openapi-spec-validator from 0.2.8 to 0.2.9 (#512)
 * :pushpin: Automatic update of dependency thoth-storages from 0.24.3 to 0.24.4 (#509)
+
+## Release 0.6.4 (2020-08-31T06:39:49)
+### Bug Fixes
+* Relock dependencies due to Pipenv/Kebechet bug
+### Non-functional
+* Add pull request template
