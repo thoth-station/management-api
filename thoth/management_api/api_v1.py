@@ -475,7 +475,7 @@ def _get_log(
     node_name: str, analysis_id: str, namespace: str
 ) -> typing.Tuple[typing.Dict[str, typing.Any], int]:
     """Get log for a node in a workflow."""
-    result = {"parameters": {"analysis_id": analysis_id}}
+    result: typing.Dict[str, typing.Any] = {"parameters": {"analysis_id": analysis_id}}
     try:
         log = _OPENSHIFT.get_workflow_node_log(node_name, analysis_id, namespace)
     except NotFoundError as exc:
