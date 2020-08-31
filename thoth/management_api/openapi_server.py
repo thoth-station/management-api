@@ -30,6 +30,8 @@ from flask import redirect, jsonify, request
 from flask_script import Manager
 from prometheus_flask_exporter import PrometheusMetrics
 
+from thoth.common import __version__ as __common__version__
+from thoth.storages import __version__ as __storages__version__
 from thoth.common import datetime2datetime_str
 from thoth.common import init_logging
 from thoth.storages import GraphDatabase
@@ -49,7 +51,9 @@ _LOGGER.setLevel(
     else logging.INFO
 )
 
-_LOGGER.info(f"This is Management API v%s", __version__)
+__service_version__ = f"{__version__}+storage.{__storages__version__}.common.{__common__version__}"
+
+_LOGGER.info("This is Management API v%s", __service_version__)
 _LOGGER.debug("DEBUG mode is enabled!")
 
 _THOTH_API_HTTPS = bool(int(os.getenv("THOTH_API_HTTPS", 1)))
@@ -83,7 +87,7 @@ manager = Manager(application)
 application.secret_key = Configuration.APP_SECRET_KEY
 
 # static information as metric
-metrics.info("management_api_info", "Management API info", version=__version__)
+metrics.info("management_api_info", "Management API info", version=__service_version__)
 _API_GAUGE_METRIC = metrics.info(
     "management_api_schema_up2date", "User API schema up2date"
 )
@@ -197,6 +201,7 @@ def internal_server_error(exc):
 def apply_headers(response):
     """Add headers to each response."""
     response.headers["X-Management-API-Version"] = __version__
+    response.headers["X-Management-API-Service-Version"] = __service_version__
     return response
 
 
