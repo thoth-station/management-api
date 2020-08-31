@@ -480,11 +480,10 @@ def _get_log(
         log = _OPENSHIFT.get_workflow_node_log(node_name, analysis_id, namespace)
     except NotFoundError as exc:
         _LOGGER.exception(f"Log for {analysis_id} were not found: {str(exc)}")
-        result.update(
-            {
-                "error": f"Log for analysis {analysis_id} was not found or it has not started yet"
-            }
-        )
+        d: typing.Dict[str, Any] = {
+            "error": f"Log for analysis {analysis_id} was not found or it has not started yet"
+        }
+        result.update(d)
         return result, 404
     else:
         result.update({"log": log})

@@ -51,7 +51,9 @@ _LOGGER.setLevel(
     else logging.INFO
 )
 
-__service_version__ = f"{__version__}+storage.{__storages__version__}.common.{__common__version__}"
+__service_version__ = (
+    f"{__version__}+storage.{__storages__version__}.common.{__common__version__}"
+)
 
 _LOGGER.info("This is Management API v%s", __service_version__)
 _LOGGER.debug("DEBUG mode is enabled!")
