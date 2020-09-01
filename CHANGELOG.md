@@ -944,3 +944,19 @@
 * Relock dependencies due to Pipenv/Kebechet bug
 ### Non-functional
 * Add pull request template
+
+## Release 0.7.0 (2020-09-01T15:24:06)
+### Features
+* Introduce a way to parametrize predictor on API endpoint
+* Introduce a way to parametrize predictor
+* Provide service version
+### Bug Fixes
+* Add pre-commit fixes
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-common from 0.17.1 to 0.17.2 (#559)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.1 to 0.17.2 (#557)
+* :pushpin: Automatic update of dependency thoth-common from 0.17.0 to 0.17.1 (#556)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.1 to 0.17.2 (#555)
+* :pushpin: Automatic update of dependency thoth-common from 0.17.0 to 0.17.1 (#554)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.16.0 to 0.16.4 (#553)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.0 to 0.17.1 (#548)
