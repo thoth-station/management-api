@@ -546,6 +546,10 @@ paths:
                     steps: []
                     strides: []
                     wraps: []
+                predictor_config:
+                  type: object
+                  description: Predictor specific configuration passed.
+                  example: {}
                 runtime_environment:
                   type: object
                   description: Runtime environment used as a hint for resolver.
