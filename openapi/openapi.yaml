@@ -546,6 +546,10 @@ paths:
                     steps: []
                     strides: []
                     wraps: []
+                predictor:
+                  type: string
+                  description: Name of the predictor to be used.
+                  example: "AUTO"
                 predictor_config:
                   type: object
                   description: Predictor specific configuration passed.
