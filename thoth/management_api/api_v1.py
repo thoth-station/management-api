@@ -203,6 +203,7 @@ def post_dependency_monkey_python(
     requirements = input.pop("requirements")
     context = input.pop("context")
     pipeline = input.pop("pipeline", None)
+    predictor = input.pop("predictor", None)
     predictor_config = input.pop("predictor_config", None)
     runtime_environment = input.pop("runtime_environment", None)
     parameters = locals()
