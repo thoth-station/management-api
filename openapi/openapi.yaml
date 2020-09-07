@@ -572,7 +572,6 @@ paths:
                     }
                 context:
                   type: object
-                  additionalProperties: true
                   required:
                     - base
                   properties:
