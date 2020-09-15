@@ -960,3 +960,18 @@
 * :pushpin: Automatic update of dependency thoth-common from 0.17.0 to 0.17.1 (#554)
 * :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.16.0 to 0.16.4 (#553)
 * :pushpin: Automatic update of dependency sentry-sdk from 0.17.0 to 0.17.1 (#548)
+
+## Release 0.7.1 (2020-09-15T10:42:30)
+### Features
+* Remove additional property configuration
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.6 to 0.25.8 (#575)
+* :pushpin: Automatic update of dependency pytest from 6.0.1 to 6.0.2 (#574)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.4 to 0.17.5 (#573)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.6 to 0.25.8 (#572)
+* :pushpin: Automatic update of dependency thoth-common from 0.18.1 to 0.19.0 (#571)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.3 to 0.17.4 (#567)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.5 to 0.25.6 (#566)
+* :pushpin: Automatic update of dependency thoth-common from 0.17.2 to 0.18.1 (#565)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.17.2 to 0.17.3 (#564)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.16.4 to 0.17.0 (#563)
