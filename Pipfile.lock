@@ -100,17 +100,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:348cddfd56be6c8b759544f99d20d633cc6a65d346651700ad8ac93a5214c032",
-                "sha256:c4ccd1f260660603f965bcc145de87e09dd1229040784fe119cd08caeb00dbe9"
+                "sha256:02f5f7a2b1349760b030c34f90a9cb4600bf8fe3cbc76b801d122bc4cecf3a7f",
+                "sha256:e0a1dbc0a0e460dc6de2f4144b5015edad3ab5c17ee83c6194b1a010d815bc60"
             ],
-            "version": "==1.15.8"
+            "version": "==1.15.9"
         },
         "botocore": {
             "hashes": [
-                "sha256:07b399997d8050d3ed1150d4d657b46558999f75246eb5b02cee78b9798b3bd5",
-                "sha256:53a778e6b715ad2ae39bf98e088962e8d524133fb458d83f080964254adc9885"
+                "sha256:35b06b8801eb2dd7e708de35581f9c0304740645874f3af5b8b0c1648f8d6365",
+                "sha256:dc3244170254cbba7dfde00b0489f830069d93dd6a9e555178d989072d7ee7c2"
             ],
-            "version": "==1.18.8"
+            "version": "==1.18.9"
         },
         "cachetools": {
             "hashes": [
@@ -925,11 +925,11 @@
         },
         "thoth-storages": {
             "hashes": [
-                "sha256:0e5f7d9aa4700f5f919ed6970f314dfeaf64e07b64150ad8f6db4168247b207b",
-                "sha256:896635a67542654a1cf39deaccc5d0e4561fac6027dc4bf7ccba03ccbf567831"
+                "sha256:057c092d8895b6a04298944764061caee949ea9d0a68771de65eae56d862cdb6",
+                "sha256:edc10b7aebe66303a0da935a6f12c70100e18ca30cce24c248bacb76c8ec22d6"
             ],
             "index": "pypi",
-            "version": "==0.25.13"
+            "version": "==0.25.14"
         },
         "threadloop": {
             "hashes": [
@@ -969,7 +969,7 @@
                 "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c",
                 "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"
             ],
-            "markers": "python_version < '3.7'",
+            "markers": "python_version < '3.8'",
             "version": "==3.7.4.3"
         },
         "tzlocal": {
