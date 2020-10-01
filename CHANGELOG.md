@@ -987,3 +987,8 @@
 * :pushpin: Automatic update of dependency thoth-common from 0.19.0 to 0.20.0 (#580)
 * :pushpin: Automatic update of dependency sentry-sdk from 0.17.5 to 0.18.0 (#589)
 * :pushpin: Automatic update of dependency thoth-storages from 0.25.11 to 0.25.13 (#588)
+
+## Release 0.7.4 (2020-10-01T06:46:50)
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.13 to 0.25.14 (#595)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.13 to 0.25.14 (#592)
