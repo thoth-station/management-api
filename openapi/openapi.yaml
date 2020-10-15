@@ -57,6 +57,14 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: index_url
+          in: query
+          required: false
+          description: >
+            Index URL to be used for solver analysis.
+          schema:
+            type: string
+            default: false
       requestBody:
         required: true
         description: Python package that should be registered.
