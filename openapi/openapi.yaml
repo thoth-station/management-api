@@ -61,7 +61,7 @@ paths:
           in: query
           required: false
           description: >
-            Index URL to be used for solver analysis. 
+            Index URL to be used for solver analysis.
           schema:
             type: string
             default: false

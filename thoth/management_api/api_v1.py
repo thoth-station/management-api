@@ -99,7 +99,7 @@ def post_solve_python(
     version_specifier: Optional[str] = None,
     debug: bool = False,
     transitive: bool = False,
-    index_url: Optional[str] = None
+    index_url: Optional[str] = None,
 ):
     """Schedule analysis for the given Python package."""
     parameters = locals()
@@ -115,7 +115,7 @@ def post_solve_python(
 
     if index_url:
         try:
-            exists = is_python_package_index_enabled(url=index_url)
+            GRAPH.is_python_package_index_enabled(url=index_url)
         except NotFoundError:
             return (
                 {
@@ -414,7 +414,10 @@ def _do_listing(adapter_class, page: int) -> tuple:
 
 
 def _get_document(
-    adapter_class, analysis_id: str, name_prefix: Optional[str] = None, namespace: Optional[str] = None,
+    adapter_class,
+    analysis_id: str,
+    name_prefix: Optional[str] = None,
+    namespace: Optional[str] = None,
 ) -> tuple:
     """Perform actual document retrieval."""
     # Parameters to be reported back to a user of API.
