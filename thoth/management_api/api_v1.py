@@ -113,11 +113,21 @@ def post_solve_python(
 
     packages = package_name + (version_specifier if version_specifier else "")
 
-    indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
-
     if index_url:
-        is_python_package_index_enabled(url=index_url)
+        try:
+            exists = is_python_package_index_enabled(url=index_url)
+        except NotFoundError:
+            return (
+                {
+                    "parameters": parameters,
+                    "error": f"Index URL provided {index_url} not registered in Thoth.",
+                },
+                404,
+            )
+
         indexes = [index_url]
+    else:
+        indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
 
     run_parameters = {
         "packages": packages,
