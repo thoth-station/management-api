@@ -116,6 +116,7 @@ def post_solve_python(
     indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
 
     if index_url:
+        is_python_package_index_enabled(url=index_url)
         indexes = [index_url]
 
     run_parameters = {
