@@ -115,14 +115,21 @@ def post_solve_python(
 
     if index_url:
         try:
-            GRAPH.is_python_package_index_enabled(url=index_url)
+            if not GRAPH.is_python_package_index_enabled(url=index_url):
+                return (
+                    {
+                        "parameters": parameters,
+                        "error": f"Index URL provided {index_url!r} is disabled",
+                    },
+                    400,
+                )
         except NotFoundError:
             return (
                 {
                     "parameters": parameters,
-                    "error": f"Index URL provided {index_url} not registered in Thoth.",
+                    "error": f"Index URL provided {index_url!r} not registered in Thoth.",
                 },
-                404,
+                400,
             )
 
         indexes = [index_url]
