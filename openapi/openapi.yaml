@@ -64,7 +64,7 @@ paths:
             Index URL to be used for solver analysis.
           schema:
             type: string
-            default: false
+            example: "https://pypi.org/simple"
       requestBody:
         required: true
         description: Python package that should be registered.
