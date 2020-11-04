@@ -65,6 +65,7 @@ paths:
           schema:
             type: string
             example: "https://pypi.org/simple"
+            nullable: true
       requestBody:
         required: true
         description: Python package that should be registered.
