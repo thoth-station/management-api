@@ -610,20 +610,11 @@ paths:
                         - micropipenv
                         - pipenv
                       default: micropipenv
-                    allowed_failures:
-                      type: integer
-                      default: 1
-                      example: 1
                     batch_size:
                       type: integer
                       default: 1
                       example: 1
                       description: Number of inspection runs
-                    parallelism:
-                      type: integer
-                      default: 1
-                      example: 1
-                      description: Number of inspections that can run in parallel
                     build:
                       type: object
                       description: Buildtime requirements and requests.
