@@ -992,3 +992,26 @@
 ### Automatic Updates
 * :pushpin: Automatic update of dependency thoth-storages from 0.25.13 to 0.25.14 (#595)
 * :pushpin: Automatic update of dependency thoth-storages from 0.25.13 to 0.25.14 (#592)
+
+## Release 0.8.0 (2020-11-04T20:31:35)
+### Features
+* Do not schedule solvers if index is not enabled (#610)
+### Improvements
+* Remove unused parameters (#617)
+* Add optional index URL for solver analysis (#600)
+### Automatic Updates
+* :pushpin: Automatic update of dependency pytest from 6.1.1 to 6.1.2 (#622)
+* :pushpin: Automatic update of dependency pytest from 6.1.1 to 6.1.2 (#621)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.15 to 0.25.16 (#619)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.19.1 to 0.19.2 (#620)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.1 to 0.20.4 (#618)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.19.0 to 0.19.1 (#614)
+* :pushpin: Automatic update of dependency pytest from 6.1.0 to 6.1.1 (#609)
+* :pushpin: Automatic update of dependency pytest from 6.1.0 to 6.1.1 (#608)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.18.0 to 0.19.0 (#607)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.14 to 0.25.15 (#606)
+* :pushpin: Automatic update of dependency sentry-sdk from 0.18.0 to 0.19.0 (#605)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.0 to 0.20.1 (#604)
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.14 to 0.25.15 (#603)
+* :pushpin: Automatic update of dependency thoth-common from 0.20.0 to 0.20.1 (#602)
+* :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.17.0 to 0.18.1 (#601)
