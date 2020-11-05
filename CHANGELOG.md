@@ -1015,3 +1015,9 @@
 * :pushpin: Automatic update of dependency thoth-storages from 0.25.14 to 0.25.15 (#603)
 * :pushpin: Automatic update of dependency thoth-common from 0.20.0 to 0.20.1 (#602)
 * :pushpin: Automatic update of dependency prometheus-flask-exporter from 0.17.0 to 0.18.1 (#601)
+
+## Release 0.8.1 (2020-11-05T07:17:19)
+### Bug Fixes
+* Openapi schema fix (#625)
+### Automatic Updates
+* :pushpin: Automatic update of dependency thoth-storages from 0.25.16 to 0.25.17 (#627)
