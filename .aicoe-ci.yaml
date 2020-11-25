@@ -6,7 +6,7 @@ build:
   build-stratergy: Source
   registry: quay.io
   registry-org: thoth-station
-  registry-project: adviser
+  registry-project: management-api
   registry-secret: thoth-station-thoth-pusher-secret
 deploy:
   project-org: "thoth-station"
