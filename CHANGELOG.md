@@ -1021,3 +1021,7 @@
 * Openapi schema fix (#625)
 ### Automatic Updates
 * :pushpin: Automatic update of dependency thoth-storages from 0.25.16 to 0.25.17 (#627)
+
+## Release 0.8.2 (2020-11-24T18:17:26)
+### Features
+* :lock: relocked pipfile (#632)
