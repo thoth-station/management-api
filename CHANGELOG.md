@@ -1025,3 +1025,12 @@
 ## Release 0.8.2 (2020-11-24T18:17:26)
 ### Features
 * :lock: relocked pipfile (#632)
+
+## Release 0.8.3 (2020-12-13T18:46:52)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#640)
+* :arrow_up: Automatic update of dependencies by kebechet. (#638)
+* update aicoe yaml (#637)
+* port to python 38 (#634)
+### Improvements
+* :guardsman: updated maintainers
