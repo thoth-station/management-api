@@ -1034,3 +1034,7 @@
 * port to python 38 (#634)
 ### Improvements
 * :guardsman: updated maintainers
+
+## Release 0.8.4 (2020-12-16T12:32:33)
+### Features
+* :lock: Relock Pipfile.lock with package updates
