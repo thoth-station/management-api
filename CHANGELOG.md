@@ -1038,3 +1038,8 @@
 ## Release 0.8.4 (2020-12-16T12:32:33)
 ### Features
 * :lock: Relock Pipfile.lock with package updates
+
+## Release 0.8.5 (2021-01-11T19:21:45)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#649)
+* :arrow_up: Automatic update of dependencies by kebechet. (#647)
