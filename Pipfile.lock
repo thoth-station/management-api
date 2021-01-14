@@ -128,17 +128,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:15d3910eb1acfcdaa6aa8a64f3ed956ada1b5f3f9a8f2f127fd786036cb2afa5",
-                "sha256:d46f7c8c586c9c293f1a1eead56c18b82fcc3eec4dcebd4686aad4a675fd45b8"
+                "sha256:b5052144034e490358c659d0e480c17a4e604fd3aee9a97ddfe6e361a245a4a5",
+                "sha256:efd6c96c98900e9fbf217f13cb58f59b793e51f69a1ce61817eefd31f17c6ef5"
             ],
-            "version": "==1.16.54"
+            "version": "==1.16.55"
         },
         "botocore": {
             "hashes": [
-                "sha256:bba883f97c6657df941598150bf8a5a88bb976b7de53ec41ad3e518cfe8931d3",
-                "sha256:edfe213f3b01467605754ba1d46c6ac3b8a4be721fdf879d45c2132a99b4ac49"
+                "sha256:760d0c16c1474c2a46e3fa45e33ae7457b5cab7410737ab1692340ade764cc73",
+                "sha256:b34327d84b3bb5620fb54603677a9a973b167290c2c1e7ab69c4a46b201c6d46"
             ],
-            "version": "==1.19.54"
+            "version": "==1.19.55"
         },
         "cachetools": {
             "hashes": [
@@ -516,11 +516,10 @@
         },
         "mako": {
             "hashes": [
-                "sha256:8195c8c1400ceb53496064314c6736719c6f25e7479cd24c77be3d9361cddc27",
-                "sha256:93729a258e4ff0747c876bd9e20df1b9758028946e976324ccd2d68245c7b6a9"
+                "sha256:17831f0b7087c313c0ffae2bcbbd3c1d5ba9eeac9c38f2eb7b50e8c99fe9d5ab"
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==1.1.3"
+            "version": "==1.1.4"
         },
         "markupsafe": {
             "hashes": [
@@ -1073,11 +1072,11 @@
         },
         "thoth-storages": {
             "hashes": [
-                "sha256:1513bfbb3e6d6ecefe66d5a769c92df7201b8adbc4f64616f1807f9e2d00c588",
-                "sha256:a3a60961ad5e3d4d3c288173324d6a0b1dedd767f7910fa37bfb5cf73f0f1c3f"
+                "sha256:12058b100c03d624f8af083479120eebc6cbe7d73af58c5f5d8a0f016fe2c460",
+                "sha256:8030ef55e5f43374608cc74cb0d5e8ea5f0bbe5db1b31a10aa5b8b1b19048a02"
             ],
             "index": "pypi",
-            "version": "==0.31.0"
+            "version": "==0.32.0"
         },
         "threadloop": {
             "hashes": [
