@@ -1049,10 +1049,10 @@
         },
         "thoth-common": {
             "hashes": [
-                "sha256:debe3118f0150c8f3813a9a3572bed274db4beb221a423954ce40afed18ba741"
+                "sha256:32b9a43def528ec82469c02640cf27ec8c1021a96c71342d140bab4f1ab36120"
             ],
             "index": "pypi",
-            "version": "==0.21.3"
+            "version": "==0.21.4"
         },
         "thoth-python": {
             "hashes": [
