@@ -144,7 +144,8 @@ def post_solve_python(
     }
 
     response, status_code = _do_schedule(
-        run_parameters, _OPENSHIFT.schedule_all_solvers,
+        run_parameters,
+        _OPENSHIFT.schedule_all_solvers,
     )
 
     # Handle a special case where no solvers for the given name were found.
@@ -275,7 +276,8 @@ def post_analyze(
     parameters["is_external"] = False
 
     response, status_code = _do_schedule(
-        parameters, _OPENSHIFT.schedule_package_extract,
+        parameters,
+        _OPENSHIFT.schedule_package_extract,
     )
 
     return response, status_code
