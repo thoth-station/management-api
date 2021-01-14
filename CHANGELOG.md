@@ -1043,3 +1043,14 @@
 ### Features
 * :arrow_up: Automatic update of dependencies by kebechet. (#649)
 * :arrow_up: Automatic update of dependencies by kebechet. (#647)
+
+## Release 0.9.0 (2021-01-14T12:39:30)
+### Features
+* Introduce async graph update (#658)
+* :arrow_up: Automatic update of dependencies by kebechet. (#657)
+* :arrow_up: Automatic update of dependencies by kebechet. (#655)
+* :arrow_up: autoupdate of pre-commit plugins
+### Bug Fixes
+* :ant: fix the pre-commit issues (#654)
+### Improvements
+* removed bissenbay, thanks for your contributions!
