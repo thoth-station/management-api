@@ -341,18 +341,12 @@ def get_dependency_monkey_report(analysis_id: str) -> tuple:
 
 
 def initialize_schema(secret: str):
-    """Initialize schema in graph database."""
-    from .openapi_server import GRAPH
-
+    """Initialize/update schema in graph database (async)."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    try:
-        GRAPH.initialize_schema()
-    except Exception as exc:
-        return {"error": str(exc)}, 500
-
-    return {}, 201
+    job_id = _OPENSHIFT.schedule_graph_schema_update()
+    return {"job_id": job_id}, 201
 
 
 def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:

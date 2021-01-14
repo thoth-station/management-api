@@ -1121,7 +1121,7 @@ paths:
       tags: [Graph]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: initialize_schema
-      summary: Perform initialization procedure in graph.
+      summary: Schedule a graph update schema job for initialization procedure in graph.
       parameters:
         - name: secret
           in: query
@@ -1131,7 +1131,7 @@ paths:
             type: string
       responses:
         "201":
-          description: Initialization procedure has finished successfully.
+          description: Graph update schema job was scheduled.
         "401":
           description: On invalid secret.
         "500":
