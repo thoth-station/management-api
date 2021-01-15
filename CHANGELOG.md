@@ -1054,3 +1054,8 @@
 * :ant: fix the pre-commit issues (#654)
 ### Improvements
 * removed bissenbay, thanks for your contributions!
+
+## Release 0.9.1 (2021-01-15T05:21:08)
+### Features
+* Add Kebechet update and info templates (#665)
+* :arrow_up: Automatic update of dependencies by kebechet. (#666)
