@@ -1,6 +1,7 @@
 ---
 name: Kebechet update
 about: Manually trigger update of dependencies
+title: Kebechet update
 labels: bot
 ---
 
