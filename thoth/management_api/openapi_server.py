@@ -91,15 +91,24 @@ application.secret_key = Configuration.APP_SECRET_KEY
 # static information as metric
 metrics.info("management_api_info", "Management API info", version=__service_version__)
 _API_GAUGE_METRIC = metrics.info(
-    "management_api_schema_up2date", "User API schema up2date"
+    "management_api_schema_up2date", "Management API schema up2date"
 )
+
 # Instantiate one GraphDatabase adapter in the whole application (one per wsgi worker) to correctly
 # reuse connection pooling from one instance.
 GRAPH = GraphDatabase()
+
+# custom metric expose head revision
+schema_revision_metric = metrics.gauge(
+    'management_api_schema_head_revision', "Management API schema library head revision",
+    labels={'revision': GRAPH.get_script_alembic_version_head()}
+)
+
 GRAPH.connect()
 
 
 @application.before_request
+@schema_revision_metric
 def before_request_callback():
     """Register callback, runs before each request to this service."""
     method = request.method
