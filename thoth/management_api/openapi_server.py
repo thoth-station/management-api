@@ -98,9 +98,9 @@ _API_GAUGE_METRIC = metrics.info(
 # reuse connection pooling from one instance.
 GRAPH = GraphDatabase()
 
-# custom metric expose head revision
+# custom metric to expose head revision from thoth-storages library
 schema_revision_metric = metrics.gauge(
-    'management_api_schema_head_revision', "Management API schema library head revision",
+    'management_api_schema_revision_script', "Management API database schema revision from script",
     labels={'revision': GRAPH.get_script_alembic_version_head()}
 )
 
