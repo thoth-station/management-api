@@ -1059,3 +1059,10 @@
 ### Features
 * Add Kebechet update and info templates (#665)
 * :arrow_up: Automatic update of dependencies by kebechet. (#666)
+
+## Release 0.10.0 (2021-01-20T08:49:19)
+### Features
+* Standardize metric name  (#673)
+* Expose schema revision (#672)
+* :arrow_up: Automatic update of dependencies by kebechet. (#671)
+* Add missing template title (#669)
