@@ -100,9 +100,12 @@ GRAPH = GraphDatabase()
 
 # custom metric to expose head revision from thoth-storages library
 schema_revision_metric = metrics.gauge(
-    "management_api_schema_revision_script",
-    "Management API database schema revision from script",
-    labels={"revision": GRAPH.get_script_alembic_version_head()},
+    "thoth_database_schema_revision_script",
+    "Thoth database schema revision from script",
+    labels={
+        "component": "management-api",
+        "revision": GRAPH.get_script_alembic_version_head(),
+    },
 )
 
 GRAPH.connect()
