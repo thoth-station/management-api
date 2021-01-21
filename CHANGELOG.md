@@ -1066,3 +1066,7 @@
 * Expose schema revision (#672)
 * :arrow_up: Automatic update of dependencies by kebechet. (#671)
 * Add missing template title (#669)
+
+## Release 0.10.1 (2021-01-21T11:37:19)
+### Features
+* Run it once and set default to 1 when revision is up (#676)
