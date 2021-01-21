@@ -99,14 +99,14 @@ _API_GAUGE_METRIC = metrics.info(
 GRAPH = GraphDatabase()
 
 # custom metric to expose head revision from thoth-storages library
-schema_revision_metric = metrics.gauge(
+schema_revision_metric = metrics.info(
     "thoth_database_schema_revision_script",
     "Thoth database schema revision from script",
     labels={
         "component": "management-api",
         "revision": GRAPH.get_script_alembic_version_head(),
     },
-).set(1)
+)
 
 GRAPH.connect()
 
@@ -132,9 +132,10 @@ def before_request_callback():
 
 
 @application.before_first_request
-@schema_revision_metric
 def before_first_request_callback():
     """Register callback, runs before first request to this service."""
+    schema_revision_metric.set(1)
+
     if bool(int(os.getenv("THOTH_MANAGEMENT_API_RUN_MIGRATIONS", 0))):
         GRAPH.initialize_schema()
 
