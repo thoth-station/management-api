@@ -106,13 +106,12 @@ schema_revision_metric = metrics.gauge(
         "component": "management-api",
         "revision": GRAPH.get_script_alembic_version_head(),
     },
-)
+).set(1)
 
 GRAPH.connect()
 
 
 @application.before_request
-@schema_revision_metric
 def before_request_callback():
     """Register callback, runs before each request to this service."""
     method = request.method
@@ -133,6 +132,7 @@ def before_request_callback():
 
 
 @application.before_first_request
+@schema_revision_metric
 def before_first_request_callback():
     """Register callback, runs before first request to this service."""
     if bool(int(os.getenv("THOTH_MANAGEMENT_API_RUN_MIGRATIONS", 0))):
