@@ -102,8 +102,8 @@ GRAPH = GraphDatabase()
 schema_revision_metric = metrics.info(
     "thoth_database_schema_revision_script",
     "Thoth database schema revision from script",
-    component="management-api",  #label
-    revision=GRAPH.get_script_alembic_version_head(),  #label
+    component="management-api",  # label
+    revision=GRAPH.get_script_alembic_version_head(),  # label
 )
 
 GRAPH.connect()
