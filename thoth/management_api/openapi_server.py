@@ -104,7 +104,7 @@ schema_revision_metric = metrics.info(
     "Thoth database schema revision from script",
     component="management-api",  # label
     revision=GRAPH.get_script_alembic_version_head(),  # label
-    env=Configuration.THOTH_DEPLOYMENT_NAME  # label
+    env=Configuration.THOTH_DEPLOYMENT_NAME,  # label
 )
 
 GRAPH.connect()
