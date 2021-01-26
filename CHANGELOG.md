@@ -1070,3 +1070,8 @@
 ## Release 0.10.1 (2021-01-21T11:37:19)
 ### Features
 * Run it once and set default to 1 when revision is up (#676)
+
+## Release 0.10.2 (2021-01-26T08:23:42)
+### Features
+* :arrow_up: Automatic update of dependencies by kebechet. (#682)
+* Standardize metrics for database check (#680)
