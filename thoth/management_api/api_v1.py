@@ -283,18 +283,6 @@ def post_analyze(
     return response, status_code
 
 
-def erase_graph(secret: str):
-    """Clean content of the graph database."""
-    from .openapi_server import GRAPH
-
-    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
-        return {"error": "Wrong secret provided"}, 401
-
-    GRAPH.drop_all()
-    GRAPH.initialize_schema()
-    return {}, 201
-
-
 def get_graph_version():
     """Get version of Thoth's storages package installed."""
     return {"thoth-storages": thoth_storages_version}, 200
