@@ -1097,25 +1097,6 @@ paths:
         "200":
           description: Version string of Thoth's
 
-  /graph/erase:
-    delete:
-      tags: [Graph]
-      x-openapi-router-controller: thoth.management_api.api_v1
-      operationId: erase_graph
-      summary: Clean graph database.
-      parameters:
-        - name: secret
-          in: query
-          required: true
-          description: A secret to clean graph database.
-          schema:
-            type: string
-      responses:
-        "201":
-          description: Graph database was cleaned.
-        "400":
-          description: On invalid request.
-
   /graph/initialize:
     put:
       tags: [Graph]
