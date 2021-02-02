@@ -1075,3 +1075,7 @@
 ### Features
 * :arrow_up: Automatic update of dependencies by kebechet. (#682)
 * Standardize metrics for database check (#680)
+
+## Release 0.11.0 (2021-02-02T08:24:41)
+### Features
+* Remove erase endpoint
