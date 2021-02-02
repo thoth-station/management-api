@@ -15,7 +15,7 @@ paths:
         - name: secret
           in: query
           required: true
-          description: A secret to obtain Thoth's deployment information.
+          description: A secret to manipulate with hardware environment information.
           schema:
             type: string
       responses:
@@ -25,6 +25,103 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Info"
+
+  /hardware-environment:
+    post:
+      tags: [hardware]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_hardware_environment
+      summary: Register the given hardware configuration.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to obtain Thoth's deployment information.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Body specifying hardware environment.
+        content:
+          application/json:
+            schema:
+              x-body-name: hardware_environment
+              $ref: "#/components/schemas/HardwareEnvironment"
+      responses:
+        "201":
+          description: A secret to manipulate with hardware environment information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareEnvironment"
+        "400":
+          description: An error reported on bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareEnvironmentResponseError"
+
+    get:
+      tags: [hardware]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_hardware_environment
+      summary: Get registered hardware environments.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to manipulate with hardware environment information.
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          description: Pagination.
+          example: 10
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The given hardware environment entry was created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareEnvironmentWithId"
+        "400":
+          description: An error reported on bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareEnvironmentResponseError"
+
+    delete:
+      tags: [hardware]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_hardware_environment
+      summary: Get registered hardware environments.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to manipulate with hardware environment information.
+          schema:
+            type: string
+        - name: id
+          in: query
+          required: true
+          description: ID of the hardware information entry.
+          example: 42
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The given hardware environment entry was created.
+        "400":
+          description: An error reported on bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HardwareEnvironmentResponseError"
 
   /solver/python:
     post:
@@ -1233,3 +1330,139 @@ components:
         parameters:
           type: object
           description: Parameters echoed back to user for debugging.
+    HardwareEnvironmentResponseError:
+      type: object
+      required:
+        - error
+        - parameters
+      properties:
+        error:
+          type: string
+          description: Error information for user.
+        parameters:
+          type: object
+          description: Parameters echoed back to user for debugging.
+    HardwareEnvironment:
+      type: object
+      description: Available hardware environment configuration.
+      properties:
+        cpu_cores:
+          type: integer
+          description: Number of cores of the CPU.
+          example: 2
+          nullable: true
+        cpu_family:
+          type: integer
+          description: The CPU family.
+          example: 6
+          nullable: true
+        cpu_model:
+          type: integer
+          description: The CPU model.
+          example: 94
+          nullable: true
+        cpu_model_name:
+          type: string
+          description: The CPU model name.
+          example: "Intel"
+          nullable: true
+        cpu_physical_cpus:
+          type: integer
+          description: The CPU physical CPUs.
+          example: 6
+          nullable: true
+        cpu_vendor:
+          type: integer
+          description: The CPU vendor.
+          example: 1
+          nullable: true
+        gpu_cores:
+          type: integer
+          description: Number of cores of the GPU.
+          example: 8
+          nullable: true
+        gpu_memory_size:
+          type: integer
+          description: The GPU memory size.
+          example: 8
+          nullable: true
+        gpu_model_name:
+          type: string
+          description: The GPU model name.
+          example: null
+          nullable: true
+        gpu_vendor:
+          type: string
+          description: The GPU vendor.
+          example: "Gigabyte"
+          nullable: true
+        ram_size:
+          type: integer
+          description: The RAM size.
+          example: 16
+          nullable: true
+    HardwareEnvironmentWithId:
+      type: object
+      additionalProperties: true
+      description: Available hardware environment configuration.
+      properties:
+        id:
+          type: integer
+          description: Identifier of the given hardware environment configuration.
+          example: 42
+          nullable: false
+        cpu_cores:
+          type: integer
+          description: Number of cores of the CPU.
+          example: 2
+          nullable: true
+        cpu_family:
+          type: integer
+          description: The CPU family.
+          example: 6
+          nullable: true
+        cpu_model:
+          type: integer
+          description: The CPU model.
+          example: 94
+          nullable: true
+        cpu_model_name:
+          type: string
+          description: The CPU model name.
+          example: "Intel"
+          nullable: true
+        cpu_physical_cpus:
+          type: integer
+          description: The CPU physical CPUs.
+          example: 6
+          nullable: true
+        cpu_vendor:
+          type: integer
+          description: The CPU vendor.
+          example: 1
+          nullable: true
+        gpu_cores:
+          type: integer
+          description: Number of cores of the GPU.
+          example: 8
+          nullable: true
+        gpu_memory_size:
+          type: integer
+          description: The GPU memory size.
+          example: 8
+          nullable: true
+        gpu_model_name:
+          type: string
+          description: The GPU model name.
+          example: null
+          nullable: true
+        gpu_vendor:
+          type: string
+          description: The GPU vendor.
+          example: "Gigabyte"
+          nullable: true
+        ram_size:
+          type: integer
+          description: The RAM size.
+          example: 16
+          nullable: true

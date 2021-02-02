@@ -328,6 +328,55 @@ def get_dependency_monkey_report(analysis_id: str) -> tuple:
     return {"parameters": parameters, "report": document}, 200
 
 
+def get_hardware_environment(
+    secret: str, page: int = 0
+) -> typing.Tuple[typing.Dict[str, typing.Any], int]:
+    """Get listing of available hardware environments."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    return {
+        "hardware_environments": GRAPH.get_hardware_environments_all(
+            is_external=False, start_offset=page, without_id=False
+        ),
+        "parameters": {
+            "page": page,
+        },
+    }, 200
+
+
+def post_hardware_environment(
+    secret: str, hardware_environment: typing.Dict[str, typing.Any]
+) -> typing.Tuple[typing.Dict[str, typing.Any], int]:
+    """Get listing of available hardware environments."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    hw_id = GRAPH.create_hardware_information(hardware_environment, is_external=False)
+    return {
+        "parameters": {"hardware_environment": hardware_environment},
+        "id": hw_id,
+    }, 201
+
+
+def delete_hardware_environment(
+    secret: str, id: int
+) -> typing.Tuple[typing.Dict[str, typing.Any], int]:
+    """Delete the given hardware environment entry."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    GRAPH.delete_hardware_information(id, is_external=False)
+
+    return {}, 200
+
+
 def initialize_schema(secret: str):
     """Initialize/update schema in graph database (async)."""
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
