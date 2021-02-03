@@ -1079,3 +1079,8 @@
 ## Release 0.11.0 (2021-02-02T08:24:41)
 ### Features
 * Remove erase endpoint
+
+## Release 0.11.1 (2021-02-02T23:47:53)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet (#691)
+* :arrow_up: Automatic update of dependencies by kebechet. (#686)
