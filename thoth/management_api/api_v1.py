@@ -54,6 +54,7 @@ def get_info(secret: str):
         "amun_api_url": os.getenv("AMUN_API_URL"),
         "frontend_namespace": os.getenv("THOTH_FRONTEND_NAMESPACE"),
         "middletier_namespace": os.getenv("THOTH_MIDDLETIER_NAMESPACE"),
+        "amun_inspection_namespace": os.getenv("THOTH_AMUN_INSPECTION_NAMESPACE"),
         "backend_namespace": os.getenv("THOTH_BACKEND_NAMESPACE"),
         "s3_bucket_prefix": os.getenv("THOTH_CEPH_BUCKET_PREFIX"),
     }
@@ -244,14 +245,14 @@ def post_dependency_monkey_python(
 def get_dependency_monkey_python_log(analysis_id: str):
     """Get dependency monkey container log."""
     return _get_log(
-        "dm", analysis_id, namespace=Configuration.THOTH_MIDDLETIER_NAMESPACE
+        "dm", analysis_id, namespace=Configuration.THOTH_AMUN_INSPECTION_NAMESPACE
     )
 
 
 def get_dependency_monkey_python_status(analysis_id: str):
     """Get dependency monkey container status."""
     return _get_workflow_status(
-        locals(), "dependency-monkey-", Configuration.THOTH_MIDDLETIER_NAMESPACE
+        locals(), "dependency-monkey-", Configuration.THOTH_AMUN_INSPECTION_NAMESPACE
     )
 
 
