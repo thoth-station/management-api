@@ -1084,3 +1084,10 @@
 ### Features
 * :arrow_up: Automatic update of dependencies by Kebechet (#691)
 * :arrow_up: Automatic update of dependencies by kebechet. (#686)
+
+## Release 0.12.0 (2021-02-09T19:53:56)
+### Features
+* run dependency monkey workload on the amun-inspection namespace (#695)
+* Implement endpoints that manipulate with hardware environments (#689)
+* :arrow_up: Automatic update of dependencies by Kebechet (#697)
+* :arrow_up: Automatic update of dependencies by Kebechet (#693)
