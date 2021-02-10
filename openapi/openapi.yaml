@@ -1184,16 +1184,6 @@ paths:
         "200":
           description: A list of available performance indicators
 
-  /graph/version:
-    get:
-      tags: [Graph]
-      x-openapi-router-controller: thoth.management_api.api_v1
-      operationId: get_graph_version
-      summary: Get version of Thoth's graph adapter implementation.
-      responses:
-        "200":
-          description: Version string of Thoth's
-
   /graph/initialize:
     put:
       tags: [Graph]
