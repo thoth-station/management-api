@@ -30,6 +30,7 @@ from thoth.common import OpenShift
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
+from thoth.storages import DependencyMonkeyRequestsStore
 from thoth.storages import DependencyMonkeyReportsStore
 from thoth.storages.exceptions import NotFoundError
 
@@ -231,8 +232,14 @@ def post_dependency_monkey_python(
     predictor = input.pop("predictor", None)
     predictor_config = input.pop("predictor_config", None)
     runtime_environment = input.pop("runtime_environment", None)
+    job_id = OpenShift.generate_id("dependency-monkey")
+
     parameters = locals()
     parameters.pop("input")
+
+    store = DependencyMonkeyRequestsStore()
+    store.connect()
+    store.store_request(job_id, parameters)
 
     return _do_schedule(
         parameters,
