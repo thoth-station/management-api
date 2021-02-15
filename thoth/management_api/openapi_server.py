@@ -71,7 +71,7 @@ app.add_api(
     arguments={"title": "Management API"},
     resolver=RestyResolver("thoth.management_api"),
     strict_validation=True,
-    validate_responses=False,
+    validate_responses=bool(int(os.getenv("THOTH_API_VALIDATE_RESPONSES", 0))),
 )
 
 
