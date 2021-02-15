@@ -1091,3 +1091,11 @@
 * Implement endpoints that manipulate with hardware environments (#689)
 * :arrow_up: Automatic update of dependencies by Kebechet (#697)
 * :arrow_up: Automatic update of dependencies by Kebechet (#693)
+
+## Release 0.13.0 (2021-02-15T18:14:04)
+### Features
+* Persist request to Dependency Monkey runs (#705)
+* :arrow_up: Automatic update of dependencies by Kebechet (#708)
+* :arrow_up: Automatic update of dependencies by Kebechet (#706)
+* Provide an option to validate responses (#704)
+* Remove /graph/version endpoint (#703)
