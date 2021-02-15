@@ -226,20 +226,31 @@ def post_dependency_monkey_python(
     limit_latest_versions: Optional[int] = None,
 ):
     """Run dependency monkey on the given application stack to produce all the possible software stacks."""
-    requirements = input.pop("requirements")
-    context = input.pop("context")
-    pipeline = input.pop("pipeline", None)
-    predictor = input.pop("predictor", None)
-    predictor_config = input.pop("predictor_config", None)
-    runtime_environment = input.pop("runtime_environment", None)
-    job_id = OpenShift.generate_id("dependency-monkey")
-
-    parameters = locals()
-    parameters.pop("input")
+    parameters = {
+        "requirements": input.pop("requirements"),
+        "context": input.pop("context"),
+        "pipeline": input.pop("pipeline", None),
+        "predictor": input.pop("predictor", None),
+        "predictor_config": input.pop("predictor_config", None),
+        "runtime_environment": input.pop("runtime_environment", None),
+        "job_id": OpenShift.generate_id("dependency-monkey"),
+        "seed": seed,
+        "dry_run": dry_run,
+        "decision": decision,
+        "debug": debug,
+        "count": count,
+        "limit_latest_versions": limit_latest_versions,
+    }
 
     store = DependencyMonkeyRequestsStore()
     store.connect()
-    store.store_request(job_id, parameters)
+    store.store_request(parameters["job_id"], parameters)
+
+    # These parts are reused from the stored request and are not sent via messages.
+    parameters.pop("requirements")
+    parameters.pop("context")
+    parameters.pop("pipeline")
+    parameters.pop("runtime_environment")
 
     return _do_schedule(
         parameters,
