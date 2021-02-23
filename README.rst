@@ -16,5 +16,5 @@ Installation and deployment
 ###########################
 
 The service is built using OpenShift Source-to-Image and deployed
-automatically with Thoth's deployment playbooks available in the `core
-repository <https://github.com/thoth-station/core>`_.
+automatically via Argo CD - see `thoth-station/thoth-application
+repository <https://github.com/thoth-station/thoth-application>`_.
