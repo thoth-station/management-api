@@ -1099,3 +1099,9 @@
 * :arrow_up: Automatic update of dependencies by Kebechet (#706)
 * Provide an option to validate responses (#704)
 * Remove /graph/version endpoint (#703)
+
+## Release 0.14.0 (2021-02-23T06:55:47)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet
+* Always sync results of package-extract on management-api
+* :arrow_up: Automatic update of dependencies by Kebechet (#712)
