@@ -280,6 +280,7 @@ def post_analyze(
 
     parameters.pop("secret", None)
     parameters["environment_type"] = parameters.get("runtime_environment") or "runtime"
+    parameters["graph_sync"] = True  # Always sync when triggered from Management API.
     parameters["is_external"] = False
 
     response, status_code = _do_schedule(
