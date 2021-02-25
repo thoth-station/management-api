@@ -1105,3 +1105,8 @@
 * :arrow_up: Automatic update of dependencies by Kebechet
 * Always sync results of package-extract on management-api
 * :arrow_up: Automatic update of dependencies by Kebechet (#712)
+
+## Release 0.15.0 (2021-02-25T14:53:45)
+### Features
+* Adjust parameters supplied to Dependency Monkey scheduling
+* Minor README correction (#720)
