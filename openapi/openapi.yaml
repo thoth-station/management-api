@@ -631,8 +631,6 @@ paths:
                     boots:
                       - name: "UbiBoot"
                         configuration: {}
-                      - name: "VersionClashBoot"
-                        configuration: {}
                     sieves:
                       - name: "CutLockedSieve"
                         configuration: {}
