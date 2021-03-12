@@ -1140,6 +1140,14 @@ paths:
             for automated reporting when results are available.
           schema:
             type: string
+        - name: is_external
+          in: query
+          required: false
+          description: >
+            Verify if the image is not from thoth-station ecosystem.
+          schema:
+            type: boolean
+            default: false
         - name: debug
           in: query
           required: false

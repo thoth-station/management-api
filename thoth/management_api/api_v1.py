@@ -280,6 +280,7 @@ def post_analyze(
     registry_user: Optional[str] = None,
     registry_password: Optional[str] = None,
     environment_type: Optional[str] = None,
+    is_external: bool = False,
     origin: Optional[str] = None,
     verify_tls: bool = True,
 ) -> Tuple[Dict[str, Any], int]:
@@ -292,7 +293,6 @@ def post_analyze(
     parameters.pop("secret", None)
     parameters["environment_type"] = parameters.get("runtime_environment") or "runtime"
     parameters["graph_sync"] = True  # Always sync when triggered from Management API.
-    parameters["is_external"] = False
 
     response, status_code = _do_schedule(
         parameters,
@@ -351,14 +351,17 @@ def get_hardware_environment(
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    return {
-        "hardware_environments": GRAPH.get_hardware_environments_all(
-            is_external=False, start_offset=page, without_id=False
-        ),
-        "parameters": {
-            "page": page,
+    return (
+        {
+            "hardware_environments": GRAPH.get_hardware_environments_all(
+                is_external=False, start_offset=page, without_id=False
+            ),
+            "parameters": {
+                "page": page,
+            },
         },
-    }, 200
+        200,
+    )
 
 
 def post_hardware_environment(
@@ -371,10 +374,13 @@ def post_hardware_environment(
         return {"error": "Wrong secret provided"}, 401
 
     hw_id = GRAPH.create_hardware_information(hardware_environment, is_external=False)
-    return {
-        "parameters": {"hardware_environment": hardware_environment},
-        "id": hw_id,
-    }, 201
+    return (
+        {
+            "parameters": {"hardware_environment": hardware_environment},
+            "id": hw_id,
+        },
+        201,
+    )
 
 
 def delete_hardware_environment(
