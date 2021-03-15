@@ -1110,3 +1110,12 @@
 ### Features
 * Adjust parameters supplied to Dependency Monkey scheduling
 * Minor README correction (#720)
+
+## Release 0.15.1 (2021-03-15T14:59:13)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet (#733)
+* :arrow_up: Automatic update of dependencies by Kebechet
+* Create .prow.yaml
+* Update .aicoe-ci.yaml
+* Remove version clash boot from the example (#728)
+* :arrow_up: update pre-commit plugins, CI related configs
