@@ -98,7 +98,7 @@ paths:
       tags: [hardware]
       x-openapi-router-controller: thoth.management_api.api_v1
       operationId: delete_hardware_environment
-      summary: Get registered hardware environments.
+      summary: Delete registered hardware environment.
       parameters:
         - name: secret
           in: query
