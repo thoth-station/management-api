@@ -1119,3 +1119,10 @@
 * Update .aicoe-ci.yaml
 * Remove version clash boot from the example (#728)
 * :arrow_up: update pre-commit plugins, CI related configs
+
+## Release 0.15.2 (2021-04-29T03:45:10)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet (#742)
+* :arrow_up: Automatic update of dependencies by Kebechet (#739)
+### Improvements
+* Fix typo in description (#741)
