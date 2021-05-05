@@ -123,6 +123,148 @@ paths:
               schema:
                 $ref: "#/components/schemas/HardwareEnvironmentResponseError"
 
+  /purge/python/solver:
+    post:
+       tags: [Purge]
+       x-openapi-router-controller: thoth.management_api.api_v1
+       operationId: post_purge_python_solver
+       summary: Schedule purging of old solver data.
+       parameters:
+         - name: secret
+           in: query
+           required: true
+           description: A secret to schedule purge-job.
+           schema:
+             type: string
+         - name: debug
+           in: query
+           required: false
+           description: Run the given purge-job in a verbose mode so developers can debug it.
+           schema:
+             type: boolean
+             default: false
+       requestBody:
+         required: true
+         description: Solver results that should be purged.
+         content:
+           application/json:
+             schema:
+               x-body-name: body
+               type: object
+               description: Solver information specify which solver data should be purged.
+               required:
+                 - os_name
+                 - os_version
+                 - python_version
+               properties:
+                 os_name:
+                   type: string
+                   description: Operating system name.
+                   example: fedora
+                 os_version:
+                   type: string
+                   description: Operating system version.
+                   example: "27"
+                 python_version:
+                   type: string
+                   description: Python version.
+                   example: "3.3"
+       responses:
+         "202":
+           description: The given purge-job was scheduled.
+         "400":
+           description: On invalid request.
+
+  /purge/python/adviser:
+    post:
+      tags: [Purge]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_purge_python_adviser
+      summary: Schedule purging of old adviser data.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to schedule purge-job.
+          schema:
+            type: string
+        - name: debug
+          in: query
+          required: false
+          description: Run the given purge-job in a verbose mode so developers can debug it.
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        description: Adviser results that should be purged.
+        content:
+          application/json:
+            schema:
+              x-body-name: body
+              type: object
+              description: Solver information specify which solver data should be purged.
+              properties:
+                end_datetime:
+                  type: string
+                  format: date-time
+                  description: Delete results older than selected date.
+                  example: "2017-07-21T17:32:28"
+                adviser_version:
+                  type: string
+                  description: Component version which results should be deleted.
+                  example: "0.0.1"
+      responses:
+        "202":
+          description: The given purge-job was scheduled.
+        "400":
+          description: On invalid request.
+
+  /purge/analyses:
+    post:
+      tags: [Purge]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_purge_analyses
+      summary: Schedule purging of old container image analysis data.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to schedule purge-job.
+          schema:
+            type: string
+        - name: debug
+          in: query
+          required: false
+          description: Run the given purge-job in a verbose mode so developers can debug it.
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        description: Container image analysis results that should be purged.
+        content:
+          application/json:
+            schema:
+              x-body-name: body
+              type: object
+              description: Container image analysis data that should be purged.
+              properties:
+                end_datetime:
+                  type: string
+                  format: date-time
+                  description: Delete results older than selected date.
+                  example: "2017-07-21T17:32:28"
+                package_extract_version:
+                  type: string
+                  description: Component version which results should be deleted.
+                  example: "0.0.1"
+      responses:
+        "202":
+          description: The given purge-job was scheduled.
+        "400":
+          description: On invalid request.
+
   /solver/python:
     post:
       tags: [Python Solver]
@@ -191,7 +333,55 @@ paths:
         "202":
           description: Solvers were run.
 
+  /adviser/python/{analysis_id}:
+    delete:
+      tags: [Purge]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_adviser_python
+      summary: Delete the given adviser result from the database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: analysis_id
+          in: path
+          required: true
+          description: Document id to be deleted.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Adviser result removed from the database.
+        "401":
+          description: On invalid secret.
+
   /solver/python/{analysis_id}:
+    delete:
+      tags: [Purge]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_solve_python
+      summary: Delete the given solver result from the database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: analysis_id
+          in: path
+          required: true
+          description: Document id to be deleted.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Solver result removed from the database.
+        "401":
+          description: On invalid secret.
     get:
       tags: [Python Solver]
       x-openapi-router-controller: thoth.management_api.api_v1
@@ -1082,6 +1272,31 @@ paths:
           description: On invalid request.
         "404":
           description: If the given Python package index was not found.
+
+  /analyze/{analysis_id}:
+    delete:
+      tags: [Purge]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_analysis
+      summary: Delete the given package-extract result from the database.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: analysis_id
+          in: path
+          required: true
+          description: Document id to be deleted.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Container image analysis result removed from the database.
+        "401":
+          description: On invalid secret.
 
   /analyze:
     post:
