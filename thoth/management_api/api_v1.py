@@ -27,6 +27,7 @@ from typing import Dict
 from typing import Tuple
 
 from thoth.common import OpenShift
+from thoth.common import parse_datetime
 from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
@@ -599,3 +600,73 @@ def _do_schedule(parameters: dict, runner: typing.Callable, **runner_kwargs):
         },
         202,
     )
+
+
+def delete_solve_python(secret: str, analysis_id: str) -> Tuple[Dict[str, Any], int]:
+    """Delete the given solver entry from the database."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    deleted = GRAPH.delete_solver_result(analysis_id)
+    return {"parameters": {"analysis_id": analysis_id}, "deleted_count": deleted}, 200
+
+
+def delete_analysis(secret: str, analysis_id: str) -> Tuple[Dict[str, Any], int]:
+    """Delete the given container image analysis from the database."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    deleted = GRAPH.delete_analysis_result(analysis_id)
+    return {"parameters": {"analysis_id": analysis_id}, "deleted_count": deleted}, 200
+
+
+def delete_adviser_python(secret: str, analysis_id: str) -> Tuple[Dict[str, Any], int]:
+    """Delete the given adviser result from the database."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    deleted = GRAPH.delete_adviser_result(analysis_id)
+    return {"parameters": {"analysis_id": analysis_id}, "deleted_count": deleted}, 200
+
+
+def post_purge_python_solver(
+    body: Dict[str, Any], debug: bool = False
+) -> Tuple[Dict[str, Any], int]:
+    """Purge old solver data."""
+    workflow_id = _OPENSHIFT.schedule_purge_solver_job(
+        os_name=body["os_name"],
+        os_version=body["os_version"],
+        python_version=body["python_version"],
+        debug=debug,
+    )
+    return {"workflow_id": workflow_id}, 202
+
+
+def post_purge_python_adviser(
+    body: Dict[str, Any], debug: bool = False
+) -> Tuple[Dict[str, Any], int]:
+    """Purge old adviser data."""
+    workflow_id = _OPENSHIFT.schedule_purge_adviser_job(
+        end_datetime=parse_datetime(body["end_datetime"]),
+        adviser_version=body["adviser_version"],
+        debug=debug,
+    )
+    return {"workflow_id": workflow_id}, 202
+
+
+def post_purge_analyses(
+    body: Dict[str, Any], debug: bool = False
+) -> Tuple[Dict[str, Any], int]:
+    """Purge old container image analyses."""
+    workflow_id = _OPENSHIFT.schedule_purge_package_extract_job(
+        end_datetime=parse_datetime(body["end_datetime"]),
+        package_extract_version=body["package_extract_version"],
+        debug=debug,
+    )
+    return {"workflow_id": workflow_id}, 202
