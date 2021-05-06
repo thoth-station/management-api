@@ -1126,3 +1126,10 @@
 * :arrow_up: Automatic update of dependencies by Kebechet (#739)
 ### Improvements
 * Fix typo in description (#741)
+
+## Release 0.16.0 (2021-05-06T06:50:31)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet (#751)
+* :arrow_up: Automatic update of dependencies by Kebechet (#749)
+* Introduce endpoints for purging data (#747)
+* :arrow_up: Automatic update of dependencies by Kebechet (#746)
