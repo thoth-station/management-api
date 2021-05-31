@@ -587,6 +587,244 @@ paths:
               schema:
                 <<: *analysisResponseError
 
+  /solver/python/rule:
+    get:
+      tags: [Python Solver Rules]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_rule
+      summary: List solver rules configured.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: package_name
+          in: query
+          required: false
+          description: Get rules specific for the given package.
+          schema:
+            type: string
+        - name: index_url
+          in: query
+          required: false
+          description: Get rules specific for the given Python package index.
+          schema:
+            type: string
+            example: "https://pypi.org/simple"
+        - name: page
+          in: query
+          required: false
+          description: Pagination.
+          example: 0
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Solver rules configured.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rules
+                  - parameters
+                properties:
+                  rules: &pythonRules
+                    description: Rules configured.
+                    type: array
+                    items: &pythonRule
+                      type: object
+                      required:
+                        - id
+                        - package_name
+                        - version_specifier
+                        - index_url
+                        - description
+                      properties:
+                        id:
+                          type: integer
+                          description: Rule unique identifier.
+                          example: 42
+                        package_name:
+                          type: string
+                          description: Name of the package for which the rule is applied.
+                          example: flask
+                        version_specifier:
+                          type: string
+                          description: Version specifier for which the rule is applicable.
+                          example: '<=1.0.0'
+                          nullable: true
+                        index_url:
+                          type: string
+                          description: Python package index URL for which the rule is applicable.
+                          nullable: true
+                          example: "https://pypi.org/simple"
+                        description:
+                          type: string
+                          description: Rule free-text information.
+                          example: Do not keep old flask releases.
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+    post:
+      tags: [Python Solver Rules]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: post_solve_python_rule
+      summary: Create a new rule.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        description: Rule description.
+        content:
+          application/json:
+            schema:
+              x-body-name: input
+              type: object
+              required:
+                - package_name
+                - description
+              properties:
+                package_name:
+                  type: string
+                  description: Name of the package for which the rule is applied.
+                  example: flask
+                version_specifier:
+                  type: string
+                  description: Version specifier for which the rule is applicable.
+                  example: '<=1.0.0'
+                  nullable: true
+                index_url:
+                  type: string
+                  description: Python package index URL for which the rule is applicable.
+                  nullable: true
+                  example: "https://pypi.org/simple"
+                description:
+                  type: string
+                  description: Rule free-text information.
+                  example: Do not keep old flask releases.
+      responses:
+        "201":
+          description: The given rule was successfully created.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rule
+                  - parameters
+                properties:
+                  rule:
+                    <<: *pythonRule
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
+  /solver/python/rule/{id}:
+    get:
+      tags: [Python Solver Rules]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: get_solve_python_rule_by_id
+      summary: Get a specific rule.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: A unique rule identifier.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Retrieved rule.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rule
+                  - parameters
+                properties:
+                  rule:
+                    <<: *pythonRule
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "404":
+          description: The referenced rule does not exist.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+    delete:
+      tags: [Python Solver Rules]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_solve_python_rule
+      summary: Delete the given rule.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to authorize operation.
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Unique identifier of a rule to be deleted.
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The given rule deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - rules
+                  - parameters
+                properties:
+                  rules:
+                    <<: *pythonRules
+                  parameters:
+                    type: object
+                    description: Parameters echoed back to user for debugging.
+        "400":
+          description: On invalid request.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+        "404":
+          description: The referenced rule does not exist.
+          content:
+            application/json:
+              schema:
+                <<: *analysisResponseError
+
   /solver/python/{analysis_id}/log:
     get:
       tags: [Python Solver]

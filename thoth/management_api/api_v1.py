@@ -670,3 +670,89 @@ def post_purge_analyses(
         debug=debug,
     )
     return {"workflow_id": workflow_id}, 202
+
+
+def get_solve_python_rule(
+    secret: str,
+    package_name: Optional[str] = None,
+    index_url: Optional[str] = None,
+    page: int = 0,
+) -> Tuple[Dict[str, Any], int]:
+    """Get rules configured."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    response = {
+        "parameters": {
+            "package_name": package_name,
+            "index_url": index_url,
+            "page": page,
+        },
+        "rules": GRAPH.get_python_rule_all(
+            package_name=package_name,
+            index_url=index_url,
+            start_offset=page * PAGINATION_SIZE,
+            count=PAGINATION_SIZE,
+        ),
+    }
+    return response, 200
+
+
+def get_solve_python_rule_by_id(secret: str, id: int) -> Tuple[Dict[str, Any], int]:
+    """Get a specific rule referenced by its unique identifier."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    response: Dict[str, Any] = {"parameters": {"id": id}}
+    try:
+        rule_matched = GRAPH.get_python_rule(rule_id=id)
+    except NotFoundError as exc:
+        response["error"] = str(exc)
+        return response, 404
+    else:
+        response["rule"] = rule_matched
+        return response, 200
+
+
+def delete_solve_python_rule(secret: str, id: int) -> Tuple[Dict[str, Any], int]:
+    """Delete the given rule."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    response: Dict[str, Any] = {"parameters": {"id": id}}
+
+    try:
+        rule_matched = GRAPH.get_python_rule(rule_id=id)
+    except NotFoundError as exc:
+        response["error"] = str(exc)
+        return response, 404
+    else:
+        if GRAPH.delete_python_rule(rule_id=id) != 1:
+            response["error"] = f"Failed to delete rule with id {id!r}"
+            return response, 500
+
+        response["rule"] = rule_matched
+        return response, 200
+
+
+def post_solve_python_rule(
+    secret: str, input: Dict[str, Any]
+) -> Tuple[Dict[str, Any], int]:
+    """Add a new rule."""
+    from .openapi_server import GRAPH
+
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+
+    try:
+        rule_created = GRAPH.create_python_rule(**input)
+    except Exception as exc:
+        return {"parameters": {}, "error": str(exc)}, 400
+    else:
+        return {"parameters": {}, "rule": rule_created}, 200
