@@ -1133,3 +1133,10 @@
 * :arrow_up: Automatic update of dependencies by Kebechet (#749)
 * Introduce endpoints for purging data (#747)
 * :arrow_up: Automatic update of dependencies by Kebechet (#746)
+
+## Release 0.17.0 (2021-06-01T20:33:13)
+### Features
+* Create endpoints for managing Python solver rules
+* :arrow_up: Automatic update of dependencies by Kebechet
+* :arrow_up: Automatic update of dependencies by Kebechet (#756)
+* :hatched_chick: update the prow resource limits
