@@ -1140,3 +1140,8 @@
 * :arrow_up: Automatic update of dependencies by Kebechet
 * :arrow_up: Automatic update of dependencies by Kebechet (#756)
 * :hatched_chick: update the prow resource limits
+
+## Release 0.17.1 (2021-06-02T10:38:38)
+### Features
+* Path parameters require "required" to be set to true explicitly
+* Fix module not found error for flask._compat
