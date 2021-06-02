@@ -755,6 +755,7 @@ paths:
         - name: id
           in: path
           description: A unique rule identifier.
+          required: true
           schema:
             type: integer
       responses:
@@ -793,6 +794,7 @@ paths:
             type: string
         - name: id
           in: path
+          required: true
           description: Unique identifier of a rule to be deleted.
           schema:
             type: integer
