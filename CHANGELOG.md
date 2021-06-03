@@ -1145,3 +1145,8 @@
 ### Features
 * Path parameters require "required" to be set to true explicitly
 * Fix module not found error for flask._compat
+
+## Release 0.17.2 (2021-06-03T20:28:34)
+### Features
+* Delete solver rules endpoint returns a single rule deleted
+* :arrow_up: Automatic update of dependencies by Kebechet
