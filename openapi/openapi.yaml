@@ -806,11 +806,11 @@ paths:
               schema:
                 type: object
                 required:
-                  - rules
+                  - rule
                   - parameters
                 properties:
-                  rules:
-                    <<: *pythonRules
+                  rule:
+                    <<: *pythonRule
                   parameters:
                     type: object
                     description: Parameters echoed back to user for debugging.
