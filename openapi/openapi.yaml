@@ -639,7 +639,7 @@ paths:
                       required:
                         - id
                         - package_name
-                        - version_specifier
+                        - version_range
                         - index_url
                         - description
                       properties:
@@ -651,9 +651,9 @@ paths:
                           type: string
                           description: Name of the package for which the rule is applied.
                           example: flask
-                        version_specifier:
+                        version_range:
                           type: string
-                          description: Version specifier for which the rule is applicable.
+                          description: Version range for which the rule is applicable.
                           example: '<=1.0.0'
                           nullable: true
                         index_url:
@@ -702,9 +702,9 @@ paths:
                   type: string
                   description: Name of the package for which the rule is applied.
                   example: flask
-                version_specifier:
+                version_range:
                   type: string
-                  description: Version specifier for which the rule is applicable.
+                  description: Version range for which the rule is applicable.
                   example: '<=1.0.0'
                   nullable: true
                 index_url:
