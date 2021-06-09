@@ -1150,3 +1150,9 @@
 ### Features
 * Delete solver rules endpoint returns a single rule deleted
 * :arrow_up: Automatic update of dependencies by Kebechet
+
+## Release 0.17.3 (2021-06-09T15:54:30)
+### Features
+* Fix wrong rule version range specified in OpenAPI spec
+* :arrow_up: Automatic update of dependencies by Kebechet
+* :arrow_up: Automatic update of dependencies by Kebechet
