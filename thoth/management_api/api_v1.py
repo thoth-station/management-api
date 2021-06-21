@@ -100,6 +100,7 @@ def post_solve_python(
     python_package: dict,
     version_specifier: Optional[str] = None,
     debug: bool = False,
+    force_sync: bool = False,
     transitive: bool = False,
     index_url: Optional[str] = None,
 ):
@@ -143,6 +144,7 @@ def post_solve_python(
         "indexes": indexes,
         "debug": debug,
         "transitive": transitive,
+        "force_sync": force_sync,
     }
 
     response, status_code = _do_schedule(

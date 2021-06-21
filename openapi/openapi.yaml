@@ -296,6 +296,14 @@ paths:
           schema:
             type: boolean
             default: false
+        - name: force_sync
+          in: query
+          required: false
+          description: >
+            Perform force sync of solver results, possibly overwrite existing entries.
+          schema:
+            type: boolean
+            default: false
         - name: index_url
           in: query
           required: false
