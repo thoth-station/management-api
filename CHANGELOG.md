@@ -1156,3 +1156,12 @@
 * Fix wrong rule version range specified in OpenAPI spec
 * :arrow_up: Automatic update of dependencies by Kebechet
 * :arrow_up: Automatic update of dependencies by Kebechet
+
+## Release 0.17.4 (2021-06-22T02:08:29)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet
+* :medal_sports: set badges for easy access to content (#782)
+* add priority/critical-urgent label to all bot related issue templates
+* :arrow_up: Automatic update of dependencies by Kebechet
+* Adjust copyright notice in headers
+* Provide force_sync option when scheduling solvers
