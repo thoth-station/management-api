@@ -1165,3 +1165,7 @@
 * :arrow_up: Automatic update of dependencies by Kebechet
 * Adjust copyright notice in headers
 * Provide force_sync option when scheduling solvers
+
+## Release 0.17.5 (2021-06-30T02:50:18)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet
