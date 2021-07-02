@@ -1169,3 +1169,7 @@
 ## Release 0.17.5 (2021-06-30T02:50:18)
 ### Features
 * :arrow_up: Automatic update of dependencies by Kebechet
+
+## Release 0.17.6 (2021-07-02T10:32:09)
+### Features
+* :arrow_up: Automatic update of dependencies by Kebechet
