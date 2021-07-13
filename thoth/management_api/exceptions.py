@@ -18,9 +18,9 @@
 """Exceptions raised in the whole management-api implementation."""
 
 
-class ManagementApiException(Exception):
+class ManagementApiException(Exception):  # noqa: N818
     """A base class for management API exceptions."""
 
 
-class NotFoundException(ManagementApiException):
+class NotFoundException(ManagementApiException):  # noqa: N818
     """An exception raised if the requested resource could not be found."""
