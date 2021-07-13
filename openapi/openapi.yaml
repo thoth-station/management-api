@@ -1467,6 +1467,7 @@ paths:
                 - url
                 - warehouse_api_url
                 - verify_ssl
+                - only_if_package_seen
               properties:
                 url:
                   type: string
@@ -1479,6 +1480,10 @@ paths:
                 verify_ssl:
                   type: boolean
                   description: Use secured connection to warehouse.
+                  example: true
+                only_if_package_seen:
+                  type: boolean
+                  description: Monitor only new releases and known packages on the given index.
                   example: true
       responses:
         "201":
@@ -1740,6 +1745,7 @@ components:
           - url
           - warehouse_api_url
           - verify_ssl
+          - only_if_package_seen
         properties:
           url:
             type: string
@@ -1753,6 +1759,10 @@ components:
           verify_ssl:
             type: boolean
             description: Use secured connection to warehouse.
+            example: true
+          only_if_package_seen:
+            type: boolean
+            description: Monitored only new releases and known packages on the given index.
             example: true
     AnalysisResponse:
       type: object
