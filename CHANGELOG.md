@@ -1179,3 +1179,7 @@
 * Dependency update for the management-api (#806)
 * Ignore flake8 N818
 * Enable configuring monitoring of Python package indexes
+
+## Release 0.17.8 (2021-07-30T13:15:42)
+### Features
+* Fix import statement (#810)
