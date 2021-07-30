@@ -1173,3 +1173,9 @@
 ## Release 0.17.6 (2021-07-02T10:32:09)
 ### Features
 * :arrow_up: Automatic update of dependencies by Kebechet
+
+## Release 0.17.7 (2021-07-30T10:44:35)
+### Features
+* Dependency update for the management-api (#806)
+* Ignore flake8 N818
+* Enable configuring monitoring of Python package indexes
