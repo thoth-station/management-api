@@ -28,7 +28,7 @@ from typing import Tuple
 
 from thoth.common import OpenShift
 from thoth.common import parse_datetime
-from thoth.common.exceptions import NotFoundException as OpenShiftNotFound
+from thoth.common.exceptions import NotFoundExceptionError as OpenShiftNotFound
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
 from thoth.storages import SolverResultsStore
 from thoth.storages import DependencyMonkeyRequestsStore
