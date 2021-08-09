@@ -1465,7 +1465,6 @@ paths:
               description: A Python package index.
               required:
                 - url
-                - warehouse_api_url
                 - verify_ssl
                 - only_if_package_seen
               properties:
@@ -1477,6 +1476,7 @@ paths:
                   type: string
                   description: URL to the warehouse API.
                   example: https://pypi.org/pypi
+                  nullable: true
                 verify_ssl:
                   type: boolean
                   description: Use secured connection to warehouse.
