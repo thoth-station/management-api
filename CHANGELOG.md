@@ -1,5 +1,9 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.17.9 (2021-08-11T11:43:44)
+### Features
+* Make warehouse_api_url optional
+
 ## [0.0.1] - 2018-Jun-26 - fpokorny
 
 ### Added
