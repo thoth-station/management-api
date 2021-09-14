@@ -1,5 +1,10 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.17.10 (2021-09-14T20:54:51)
+### Features
+* Update of the dependencies
+* :arrow_up: Automatic update of dependencies by Kebechet
+
 ## Release 0.17.9 (2021-08-11T11:43:44)
 ### Features
 * Make warehouse_api_url optional
