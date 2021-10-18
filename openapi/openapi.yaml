@@ -1450,7 +1450,7 @@ paths:
         - name: enabled
           in: query
           required: false
-          description: Enable the given Python package index in Thoth's database.
+          description: Register/update the given Python package index in Thoth's database.
           schema:
             type: boolean
             default: false

@@ -62,7 +62,7 @@ def get_info(secret: str):
 
 
 def post_register_python_package_index(
-    secret: str, index: dict, enabled: bool = False, only_if_package_seen: bool = True
+    secret: str, index: dict, enabled: bool = False
 ) -> tuple:
     """Register the given Python package index in the graph database."""
     from .openapi_server import GRAPH
@@ -75,7 +75,7 @@ def post_register_python_package_index(
         warehouse_api_url=index["warehouse_api_url"],
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
         enabled=enabled,
-        only_if_package_seen=only_if_package_seen,
+        only_if_package_seen=index["only_if_package_seen"],
     )
     return {}, 201
 
