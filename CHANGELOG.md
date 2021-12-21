@@ -1,5 +1,10 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.17.15 (2021-12-21T22:09:01)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 0.17.14 (2021-11-08T12:25:59)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 
