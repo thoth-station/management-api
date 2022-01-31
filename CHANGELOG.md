@@ -1,5 +1,10 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.17.16 (2022-01-31T21:57:56)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Remove unused .thothTemplate.yaml
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 0.17.15 (2021-12-21T22:09:01)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
