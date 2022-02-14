@@ -117,6 +117,7 @@ def post_solve_python(
 
     packages = package_name + (version_specifier if version_specifier else "")
 
+    all_indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
     if index_url:
         try:
             if not GRAPH.is_python_package_index_enabled(url=index_url):
@@ -138,11 +139,12 @@ def post_solve_python(
 
         indexes = [index_url]
     else:
-        indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
+        indexes = all_indexes
 
     run_parameters = {
         "packages": packages,
         "indexes": indexes,
+        "dependency_indexes": all_indexes,
         "debug": debug,
         "transitive": transitive,
         "force_sync": force_sync,
