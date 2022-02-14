@@ -1,5 +1,9 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.0 (2022-02-14T09:41:43)
+* :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* Allow passing dependency indexes to the solver workflow
+
 ## Release 0.17.16 (2022-01-31T21:57:56)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * Remove unused .thothTemplate.yaml
