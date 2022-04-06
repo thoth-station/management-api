@@ -1046,7 +1046,10 @@ paths:
               type: object
               required:
                 - 'requirements'
+                - 'requirements_locked'
                 - 'context'
+                - 'runtime_environment'
+                - 'constraints'
               properties:
                 requirements:
                   type: object
@@ -1056,12 +1059,15 @@ paths:
                       "source": [
                       ],
                       "packages": {
-                        "tensorflow": "*"
+                        "tensorflow": "==2.8.0"
                       },
                       "requires": {
-                        "python_version": "3.6"
+                        "python_version": "3.8"
                       }
                     }
+                requirements_locked:
+                  type: object
+                  description: Pipfile.lock with fully pinned down and resolved software stack.
                 pipeline:
                   type: object
                   description: Resolver pipeline configuration.
@@ -1071,8 +1077,6 @@ paths:
                         configuration: {}
                     sieves:
                       - name: "CutLockedSieve"
-                        configuration: {}
-                      - name: "CutPreReleasesSieve"
                         configuration: {}
                       - name: "PackageIndexSieve"
                         configuration: {}
@@ -1102,14 +1106,14 @@ paths:
                   example:
                     {
                       "operating_system": {
-                        "name": "rhel",
+                        "name": "ubi",
                         "version": "8"
                       },
                       "hardware": {
                         "cpu_family": 5,
                         "cpu_model": 5
                       },
-                      "python_version": "3.6",
+                      "python_version": "3.8",
                       "platform": "linux-x86_64"
                     }
                 context:
@@ -1120,7 +1124,7 @@ paths:
                     base:
                       type: string
                       description: Base image to build stack upon.
-                      example: quay.io/thoth-station/s2i-thoth-ubi8-py36
+                      example: quay.io/thoth-station/s2i-thoth-ubi8-py38:v0.32.3
                     identifier:
                       type: string
                       description: Identifier to be used for inspection jobs.
@@ -1243,6 +1247,10 @@ paths:
                       type: string
                       description: A script to validate stack with or URL to script to be used.
                       example: https://raw.githubusercontent.com/thoth-station/performance/master/tensorflow/conv2d.py
+                constraints:
+                  type: object
+                  description: Constraints for a given package
+                  additionalProperties: {}
       parameters:
         - name: seed
           in: query
