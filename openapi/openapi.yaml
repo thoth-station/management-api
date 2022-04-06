@@ -1124,7 +1124,7 @@ paths:
                     base:
                       type: string
                       description: Base image to build stack upon.
-                      example: quay.io/thoth-station/s2i-thoth-ubi8-py38:v0.32.3
+                      example: quay.io/thoth-station/s2i-thoth-ubi8-py38:latest
                     identifier:
                       type: string
                       description: Identifier to be used for inspection jobs.
