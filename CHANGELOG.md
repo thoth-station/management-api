@@ -1,5 +1,16 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.1 (2022-04-06T14:00:51)
+* 8492f47 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* bc244f3 Keep base image to latest tag
+* 50221a7 Update pre-commit base image version
+* 8acb248 Update dependency-monkey endpoint schema
+* 88d2bc7 :ship: Bump up base image initialized in CI.
+* 087983e Fix pre-commit git protocol and config
+* 3612a38 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 3b01329 Document how to run Management API locally
+* 1336ac1 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 0.18.0 (2022-02-14T09:41:43)
 * :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * Allow passing dependency indexes to the solver workflow
