@@ -1046,10 +1046,8 @@ paths:
               type: object
               required:
                 - 'requirements'
-                - 'requirements_locked'
                 - 'context'
                 - 'runtime_environment'
-                - 'constraints'
               properties:
                 requirements:
                   type: object
@@ -1065,9 +1063,6 @@ paths:
                         "python_version": "3.8"
                       }
                     }
-                requirements_locked:
-                  type: object
-                  description: Pipfile.lock with fully pinned down and resolved software stack.
                 pipeline:
                   type: object
                   description: Resolver pipeline configuration.
@@ -1247,10 +1242,6 @@ paths:
                       type: string
                       description: A script to validate stack with or URL to script to be used.
                       example: https://raw.githubusercontent.com/thoth-station/performance/master/tensorflow/conv2d.py
-                constraints:
-                  type: object
-                  description: Constraints for a given package
-                  additionalProperties: {}
       parameters:
         - name: seed
           in: query
