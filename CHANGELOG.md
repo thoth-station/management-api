@@ -1,5 +1,8 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.2 (2022-04-07T08:41:45)
+* a0497d2 Downgrade markupsafe <2.1.0
+
 ## Release 0.18.1 (2022-04-06T14:00:51)
 * 8492f47 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
 * bc244f3 Keep base image to latest tag
