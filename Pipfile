@@ -23,6 +23,7 @@ thoth-storages = "*"
 aiocontextvars = "*"
 sentry-sdk = {extras = ["flask"],version = "*"}
 werkzeug = "==1.0.1"
+markupsafe = "<2.1.0"
 
 [requires]
 python_version = "3.8"
