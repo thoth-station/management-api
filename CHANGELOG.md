@@ -1,5 +1,8 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.3 (2022-04-07T11:26:03)
+* fab7f87 Remove requirements_locked and constraints from dependency monkey
+
 ## Release 0.18.2 (2022-04-07T08:41:45)
 * a0497d2 Downgrade markupsafe <2.1.0
 
