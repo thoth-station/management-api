@@ -26,6 +26,7 @@ from typing import Optional
 from typing import Dict
 from typing import Tuple
 
+
 from thoth.common import OpenShift
 from thoth.common import parse_datetime
 from thoth.common.exceptions import NotFoundExceptionError as OpenShiftNotFound
@@ -325,6 +326,23 @@ def schedule_graph_refresh(secret: str):
 
     job_id = _OPENSHIFT.schedule_graph_refresh()
     return {"job_id": job_id}, 201
+
+
+def schedule_sync_job(
+    secret: str,
+    document_type: Optional[str],
+    force_sync: bool = False,
+    graceful: bool = True,
+):
+    """Schedule the sync job for a document type."""
+    if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
+        return {"error": "Wrong secret provided"}, 401
+    workflow_id = _OPENSHIFT.schedule_sync_job(
+        document_type=document_type,
+        force_sync=force_sync,
+        graceful=graceful,
+    )
+    return {"workflow_id": workflow_id}, 201
 
 
 def get_dependency_monkey_report(analysis_id: str) -> tuple:
