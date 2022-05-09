@@ -1,5 +1,16 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.4 (2022-05-09T19:29:30)
+* 70a0219 Fix retrieving unsolvable packages (#890)
+* 195a29a :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* ab54c49 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#888)
+* 13b98e9 :ship: Bump up base image initialized in CI. (#886)
+* 7b926f9 :ship: Bump up base image initialized in CI.
+* 0f9337f :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* e3faa44 Update url to amun-api prod
+* 61b4656 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* 7525596 Add my username to approvers and maintainers
+
 ## Release 0.18.3 (2022-04-07T11:26:03)
 * fab7f87 Remove requirements_locked and constraints from dependency monkey
 
