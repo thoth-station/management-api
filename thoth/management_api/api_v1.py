@@ -27,7 +27,6 @@ from typing import Dict
 from typing import Tuple
 
 from thoth.common import OpenShift
-from thoth.common import get_solver_parts
 from thoth.common import parse_datetime
 from thoth.common.exceptions import NotFoundExceptionError as OpenShiftNotFound
 from thoth.storages.graph.models_performance import ALL_PERFORMANCE_MODELS
@@ -429,7 +428,12 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
 
     indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
     analyses = []
-    os_name, os_version, python_version = get_solver_parts(solver_name=solver_name)
+    parsed_solver_name = _OPENSHIFT.parse_python_solver_name(solver_name=solver_name)
+    os_name, os_version, python_version = (
+        parsed_solver_name.get("os_name"),
+        parsed_solver_name.get("os_version"),
+        parsed_solver_name.get("python_version"),
+    )
 
     for (
         package_name,
