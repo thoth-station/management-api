@@ -428,24 +428,37 @@ def schedule_solver_unsolvable(secret: str, solver_name: str) -> tuple:
 
     indexes = GRAPH.get_python_package_index_urls_all(enabled=True)
     analyses = []
-    for package_name, versions in GRAPH.retrieve_unsolvable_python_packages(
-        solver_name
-    ).items():
-        for package_version in versions:
-            analysis_id = _OPENSHIFT.schedule_solver(
-                packages=f"{package_name}==={package_version}",
-                solver=solver_name,
-                indexes=indexes,
-                transitive=False,
-            )
+    parsed_solver_name = _OPENSHIFT.parse_python_solver_name(solver_name=solver_name)
+    os_name, os_version, python_version = (
+        parsed_solver_name.get("os_name"),
+        parsed_solver_name.get("os_version"),
+        parsed_solver_name.get("python_version"),
+    )
 
-            analyses.append(
-                {
-                    "package_name": package_name,
-                    "package_version": package_version,
-                    "analysis_id": analysis_id,
-                }
-            )
+    for (
+        package_name,
+        package_version,
+        package_index,
+    ) in GRAPH.get_error_solved_python_package_versions_all(
+        unsolvable=True,
+        os_name=os_name,
+        os_version=os_version,
+        python_version=python_version,
+    ):
+        analysis_id = _OPENSHIFT.schedule_solver(
+            packages=f"{package_name}==={package_version}",
+            solver=solver_name,
+            indexes=package_index,
+            transitive=False,
+        )
+
+        analyses.append(
+            {
+                "package_name": package_name,
+                "package_version": package_version,
+                "analysis_id": analysis_id,
+            }
+        )
 
     response = {"parameters": parameters, "index_urls": indexes, "analyses": analyses}
 
