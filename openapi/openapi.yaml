@@ -1670,6 +1670,57 @@ paths:
         "500":
           description: On server side errors.
 
+  /graph/sync-job:
+    post:
+      tags: [Graph]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: schedule_sync_job
+      summary: Trigger the Sync job for solver documents
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to schedule the job.
+          schema:
+            type: string
+        - name: document_type
+          in: query
+          required: true
+          description: >
+            The type of document to trigger the sync job for. The various document options are as follows.
+              * `adviser` - Sync adviser ceph documents
+              * `solver` - Sync solver ceph documents
+              * `revsolver` - Sync reverse solver ceph documents
+              * `package-extract` - Sync package metadata documents
+              * `prrovenance-checker` - Sync provenance-checker ceph documents
+              * `security-indicators` - Synce CVE ceph documents
+          schema:
+            type:  string
+            enum:
+              - adviser
+              - solver
+              - revsolver
+              - package-extract
+              - provenance-checker
+              - security-indicators
+        - name: force
+          in: query
+          required: false
+          description: Perform force sync of documents.
+          schema:
+            type: string
+        - name: graceful
+          in: query
+          required: false
+          description: Continue on any error during the sync.
+          schema:
+            type: string
+      responses:
+        "201":
+          description: The Sync Job was triggerred successfully.
+        "400":
+          description: On invalid request.
+
   /graph/refresh:
     post:
       tags: [Graph]
