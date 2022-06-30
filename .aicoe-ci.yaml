@@ -8,7 +8,9 @@ build:
   registry-project: management-api
   registry-secret: thoth-station-thoth-pusher-secret
 deploy:
-  project-org: "thoth-station"
-  project-name: "thoth-application"
-  image-name: "management-api"
-  overlay-contextpath: "management-api/overlays/test/imagestreamtag.yaml"
+  test:
+    default-action: "pr"
+    project-org: "thoth-station"
+    project-name: "thoth-application"
+    image-name: "management-api"
+    overlay-contextpath: "management-api/overlays/test/imagestreamtag.yaml"
