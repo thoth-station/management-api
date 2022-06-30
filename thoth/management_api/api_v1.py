@@ -73,7 +73,7 @@ def post_register_python_package_index(
 
     GRAPH.register_python_package_index(
         url=index["url"],
-        warehouse_api_url=index["warehouse_api_url"],
+        warehouse_api_url=index.get("warehouse_api_url", None),
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
         enabled=enabled,
         only_if_package_seen=index["only_if_package_seen"],
