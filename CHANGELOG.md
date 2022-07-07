@@ -1,5 +1,14 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.5 (2022-07-07T13:41:05)
+* 4c8fba8 Remove ref to external doc and explicit the parameter purpose
+* e6233f4 Fix the description of index_url in /python/package-index/state
+* 7ec2955 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* b10bc18 Fix: To check if 'warehouse_api_url' key exists (#897)
+* 63d1d3b :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* bc61508 enable sync-job to be called from the management api (#884)
+* c8d6860 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 0.18.4 (2022-05-09T19:29:30)
 * 70a0219 Fix retrieving unsolvable packages (#890)
 * 195a29a :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
