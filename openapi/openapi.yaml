@@ -1506,7 +1506,7 @@ paths:
         - name: index_url
           in: query
           required: true
-          description: URL to the Python simple repository as described in PEP 503.
+          description: URL to the Python package index to enable or disable.
           schema:
             type: string
             example: "https://pypi.org/simple"
