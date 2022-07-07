@@ -1525,6 +1525,34 @@ paths:
         "404":
           description: If the given Python package index was not found.
 
+  /python/package-index/delete:
+    delete:
+      tags: [Python Package Index]
+      x-openapi-router-controller: thoth.management_api.api_v1
+      operationId: delete_python_package_index
+      summary:  Unlist the given Python package index and schedule its deletion.
+      parameters:
+        - name: secret
+          in: query
+          required: true
+          description: A secret to delete the given Python package index.
+          schema:
+            type: string
+        - name: index_url
+          in: query
+          required: true
+          description: URL to the Python simple repository as described in PEP 503.
+          schema:
+            type: string
+            example: "https://pypi.org/simple"
+      responses:
+        "202":
+          description: The given Python package index was scheduled for deletion.
+        "400":
+          description: Invalid request.
+        "404":
+          description: The given Python package index was not found.
+
   /analyze/{analysis_id}:
     delete:
       tags: [Purge]
