@@ -1506,7 +1506,7 @@ paths:
         - name: index_url
           in: query
           required: true
-          description: A secret to register the given Python package index.
+          description: URL to the Python package index to enable or disable.
           schema:
             type: string
             example: "https://pypi.org/simple"
