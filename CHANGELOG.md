@@ -1,5 +1,14 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.6 (2022-08-23T04:08:21)
+* 3da0734 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#914)
+* b3f8315 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#913)
+* edbb166 Fix a typo in ci config (#910)
+* 91bdad3 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+* e6f03cf :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#909)
+* 8d91ad5 :ship: Bump up base image initialized in CI. (#908)
+* 9d56d32 Get flake8 config out of pre-commit config (#907)
+
 ## Release 0.18.5 (2022-07-07T13:41:05)
 * 4c8fba8 Remove ref to external doc and explicit the parameter purpose
 * e6233f4 Fix the description of index_url in /python/package-index/state
