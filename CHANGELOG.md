@@ -1,5 +1,12 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.7 (2022-09-20T02:04:42)
+* e99e968 :ship: Bump up base image initialized in CI. (#924)
+* b84290d :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#923)
+* b77e746 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#921)
+* 9bb95ad :ship: Bump up base image initialized in CI.
+* 4e4247e :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment
+
 ## Release 0.18.6 (2022-08-23T04:08:21)
 * 3da0734 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#914)
 * b3f8315 :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#913)
