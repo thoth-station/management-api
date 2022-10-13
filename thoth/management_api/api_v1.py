@@ -593,7 +593,7 @@ def _get_log(
     result: typing.Dict[str, typing.Any] = {"parameters": {"analysis_id": analysis_id}}
     try:
         log = _OPENSHIFT.get_workflow_node_log(node_name, analysis_id, namespace)
-    except NotFoundError as exc:
+    except OpenShiftNotFound as exc:
         _LOGGER.exception(f"Log for {analysis_id} were not found: {str(exc)}")
         d: typing.Dict[str, Any] = {
             "error": f"Log for analysis {analysis_id} was not found or it has not started yet"
