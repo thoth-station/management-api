@@ -1,5 +1,12 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.8 (2022-10-13T18:55:29)
+* 422bd1b :recycle: Correct the error type for exception handle in get_log
+* bf7500a :books: Adjusted the return with description and .env.template for local dev
+* 428fb28 :hammer: Remove the jaegar tracing from the api
+* 0ab52d9 :guardsman: Update the OWNERS and pre-commit hooks
+* f2040db :ship: Bump up base image initialized in CI.
+
 ## Release 0.18.7 (2022-09-20T02:04:42)
 * e99e968 :ship: Bump up base image initialized in CI. (#924)
 * b84290d :arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment (#923)
