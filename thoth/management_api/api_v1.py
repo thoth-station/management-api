@@ -71,14 +71,16 @@ def post_register_python_package_index(
     if secret != Configuration.THOTH_MANAGEMENT_API_TOKEN:
         return {"error": "Wrong secret provided"}, 401
 
-    GRAPH.register_python_package_index(
+    register = GRAPH.register_python_package_index(
         url=index["url"],
         warehouse_api_url=index.get("warehouse_api_url", None),
         verify_ssl=index["verify_ssl"] if index.get("verify_ssl") is not None else True,
         enabled=enabled,
         only_if_package_seen=index["only_if_package_seen"],
     )
-    return {}, 201
+    if register:
+        return {"response": "Successfully registered the Index."}, 201
+    return {"error": "Unable to register the Index.Please contact administrator."}, 400
 
 
 def post_set_python_package_index_state(
@@ -95,7 +97,7 @@ def post_set_python_package_index_state(
     except NotFoundError as exc:
         return {"error": str(exc)}, 404
 
-    return {}, 201
+    return {"response": "Successfully updated the registered Index."}, 201
 
 
 def post_solve_python(

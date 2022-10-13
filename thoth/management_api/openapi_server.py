@@ -27,7 +27,6 @@ import connexion
 from connexion.resolver import RestyResolver
 
 from flask import redirect, jsonify, request
-from flask_script import Manager
 from prometheus_flask_exporter import PrometheusMetrics
 
 from thoth.common import __version__ as __common__version__
@@ -38,8 +37,6 @@ from thoth.storages import GraphDatabase
 from thoth.storages.exceptions import DatabaseNotInitialized
 from thoth.management_api import __version__
 from thoth.management_api.configuration import Configuration
-from thoth.management_api.configuration import init_jaeger_tracer
-
 
 # Configure global application logging using Thoth's init_logging.
 init_logging(logging_env_var_start="THOTH_MANAGEMENT_API_LOG_")
@@ -77,13 +74,8 @@ app.add_api(
 
 application = app.app
 
-
-# create tracer and put it in the application configuration
-Configuration.tracer = init_jaeger_tracer("management_api")
-
 # create metrics and manager
 metrics = PrometheusMetrics(application)
-manager = Manager(application)
 
 # Needed for session.
 application.secret_key = Configuration.APP_SECRET_KEY
