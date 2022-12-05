@@ -1,5 +1,13 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.9 (2022-12-05T01:58:58)
+* e23bbab ':arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment'
+* e6ad630 ':arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment' (#935)
+* d331ee6 ':arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment' (#934)
+* 2002ac4 :ship: Bump up base image initialized in CI. (#933)
+* 1a27cd2 git ls-files -z -- .pre-commit-config.yaml | xargs -0 sed -i 's#https://gitlab.com/PyCQA/flake8#https://github.com/PyCQA/flake8#' (#932)
+* 9a6bde5 :ship: Bump up base image initialized in CI.
+
 ## Release 0.18.8 (2022-10-13T18:55:29)
 * 422bd1b :recycle: Correct the error type for exception handle in get_log
 * bf7500a :books: Adjusted the return with description and .env.template for local dev
