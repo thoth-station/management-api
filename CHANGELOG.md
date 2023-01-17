@@ -1,5 +1,8 @@
 # Changelog for Thoth's Management API Service
 
+## Release 0.18.11 (2023-01-17T21:54:02)
+* 0cf0021 ':arrow_up: Automatic update of dependencies by Kebechet for the ubi8 environment' (#945)
+
 ## Release 0.18.10 (2022-12-05T04:37:55)
 * d2603b1 Fix the DatabaseNotInitializedError exception from thoth-storages (#941)
 
